@@ -54,8 +54,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -153,7 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2.2" data-path="unix.html"><a href="unix.html#linux"><i class="fa fa-check"></i><b>1.2.2</b> Linux</a></li>
 <li class="chapter" data-level="1.2.3" data-path="unix.html"><a href="unix.html#windows"><i class="fa fa-check"></i><b>1.2.3</b> Windows</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="unix.html"><a href="unix.html#shell"><i class="fa fa-check"></i><b>1.3</b> The shell</a></li>
+<li class="chapter" data-level="1.3" data-path="unix.html"><a href="unix.html#shell"><i class="fa fa-check"></i><b>1.3</b> The Shell</a></li>
 <li class="chapter" data-level="1.4" data-path="unix.html"><a href="unix.html#file-system"><i class="fa fa-check"></i><b>1.4</b> The file system</a>
 <ul>
 <li class="chapter" data-level="1.4.1" data-path="unix.html"><a href="unix.html#paths"><i class="fa fa-check"></i><b>1.4.1</b> Paths</a></li>
@@ -432,7 +433,7 @@ how did the shell know where to look?</p>
 <span id="cb226-3"><a href="shell-config.html#cb226-3" tabindex="-1"></a><span class="fu">which</span> python3</span></code></pre></div>
 <pre><code>/bin/ls
 /usr/bin/less
-/opt/miniconda3/bin/python3</code></pre>
+/usr/bin/python3</code></pre>
 <p>So <code>ls</code> is the file <code>/bin/ls</code>. You could run it by typing its full path, and
 it would do exactly the same thing:</p>
 <div class="sourceCode" id="cb228"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb228-1"><a href="shell-config.html#cb228-1" tabindex="-1"></a><span class="ex">/bin/ls</span></span></code></pre></div>
@@ -455,12 +456,7 @@ directories separated by colons:</p>
 one directory per line. This is the <code>PATH</code> on the computer that built this
 book:</p>
 <div class="sourceCode" id="cb233"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb233-1"><a href="shell-config.html#cb233-1" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$PATH</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&#39;:&#39;</span> <span class="st">&#39;\n&#39;</span></span></code></pre></div>
-<pre><code>/opt/miniconda3/bin
-/opt/miniconda3/condabin
-/opt/homebrew/bin
-/opt/homebrew/sbin
-/Users/aja/perl5/bin
-/usr/local/bin
+<pre><code>/usr/local/bin
 /System/Cryptexes/App/usr/bin
 /usr/bin
 /bin
@@ -470,12 +466,11 @@ book:</p>
 /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin
 /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
 /opt/X11/bin
-/Users/aja/local/bin
-/Users/aja/local/src/scripts
-/Users/aja/.local/bin
-/Users/aja/local/src/phylogenomic_dataset_construction3/scripts3
-/Library/Frameworks/Python.framework/Versions/3.6/bin
-/Users/aja/Library/Python/3.7/bin</code></pre>
+/Applications/quarto/bin
+/Library/TeX/texbin
+/usr/texbin
+/Applications/RStudio.app/Contents/Resources/app/quarto/bin
+/Applications/RStudio.app/Contents/Resources/app/bin/postback</code></pre>
 <p>When you type a command, the shell:</p>
 <ol style="list-style-type: decimal">
 <li>checks whether it’s an <strong>alias</strong>, a shortcut name you’ve defined for a
@@ -497,9 +492,7 @@ directory that isn’t in your <code>PATH</code>.</p>
 <p>You can have several programs with the same name in different directories.
 <code>which -a</code> lists all of them, in the order the shell searches:</p>
 <div class="sourceCode" id="cb236"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb236-1"><a href="shell-config.html#cb236-1" tabindex="-1"></a><span class="fu">which</span> <span class="at">-a</span> python3</span></code></pre></div>
-<pre><code>/opt/miniconda3/bin/python3
-/opt/homebrew/bin/python3
-/usr/bin/python3</code></pre>
+<pre><code>/usr/bin/python3</code></pre>
 <p>This computer has three different <code>python3</code> programs: one from conda, one from
 Homebrew, and one from Apple. Typing <code>python3</code> runs the first one, the conda
 version, because <code>/opt/miniconda3/bin</code> comes first in the <code>PATH</code>. This is

@@ -54,8 +54,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -153,7 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2.2" data-path="unix.html"><a href="unix.html#linux"><i class="fa fa-check"></i><b>1.2.2</b> Linux</a></li>
 <li class="chapter" data-level="1.2.3" data-path="unix.html"><a href="unix.html#windows"><i class="fa fa-check"></i><b>1.2.3</b> Windows</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="unix.html"><a href="unix.html#shell"><i class="fa fa-check"></i><b>1.3</b> The shell</a></li>
+<li class="chapter" data-level="1.3" data-path="unix.html"><a href="unix.html#shell"><i class="fa fa-check"></i><b>1.3</b> The Shell</a></li>
 <li class="chapter" data-level="1.4" data-path="unix.html"><a href="unix.html#file-system"><i class="fa fa-check"></i><b>1.4</b> The file system</a>
 <ul>
 <li class="chapter" data-level="1.4.1" data-path="unix.html"><a href="unix.html#paths"><i class="fa fa-check"></i><b>1.4.1</b> Paths</a></li>
@@ -428,14 +429,14 @@ multiple datasets.</li>
 <li>They keep no log of what you did and which commands you ran.</li>
 <li>They’re not conducive to running jobs remotely on a computing cluster.</li>
 <li>They’re labor-intensive to develop and are generally restricted to a single
-operating system, so the software you need often doesn’t have one.</li>
+operating system.</li>
 </ul>
-<p>Use the command line instead. It is extremely powerful, <em>not</em> a primitive
-interface. Learning it takes an up-front investment, but the long-term payoff
-is enormous:</p>
+<p>Use the command line instead. It’s extremely powerful. It might look like a
+primitive interface, but it’s not. Learning to work from the command line
+requires an up-front investment, but the long-term payoff is enormous:</p>
 <ul>
 <li>It’s an absolute necessity for the big datasets that characterize modern
-biology.</li>
+data science.</li>
 <li>You can automate tasks.</li>
 <li>You can do, and re-do, and re-do analyses with minimal added effort.</li>
 <li>It’s easy to record exactly what you did, which minimizes mistakes and makes
@@ -459,11 +460,10 @@ your work repeatable and easier to troubleshoot.</li>
 <li>Python no longer comes pre-installed (Apple removed it in 2022), but it’s
 easy to install with conda or Homebrew.</li>
 <li>Some bioinformatics programs aren’t yet built for the ARM chips (M1, M2, …)
-in newer Macs. They usually still run through Apple’s Rosetta translation
-layer, or in a container.</li>
+in newer Macs.</li>
 <li>macOS uses the BSD versions of many Unix commands, which occasionally behave
-a little differently from the GNU versions on Linux. This book points out the
-differences that matter (for example, <code>sed -i</code> in Section <a href="unix.html#sed">1.14</a>).</li>
+a little differently from the GNU versions on Linux. This book tries to point
+out the differences that matter (for example, <code>sed -i</code> in Section <a href="unix.html#sed">1.14</a>).</li>
 </ul>
 </div>
 <div id="linux" class="section level3 hasAnchor" number="1.2.2">
@@ -473,7 +473,6 @@ differences that matter (for example, <code>sed -i</code> in Section <a href="un
 <li>You can install it as the operating system on any PC. A Linux box is a
 fraction of the price of a comparably outfitted Mac.</li>
 <li>It’s compatible with all the important bioinformatics software.</li>
-<li>People will think you’re smart; you can snub Mac users.</li>
 <li>It’s open source.</li>
 </ul>
 <p><strong>Cons</strong></p>
@@ -484,7 +483,7 @@ fraction of the price of a comparably outfitted Mac.</li>
 </ul>
 <div class="note">
 <p><strong>An aside: Unix vs. Linux.</strong> Unix is a family of operating systems that dates
-back to Bell Labs in the 1970s; macOS is a certified Unix. Linux (“Linus’
+back to Bell Labs in the 1970s. macOS is a certified Unix. Linux (“Linus’
 Unix,” after its creator Linus Torvalds) is a free, open-source, Unix-like
 operating system. For the purposes of this course, the commands are nearly
 identical. The two differ mostly in how they’re developed:</p>
@@ -557,19 +556,19 @@ computer to switch operating systems.</li>
 </div>
 </div>
 <div id="shell" class="section level2 hasAnchor" number="1.3">
-<h2><span class="header-section-number">1.3</span> The shell<a href="unix.html#shell" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">1.3</span> The Shell<a href="unix.html#shell" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You interact with Unix through a <strong>shell</strong>, which is:</p>
 <ul>
-<li>an intermediary between you and the inner workings of the operating system;</li>
-<li>a <em>command interpreter</em>, providing an interface to programs and utilities;</li>
+<li>an intermediary between you and the inner workings of the operating system</li>
+<li>a <em>command interpreter</em>, providing an interface to programs and utilities</li>
 <li>a <em>programming language</em>, letting you combine utilities in different ways to
-get things done.</li>
+get things done</li>
 </ul>
 <p>A shell can be used interactively, accepting commands you type on the keyboard,
-or non-interactively, reading commands from a file (a <em>script</em>). It can:</p>
+or non-interactively, reading commands from a file (a <em>script</em>). A shell can:</p>
 <ul>
-<li>run <strong>builtin commands</strong> that are implemented inside the shell itself, such
-as <code>cd</code>, <code>pwd</code>, and <code>exit</code>;</li>
+<li>run <strong>builtin commands</strong> implemented inside the shell itself, such as
+<code>cd</code>, <code>pwd</code>, and <code>exit</code>;</li>
 <li>run <strong>programs installed elsewhere</strong> on the file system, such as the
 <a href="https://www.gnu.org/software/coreutils/">GNU Core Utilities</a> (<code>ls</code>, <code>mv</code>,
 <code>rm</code>, <code>mkdir</code>, <code>chmod</code>, …). Section <a href="shell-config.html#path">2.1</a> explains how the shell
@@ -602,9 +601,9 @@ hold files and other folders. In Unix, folders are called <strong>directories</s
 they’re organized into a tree that starts at a single <strong>root directory</strong>,
 written as a forward slash: <code>/</code>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:directory-structure"></span>
-<img src="images/01-unix/directory-structure.png" alt="Part of the directory structure on a Mac. Everything branches from the root directory (`/`). The user aja's home directory (`~`) is inside `/Users`. Modified from Haddock &amp; Dunn, [*Practical Computing for Biologists*](#references) (2011)." width="90%" />
+<img src="images/01-unix/directory-structure.png" alt="Part of the directory structure on a Mac. Everything branches from the root directory (`/`). The user aja's home directory (`~`) is inside `/Users`. Modified from Haddock &amp; Dunn, [*Practical Computing for Biologists*](#references)." width="90%" />
 <p class="caption">
-Figure 1.1: Part of the directory structure on a Mac. Everything branches from the root directory (<code>/</code>). The user aja’s home directory (<code>~</code>) is inside <code>/Users</code>. Modified from Haddock &amp; Dunn, <a href="references.html#references"><em>Practical Computing for Biologists</em></a> (2011).
+Figure 1.1: Part of the directory structure on a Mac. Everything branches from the root directory (<code>/</code>). The user aja’s home directory (<code>~</code>) is inside <code>/Users</code>. Modified from Haddock &amp; Dunn, <a href="references.html#references"><em>Practical Computing for Biologists</em></a>.
 </p>
 </div>
 <p>Every user has a <strong>home directory</strong> where their own files live. On a Mac, it’s
@@ -665,12 +664,13 @@ the Finder and dropping it into the Terminal window. Try it with
 <div class="warning">
 <p><strong>New rule: no spaces in file names.</strong> Look at what happened when you dragged
 <code>Don't do this.txt</code> into the Terminal: the shell needs backslashes to “escape”
-the spaces and the apostrophe, because spaces separate the parts of a command.
-Spaces (and other special characters, like parentheses and apostrophes) in
-file names cause endless trouble at the command line. Instead, use:</p>
+the spaces and the apostrophe, because spaces are reserved for separating the
+parts of a command. Spaces (and other special characters, like parentheses and
+apostrophes) in file names cause endless trouble at the command line.
+Instead, use:</p>
 <ul>
 <li>underscores or dashes: <code>my_file.txt</code>, <code>my-file.txt</code></li>
-<li>mixed upper and lowercase: <code>myFile.txt</code></li>
+<li>camelCase (mixed upper and lowercase): <code>myFile.txt</code></li>
 <li>dots: <code>my.file.txt</code></li>
 </ul>
 </div>
@@ -873,7 +873,7 @@ drwxr-xr-x  25 aja  staff   800B Nov  2 18:15 mt_genomes
 drwxr-xr-x  10 aja  staff   320B Nov  2 18:15 ..
 drwxr-xr-x   8 aja  staff   256B Nov  2 18:15 .</code></pre>
 <p>Files whose names start with a dot (like <code>.DS_Store</code>) are <strong>hidden files</strong>;
-plain <code>ls</code> doesn’t show them. <code>.</code> and <code>..</code> are the current and parent
+plain <code>ls</code> doesn’t show them. <code>.</code> and <code>..</code> are links to the current and parent
 directories.</p>
 </div>
 <div id="reading-ls--l-output" class="section level3 hasAnchor" number="1.5.5">
@@ -1048,7 +1048,7 @@ ATGTTAGAAGGTGCAAAATCAATGGGTGCCGGAGCTGCTACAATTGCTTCAGCGGGAGCTGCTGTCGGTATTGGAAACGT
 <div class="sourceCode" id="cb35"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="unix.html#cb35-1" tabindex="-1"></a><span class="fu">cat</span> file1 file2 file3</span></code></pre></div>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-6" class="exercise"><strong>Exercise 1.5  </strong></span>A colleague asks you to send her a single file with all the watermelon <em>nad</em>
-gene sequences, both amino acid and nucleotide. How would you do it? How long
+gene sequences, both amino acids and nucleotides. How would you do it? How long
 would it take for one species? 5 species? 100 species? 1,000 species?</p>
 </div>
 </div>
@@ -1411,6 +1411,8 @@ the command ask for confirmation before overwriting or removing anything.</p>
 <p><strong>Back up your data.</strong> If you don’t, and you lose it, it’s your own fault.</p>
 <ul>
 <li>Use Box, Google Drive, OneDrive, or Dropbox. Mac users: also use Time Machine.</li>
+<li>Have at least two backups of your important files. These backups should be in
+different physical locations.</li>
 <li>Make copies of your files before doing something drastic.</li>
 <li>Make dummy files and folders and test your commands on those first. The
 <code>/tmp</code> directory is a good place for this.</li>
@@ -1770,7 +1772,7 @@ the one being searched.</p>
 <li><strong>Blank lines.</strong> On many systems, including Linux and the cluster, an empty
 pattern matches <em>every</em> line. Check for a blank line at the end of the file.</li>
 <li><strong>Windows line endings.</strong> Each pattern ends with an invisible <code>\r</code> that
-won’t match anything (Section <a href="unix.html#text-files">1.8</a>). Fix the file with <code>tr -d   '\r'</code>.</li>
+won’t match anything (Section <a href="unix.html#text-files">1.8</a>). Fix the file with <code>tr -d '\r'</code>.</li>
 <li><strong>Special characters.</strong> <code>grep</code> treats patterns as regular expressions (more
 on these later), where characters like <code>.</code>, <code>(</code>, and <code>*</code> have special
 meanings. If your patterns are plain names, add <code>-F</code> to treat them as fixed

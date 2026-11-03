@@ -20,7 +20,8 @@ Rscript -e 'bookdown::render_book()'
 The finished HTML book is written to `docs/`. Open `docs/index.html` in a
 browser. In RStudio, you can instead open `bookdown.Rproj` and use
 *Build > Build Book*, or run `bookdown::serve_book()` for a live preview that
-rebuilds whenever you save a file.
+rebuilds whenever you save a file. The live preview needs the `servr` package
+(`install.packages("servr")`, once).
 
 ## Publishing
 

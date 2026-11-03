@@ -22,14 +22,14 @@ fine for many things, but they fall short for scientific computing:
 - They keep no log of what you did and which commands you ran.
 - They're not conducive to running jobs remotely on a computing cluster.
 - They're labor-intensive to develop and are generally restricted to a single
-  operating system, so the software you need often doesn't have one.
+  operating system.
 
-Use the command line instead. It is extremely powerful, *not* a primitive
-interface. Learning it takes an up-front investment, but the long-term payoff
-is enormous:
+Use the command line instead. It's extremely powerful. It might look like a 
+primitive interface, but it's not. Learning to work from the command line
+requires an up-front investment, but the long-term payoff is enormous:
 
 - It's an absolute necessity for the big datasets that characterize modern
-  biology.
+  data science.
 - You can automate tasks.
 - You can do, and re-do, and re-do analyses with minimal added effort.
 - It's easy to record exactly what you did, which minimizes mistakes and makes
@@ -52,11 +52,10 @@ is enormous:
 - Python no longer comes pre-installed (Apple removed it in 2022), but it's
   easy to install with conda or Homebrew.
 - Some bioinformatics programs aren't yet built for the ARM chips (M1, M2, ...)
-  in newer Macs. They usually still run through Apple's Rosetta translation
-  layer, or in a container.
+  in newer Macs.
 - macOS uses the BSD versions of many Unix commands, which occasionally behave
-  a little differently from the GNU versions on Linux. This book points out the
-  differences that matter (for example, `sed -i` in Section \@ref(sed)).
+  a little differently from the GNU versions on Linux. This book tries to point
+  out the differences that matter (for example, `sed -i` in Section \@ref(sed)).
 
 ### Linux
 
@@ -65,7 +64,6 @@ is enormous:
 - You can install it as the operating system on any PC. A Linux box is a
   fraction of the price of a comparably outfitted Mac.
 - It's compatible with all the important bioinformatics software.
-- People will think you're smart; you can snub Mac users.
 - It's open source.
 
 **Cons**
@@ -76,7 +74,7 @@ is enormous:
 
 ::: {.note}
 **An aside: Unix vs. Linux.** Unix is a family of operating systems that dates
-back to Bell Labs in the 1970s; macOS is a certified Unix. Linux ("Linus'
+back to Bell Labs in the 1970s. macOS is a certified Unix. Linux ("Linus'
 Unix," after its creator Linus Torvalds) is a free, open-source, Unix-like
 operating system. For the purposes of this course, the commands are nearly
 identical. The two differ mostly in how they're developed:
@@ -117,20 +115,20 @@ But there are workarounds for running Linux alongside Windows:
   [UNetbootin](http://unetbootin.sourceforge.net/)). You have to restart your
   computer to switch operating systems.
 
-## The shell {#shell}
+## The Shell {#shell}
 
 You interact with Unix through a **shell**, which is:
 
-- an intermediary between you and the inner workings of the operating system;
-- a *command interpreter*, providing an interface to programs and utilities;
+- an intermediary between you and the inner workings of the operating system
+- a *command interpreter*, providing an interface to programs and utilities
 - a *programming language*, letting you combine utilities in different ways to
-  get things done.
+  get things done
 
 A shell can be used interactively, accepting commands you type on the keyboard,
-or non-interactively, reading commands from a file (a *script*). It can:
+or non-interactively, reading commands from a file (a *script*). A shell can:
 
-- run **builtin commands** that are implemented inside the shell itself, such
-  as `cd`, `pwd`, and `exit`;
+- run **builtin commands** implemented inside the shell itself, such as
+  `cd`, `pwd`, and `exit`;
 - run **programs installed elsewhere** on the file system, such as the
   [GNU Core Utilities](https://www.gnu.org/software/coreutils/) (`ls`, `mv`,
   `rm`, `mkdir`, `chmod`, ...). Section \@ref(path) explains how the shell
@@ -164,7 +162,7 @@ hold files and other folders. In Unix, folders are called **directories**, and
 they're organized into a tree that starts at a single **root directory**,
 written as a forward slash: `/`.
 
-```{r directory-structure, echo = FALSE, out.width = "90%", fig.cap = "Part of the directory structure on a Mac. Everything branches from the root directory (`/`). The user aja's home directory (`~`) is inside `/Users`. Modified from Haddock & Dunn, [*Practical Computing for Biologists*](#references) (2011)."}
+```{r directory-structure, echo = FALSE, out.width = "90%", fig.cap = "Part of the directory structure on a Mac. Everything branches from the root directory (`/`). The user aja's home directory (`~`) is inside `/Users`. Modified from Haddock & Dunn, [*Practical Computing for Biologists*](#references)."}
 knitr::include_graphics("images/01-unix/directory-structure.png")
 ```
 
@@ -215,12 +213,13 @@ the Finder and dropping it into the Terminal window. Try it with
 ::: {.warning}
 **New rule: no spaces in file names.** Look at what happened when you dragged
 `Don't do this.txt` into the Terminal: the shell needs backslashes to "escape"
-the spaces and the apostrophe, because spaces separate the parts of a command.
-Spaces (and other special characters, like parentheses and apostrophes) in
-file names cause endless trouble at the command line. Instead, use:
+the spaces and the apostrophe, because spaces are reserved for separating the
+parts of a command. Spaces (and other special characters, like parentheses and
+apostrophes) in file names cause endless trouble at the command line. 
+Instead, use:
 
 - underscores or dashes: `my_file.txt`, `my-file.txt`
-- mixed upper and lowercase: `myFile.txt`
+- camelCase (mixed upper and lowercase): `myFile.txt`
 - dots: `my.file.txt`
 :::
 
@@ -393,7 +392,7 @@ ls -alSh
 ```
 
 Files whose names start with a dot (like `.DS_Store`) are **hidden files**;
-plain `ls` doesn't show them. `.` and `..` are the current and parent
+plain `ls` doesn't show them. `.` and `..` are links to the current and parent
 directories.
 
 ### Reading `ls -l` output
@@ -509,7 +508,7 @@ cat file1 file2 file3
 
 ::: {.exercise}
 A colleague asks you to send her a single file with all the watermelon *nad*
-gene sequences, both amino acid and nucleotide. How would you do it? How long
+gene sequences, both amino acids and nucleotides. How would you do it? How long
 would it take for one species? 5 species? 100 species? 1,000 species?
 :::
 
@@ -810,6 +809,8 @@ the command ask for confirmation before overwriting or removing anything.
 **Back up your data.** If you don't, and you lose it, it's your own fault.
 
 - Use Box, Google Drive, OneDrive, or Dropbox. Mac users: also use Time Machine.
+- Have at least two backups of your important files. These backups should be in
+  different physical locations.
 - Make copies of your files before doing something drastic.
 - Make dummy files and folders and test your commands on those first. The
   `/tmp` directory is a good place for this.

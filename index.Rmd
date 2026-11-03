@@ -37,7 +37,12 @@ Sys.setenv(GIT_CONFIG_GLOBAL = git_config, GIT_CONFIG_NOSYSTEM = "1")
 
 knitr::opts_chunk$set(comment = "", collapse = FALSE, fig.align = "center")
 
-bash_engine <- knitr::knit_engines$get("bash")
+# Keep knitr's original bash engine. Saving it once matters when the book is
+# rebuilt in the same R session (serve_book()), where knit_engines$get("bash")
+# would return the wrapper below and it would call itself forever.
+if (is.null(getOption("book.bash_engine")))
+  options(book.bash_engine = knitr::knit_engines$get("bash"))
+bash_engine <- getOption("book.bash_engine")
 knitr::knit_engines$set(bash = function(options) {
   base <- if (isTRUE(options$sandbox)) file.path(sandbox_dir, "data") else data_dir
   old <- setwd(file.path(base, if (is.null(options$dir)) "." else options$dir))

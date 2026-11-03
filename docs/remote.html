@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Working remotely | Practical Programming for Biologists</title>
+  <meta name="description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Working remotely | Practical Programming for Biologists" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Working remotely | Practical Programming for Biologists" />
+  
+  <meta name="twitter:description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  
+
+<meta name="author" content="Andrew Alverson" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="project.html"/>
+<link rel="next" href="git.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Practical Programming for Biologists</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#before-the-first-class"><i class="fa fa-check"></i>Before the first class</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-read-this-book"><i class="fa fa-check"></i>How to read this book</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="unix.html"><a href="unix.html"><i class="fa fa-check"></i><b>1</b> Introduction to Unix</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="unix.html"><a href="unix.html#why-command-line"><i class="fa fa-check"></i><b>1.1</b> Why the command line?</a></li>
+<li class="chapter" data-level="1.2" data-path="unix.html"><a href="unix.html#choosing-os"><i class="fa fa-check"></i><b>1.2</b> Choosing an operating system</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="unix.html"><a href="unix.html#macos"><i class="fa fa-check"></i><b>1.2.1</b> macOS</a></li>
+<li class="chapter" data-level="1.2.2" data-path="unix.html"><a href="unix.html#linux"><i class="fa fa-check"></i><b>1.2.2</b> Linux</a></li>
+<li class="chapter" data-level="1.2.3" data-path="unix.html"><a href="unix.html#windows"><i class="fa fa-check"></i><b>1.2.3</b> Windows</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="unix.html"><a href="unix.html#shell"><i class="fa fa-check"></i><b>1.3</b> The shell</a></li>
+<li class="chapter" data-level="1.4" data-path="unix.html"><a href="unix.html#file-system"><i class="fa fa-check"></i><b>1.4</b> The file system</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="unix.html"><a href="unix.html#paths"><i class="fa fa-check"></i><b>1.4.1</b> Paths</a></li>
+<li class="chapter" data-level="1.4.2" data-path="unix.html"><a href="unix.html#course-files"><i class="fa fa-check"></i><b>1.4.2</b> The course files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="unix.html"><a href="unix.html#getting-around"><i class="fa fa-check"></i><b>1.5</b> Getting around</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="unix.html"><a href="unix.html#pwd-cd-and-echo"><i class="fa fa-check"></i><b>1.5.1</b> <code>pwd</code>, <code>cd</code>, and <code>echo</code></a></li>
+<li class="chapter" data-level="1.5.2" data-path="unix.html"><a href="unix.html#clear-and-exit"><i class="fa fa-check"></i><b>1.5.2</b> <code>clear</code> and <code>exit</code></a></li>
+<li class="chapter" data-level="1.5.3" data-path="unix.html"><a href="unix.html#ctrl-c"><i class="fa fa-check"></i><b>1.5.3</b> Stopping a command: <kbd>Ctrl</kbd>+<kbd>C</kbd></a></li>
+<li class="chapter" data-level="1.5.4" data-path="unix.html"><a href="unix.html#ls"><i class="fa fa-check"></i><b>1.5.4</b> <code>ls</code>: listing directory contents</a></li>
+<li class="chapter" data-level="1.5.5" data-path="unix.html"><a href="unix.html#reading-ls--l-output"><i class="fa fa-check"></i><b>1.5.5</b> Reading <code>ls -l</code> output</a></li>
+<li class="chapter" data-level="1.5.6" data-path="unix.html"><a href="unix.html#wildcards"><i class="fa fa-check"></i><b>1.5.6</b> Wildcards</a></li>
+<li class="chapter" data-level="1.5.7" data-path="unix.html"><a href="unix.html#find"><i class="fa fa-check"></i><b>1.5.7</b> Finding files: <code>find</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="unix.html"><a href="unix.html#viewing-files"><i class="fa fa-check"></i><b>1.6</b> Looking at files</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="unix.html"><a href="unix.html#cat"><i class="fa fa-check"></i><b>1.6.1</b> <code>cat</code></a></li>
+<li class="chapter" data-level="1.6.2" data-path="unix.html"><a href="unix.html#head-and-tail"><i class="fa fa-check"></i><b>1.6.2</b> <code>head</code> and <code>tail</code></a></li>
+<li class="chapter" data-level="1.6.3" data-path="unix.html"><a href="unix.html#less"><i class="fa fa-check"></i><b>1.6.3</b> <code>less</code></a></li>
+<li class="chapter" data-level="1.6.4" data-path="unix.html"><a href="unix.html#man"><i class="fa fa-check"></i><b>1.6.4</b> Getting help: <code>man</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="unix.html"><a href="unix.html#data-streams"><i class="fa fa-check"></i><b>1.7</b> Data streams and redirection</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="unix.html"><a href="unix.html#redirecting-stdout"><i class="fa fa-check"></i><b>1.7.1</b> Redirecting STDOUT</a></li>
+<li class="chapter" data-level="1.7.2" data-path="unix.html"><a href="unix.html#redirecting-stderr"><i class="fa fa-check"></i><b>1.7.2</b> Redirecting STDERR</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="unix.html"><a href="unix.html#text-files"><i class="fa fa-check"></i><b>1.8</b> Text files and text editors</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="unix.html"><a href="unix.html#plain-text"><i class="fa fa-check"></i><b>1.8.1</b> Plain text</a></li>
+<li class="chapter" data-level="1.8.2" data-path="unix.html"><a href="unix.html#line-breaks-matter"><i class="fa fa-check"></i><b>1.8.2</b> Line breaks matter</a></li>
+<li class="chapter" data-level="1.8.3" data-path="unix.html"><a href="unix.html#text-editors"><i class="fa fa-check"></i><b>1.8.3</b> Text editors</a></li>
+<li class="chapter" data-level="1.8.4" data-path="unix.html"><a href="unix.html#fonts"><i class="fa fa-check"></i><b>1.8.4</b> Fonts</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="unix.html"><a href="unix.html#managing-files"><i class="fa fa-check"></i><b>1.9</b> Managing files and directories</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="unix.html"><a href="unix.html#copying-and-moving-cp-and-mv"><i class="fa fa-check"></i><b>1.9.1</b> Copying and moving: <code>cp</code> and <code>mv</code></a></li>
+<li class="chapter" data-level="1.9.2" data-path="unix.html"><a href="unix.html#making-directories-mkdir"><i class="fa fa-check"></i><b>1.9.2</b> Making directories: <code>mkdir</code></a></li>
+<li class="chapter" data-level="1.9.3" data-path="unix.html"><a href="unix.html#deleting-rm-and-rmdir"><i class="fa fa-check"></i><b>1.9.3</b> Deleting: <code>rm</code> and <code>rmdir</code></a></li>
+<li class="chapter" data-level="1.9.4" data-path="unix.html"><a href="unix.html#ln"><i class="fa fa-check"></i><b>1.9.4</b> Links: <code>ln</code></a></li>
+<li class="chapter" data-level="1.9.5" data-path="unix.html"><a href="unix.html#how-much-space-du-and-df"><i class="fa fa-check"></i><b>1.9.5</b> How much space? <code>du</code> and <code>df</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="unix.html"><a href="unix.html#working-with-data"><i class="fa fa-check"></i><b>1.10</b> Working with data</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="unix.html"><a href="unix.html#wc"><i class="fa fa-check"></i><b>1.10.1</b> <code>wc</code>: counting</a></li>
+<li class="chapter" data-level="1.10.2" data-path="unix.html"><a href="unix.html#sort"><i class="fa fa-check"></i><b>1.10.2</b> <code>sort</code>: sorting</a></li>
+<li class="chapter" data-level="1.10.3" data-path="unix.html"><a href="unix.html#grep"><i class="fa fa-check"></i><b>1.10.3</b> <code>grep</code>: searching</a></li>
+<li class="chapter" data-level="1.10.4" data-path="unix.html"><a href="unix.html#cut-extracting-columns"><i class="fa fa-check"></i><b>1.10.4</b> <code>cut</code>: extracting columns</a></li>
+<li class="chapter" data-level="1.10.5" data-path="unix.html"><a href="unix.html#uniq-removing-duplicates"><i class="fa fa-check"></i><b>1.10.5</b> <code>uniq</code>: removing duplicates</a></li>
+<li class="chapter" data-level="1.10.6" data-path="unix.html"><a href="unix.html#column-viewing-tables"><i class="fa fa-check"></i><b>1.10.6</b> <code>column</code>: viewing tables</a></li>
+<li class="chapter" data-level="1.10.7" data-path="unix.html"><a href="unix.html#diff"><i class="fa fa-check"></i><b>1.10.7</b> <code>diff</code>: comparing files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="unix.html"><a href="unix.html#pipes"><i class="fa fa-check"></i><b>1.11</b> Pipes</a></li>
+<li class="chapter" data-level="1.12" data-path="unix.html"><a href="unix.html#quoting"><i class="fa fa-check"></i><b>1.12</b> Variables and quoting</a>
+<ul>
+<li class="chapter" data-level="1.12.1" data-path="unix.html"><a href="unix.html#variables"><i class="fa fa-check"></i><b>1.12.1</b> Variables</a></li>
+<li class="chapter" data-level="1.12.2" data-path="unix.html"><a href="unix.html#quotes-and-special-characters"><i class="fa fa-check"></i><b>1.12.2</b> Quotes and special characters</a></li>
+</ul></li>
+<li class="chapter" data-level="1.13" data-path="unix.html"><a href="unix.html#awk"><i class="fa fa-check"></i><b>1.13</b> <code>awk</code>: working with columns</a>
+<ul>
+<li class="chapter" data-level="1.13.1" data-path="unix.html"><a href="unix.html#how-awk-reads-a-file"><i class="fa fa-check"></i><b>1.13.1</b> How <code>awk</code> reads a file</a></li>
+<li class="chapter" data-level="1.13.2" data-path="unix.html"><a href="unix.html#printing-columns-the-action"><i class="fa fa-check"></i><b>1.13.2</b> Printing columns (the action)</a></li>
+<li class="chapter" data-level="1.13.3" data-path="unix.html"><a href="unix.html#filtering-rows-the-pattern"><i class="fa fa-check"></i><b>1.13.3</b> Filtering rows (the pattern)</a></li>
+<li class="chapter" data-level="1.13.4" data-path="unix.html"><a href="unix.html#both-together"><i class="fa fa-check"></i><b>1.13.4</b> Both together</a></li>
+<li class="chapter" data-level="1.13.5" data-path="unix.html"><a href="unix.html#awk-fs"><i class="fa fa-check"></i><b>1.13.5</b> Tabs and commas: setting the field separator</a></li>
+<li class="chapter" data-level="1.13.6" data-path="unix.html"><a href="unix.html#doing-math"><i class="fa fa-check"></i><b>1.13.6</b> Doing math</a></li>
+<li class="chapter" data-level="1.13.7" data-path="unix.html"><a href="unix.html#summarizing-end"><i class="fa fa-check"></i><b>1.13.7</b> Summarizing: <code>END</code></a></li>
+<li class="chapter" data-level="1.13.8" data-path="unix.html"><a href="unix.html#awk-cheat-sheet"><i class="fa fa-check"></i><b>1.13.8</b> <code>awk</code> cheat sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="1.14" data-path="unix.html"><a href="unix.html#sed"><i class="fa fa-check"></i><b>1.14</b> <code>sed</code>: find and replace</a>
+<ul>
+<li class="chapter" data-level="1.14.1" data-path="unix.html"><a href="unix.html#substitution-soldnew"><i class="fa fa-check"></i><b>1.14.1</b> Substitution: <code>s/old/new/</code></a></li>
+<li class="chapter" data-level="1.14.2" data-path="unix.html"><a href="unix.html#replacing-every-match-g"><i class="fa fa-check"></i><b>1.14.2</b> Replacing every match: <code>g</code></a></li>
+<li class="chapter" data-level="1.14.3" data-path="unix.html"><a href="unix.html#practical-examples"><i class="fa fa-check"></i><b>1.14.3</b> Practical examples</a></li>
+<li class="chapter" data-level="1.14.4" data-path="unix.html"><a href="unix.html#deleting-and-printing-lines"><i class="fa fa-check"></i><b>1.14.4</b> Deleting and printing lines</a></li>
+<li class="chapter" data-level="1.14.5" data-path="unix.html"><a href="unix.html#sed-i"><i class="fa fa-check"></i><b>1.14.5</b> Editing a file in place: <code>-i</code></a></li>
+<li class="chapter" data-level="1.14.6" data-path="unix.html"><a href="unix.html#sed-cheat-sheet"><i class="fa fa-check"></i><b>1.14.6</b> <code>sed</code> cheat sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="1.15" data-path="unix.html"><a href="unix.html#bash-scripts"><i class="fa fa-check"></i><b>1.15</b> Bash scripts</a>
+<ul>
+<li class="chapter" data-level="1.15.1" data-path="unix.html"><a href="unix.html#running-several-commands"><i class="fa fa-check"></i><b>1.15.1</b> Running several commands</a></li>
+<li class="chapter" data-level="1.15.2" data-path="unix.html"><a href="unix.html#writing-a-script"><i class="fa fa-check"></i><b>1.15.2</b> Writing a script</a></li>
+<li class="chapter" data-level="1.15.3" data-path="unix.html"><a href="unix.html#chmod"><i class="fa fa-check"></i><b>1.15.3</b> File permissions: <code>chmod</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.16" data-path="unix.html"><a href="unix.html#loops"><i class="fa fa-check"></i><b>1.16</b> Loops</a>
+<ul>
+<li class="chapter" data-level="1.16.1" data-path="unix.html"><a href="unix.html#for-loops"><i class="fa fa-check"></i><b>1.16.1</b> <code>for</code> loops</a></li>
+<li class="chapter" data-level="1.16.2" data-path="unix.html"><a href="unix.html#parameter-expansion"><i class="fa fa-check"></i><b>1.16.2</b> Changing file names in a loop</a></li>
+</ul></li>
+<li class="chapter" data-level="1.17" data-path="unix.html"><a href="unix.html#unix-summary"><i class="fa fa-check"></i><b>1.17</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="shell-config.html"><a href="shell-config.html"><i class="fa fa-check"></i><b>2</b> Tailoring your shell</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="shell-config.html"><a href="shell-config.html#path"><i class="fa fa-check"></i><b>2.1</b> Where are executable programs installed?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="shell-config.html"><a href="shell-config.html#which-and-type"><i class="fa fa-check"></i><b>2.1.1</b> <code>which</code> and <code>type</code></a></li>
+<li class="chapter" data-level="2.1.2" data-path="shell-config.html"><a href="shell-config.html#the-path-variable"><i class="fa fa-check"></i><b>2.1.2</b> The <code>$PATH</code> variable</a></li>
+<li class="chapter" data-level="2.1.3" data-path="shell-config.html"><a href="shell-config.html#order-matters"><i class="fa fa-check"></i><b>2.1.3</b> Order matters</a></li>
+<li class="chapter" data-level="2.1.4" data-path="shell-config.html"><a href="shell-config.html#why-.script.sh"><i class="fa fa-check"></i><b>2.1.4</b> Why <code>./script.sh</code>?</a></li>
+<li class="chapter" data-level="2.1.5" data-path="shell-config.html"><a href="shell-config.html#change-path"><i class="fa fa-check"></i><b>2.1.5</b> Changing the <code>PATH</code></a></li>
+<li class="chapter" data-level="2.1.6" data-path="shell-config.html"><a href="shell-config.html#local-scripts"><i class="fa fa-check"></i><b>2.1.6</b> A home for your own scripts</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="shell-config.html"><a href="shell-config.html#config-files"><i class="fa fa-check"></i><b>2.2</b> The shell’s configuration files</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="shell-config.html"><a href="shell-config.html#which-file-it-depends-on-your-shell"><i class="fa fa-check"></i><b>2.2.1</b> Which file? It depends on your shell</a></li>
+<li class="chapter" data-level="2.2.2" data-path="shell-config.html"><a href="shell-config.html#zsh-use-.zshrc"><i class="fa fa-check"></i><b>2.2.2</b> Zsh: use <code>~/.zshrc</code></a></li>
+<li class="chapter" data-level="2.2.3" data-path="shell-config.html"><a href="shell-config.html#bash-.bash_profile-vs.-.bashrc"><i class="fa fa-check"></i><b>2.2.3</b> Bash: <code>.bash_profile</code> vs. <code>.bashrc</code></a></li>
+<li class="chapter" data-level="2.2.4" data-path="shell-config.html"><a href="shell-config.html#in-short"><i class="fa fa-check"></i><b>2.2.4</b> In short</a></li>
+<li class="chapter" data-level="2.2.5" data-path="shell-config.html"><a href="shell-config.html#editing-your-configuration-file"><i class="fa fa-check"></i><b>2.2.5</b> Editing your configuration file</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="shell-config.html"><a href="shell-config.html#aliases"><i class="fa fa-check"></i><b>2.3</b> Aliases</a></li>
+<li class="chapter" data-level="2.4" data-path="shell-config.html"><a href="shell-config.html#colors"><i class="fa fa-check"></i><b>2.4</b> Colors</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="shell-config.html"><a href="shell-config.html#colors-in-ls-output"><i class="fa fa-check"></i><b>2.4.1</b> Colors in <code>ls</code> output</a></li>
+<li class="chapter" data-level="2.4.2" data-path="shell-config.html"><a href="shell-config.html#terminal-colors-fonts-and-themes"><i class="fa fa-check"></i><b>2.4.2</b> Terminal colors, fonts, and themes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="shell-config.html"><a href="shell-config.html#history"><i class="fa fa-check"></i><b>2.5</b> History</a></li>
+<li class="chapter" data-level="2.6" data-path="shell-config.html"><a href="shell-config.html#noclobber"><i class="fa fa-check"></i><b>2.6</b> A safety net: <code>noclobber</code></a></li>
+<li class="chapter" data-level="2.7" data-path="shell-config.html"><a href="shell-config.html#customizing-your-prompt"><i class="fa fa-check"></i><b>2.7</b> Customizing your prompt</a></li>
+<li class="chapter" data-level="2.8" data-path="shell-config.html"><a href="shell-config.html#example-config"><i class="fa fa-check"></i><b>2.8</b> Putting it together</a></li>
+<li class="chapter" data-level="2.9" data-path="shell-config.html"><a href="shell-config.html#shell-summary"><i class="fa fa-check"></i><b>2.9</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>3</b> Organizing your project</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="project.html"><a href="project.html#why-organize"><i class="fa fa-check"></i><b>3.1</b> Why organize?</a></li>
+<li class="chapter" data-level="3.2" data-path="project.html"><a href="project.html#project-layout"><i class="fa fa-check"></i><b>3.2</b> A directory for each project</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="project.html"><a href="project.html#mkdir-braces"><i class="fa fa-check"></i><b>3.2.1</b> Making the directories</a></li>
+<li class="chapter" data-level="3.2.2" data-path="project.html"><a href="project.html#project-rules"><i class="fa fa-check"></i><b>3.2.2</b> Rules of thumb</a></li>
+<li class="chapter" data-level="3.2.3" data-path="project.html"><a href="project.html#final-result"><i class="fa fa-check"></i><b>3.2.3</b> Marking the final result</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="project.html"><a href="project.html#data-readme"><i class="fa fa-check"></i><b>3.3</b> Documenting your data</a></li>
+<li class="chapter" data-level="3.4" data-path="project.html"><a href="project.html#rstudio-projects"><i class="fa fa-check"></i><b>3.4</b> RStudio projects</a></li>
+<li class="chapter" data-level="3.5" data-path="project.html"><a href="project.html#notebook"><i class="fa fa-check"></i><b>3.5</b> The project notebook</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="project.html"><a href="project.html#make-notebook"><i class="fa fa-check"></i><b>3.5.1</b> Making the notebook</a></li>
+<li class="chapter" data-level="3.5.2" data-path="project.html"><a href="project.html#notebook-contents"><i class="fa fa-check"></i><b>3.5.2</b> What goes in the notebook</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="project.html"><a href="project.html#markdown"><i class="fa fa-check"></i><b>3.6</b> Markdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#text"><i class="fa fa-check"></i>Text</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#headings"><i class="fa fa-check"></i>Headings</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#lists"><i class="fa fa-check"></i>Lists</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#code"><i class="fa fa-check"></i>Code</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#images-tables-and-quotes"><i class="fa fa-check"></i>Images, tables, and quotes</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#learning-more"><i class="fa fa-check"></i>Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="project.html"><a href="project.html#project-summary"><i class="fa fa-check"></i><b>3.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="remote.html"><a href="remote.html"><i class="fa fa-check"></i><b>4</b> Working remotely</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="remote.html"><a href="remote.html#ssh"><i class="fa fa-check"></i><b>4.1</b> Logging onto a remote system</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="remote.html"><a href="remote.html#ahpcc-files"><i class="fa fa-check"></i><b>4.1.1</b> The file system on AHPCC</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="remote.html"><a href="remote.html#copying-files"><i class="fa fa-check"></i><b>4.2</b> Copying files between computers</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="remote.html"><a href="remote.html#scp"><i class="fa fa-check"></i><b>4.2.1</b> <code>scp</code></a></li>
+<li class="chapter" data-level="4.2.2" data-path="remote.html"><a href="remote.html#rsync"><i class="fa fa-check"></i><b>4.2.2</b> <code>rsync</code>: bigger, smarter copies</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="remote.html"><a href="remote.html#download"><i class="fa fa-check"></i><b>4.3</b> Getting data from the web</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="remote.html"><a href="remote.html#curl"><i class="fa fa-check"></i><b>4.3.1</b> <code>curl</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="remote.html"><a href="remote.html#wget"><i class="fa fa-check"></i><b>4.3.2</b> <code>wget</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="remote.html"><a href="remote.html#compression"><i class="fa fa-check"></i><b>4.4</b> Compressing data</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="remote.html"><a href="remote.html#gzip-and-gunzip"><i class="fa fa-check"></i><b>4.4.1</b> <code>gzip</code> and <code>gunzip</code></a></li>
+<li class="chapter" data-level="4.4.2" data-path="remote.html"><a href="remote.html#working-with-compressed-files"><i class="fa fa-check"></i><b>4.4.2</b> Working with compressed files</a></li>
+<li class="chapter" data-level="4.4.3" data-path="remote.html"><a href="remote.html#tar"><i class="fa fa-check"></i><b>4.4.3</b> <code>tar</code>: archiving directories</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="remote.html"><a href="remote.html#checksums"><i class="fa fa-check"></i><b>4.5</b> Verifying data integrity</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="remote.html"><a href="remote.html#md5sum"><i class="fa fa-check"></i><b>4.5.1</b> <code>md5sum</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="remote.html"><a href="remote.html#slurm"><i class="fa fa-check"></i><b>4.6</b> Running jobs on the cluster</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="remote.html"><a href="remote.html#anatomy-of-a-slurm-script"><i class="fa fa-check"></i><b>4.6.1</b> Anatomy of a SLURM script</a></li>
+<li class="chapter" data-level="4.6.2" data-path="remote.html"><a href="remote.html#scratch"><i class="fa fa-check"></i><b>4.6.2</b> Using the scratch disk</a></li>
+<li class="chapter" data-level="4.6.3" data-path="remote.html"><a href="remote.html#submitting-and-checking-jobs"><i class="fa fa-check"></i><b>4.6.3</b> Submitting and checking jobs</a></li>
+<li class="chapter" data-level="4.6.4" data-path="remote.html"><a href="remote.html#software-modules"><i class="fa fa-check"></i><b>4.6.4</b> Software modules</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="remote.html"><a href="remote.html#ssh-keys"><i class="fa fa-check"></i><b>4.7</b> Authentication with SSH keys</a>
+<ul>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#check-for-existing-keys"><i class="fa fa-check"></i>1. Check for existing keys</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#create-a-key-pair"><i class="fa fa-check"></i>2. Create a key pair</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#copy-your-public-key-to-the-remote-computer"><i class="fa fa-check"></i>3. Copy your public key to the remote computer</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#check-permissions"><i class="fa fa-check"></i>4. Check permissions</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#log-on"><i class="fa fa-check"></i>5. Log on</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="remote.html"><a href="remote.html#remote-summary"><i class="fa fa-check"></i><b>4.8</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="git.html"><a href="git.html"><i class="fa fa-check"></i><b>5</b> Version control with Git and GitHub</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="git.html"><a href="git.html#why-git"><i class="fa fa-check"></i><b>5.1</b> Why version control?</a></li>
+<li class="chapter" data-level="5.2" data-path="git.html"><a href="git.html#git-setup"><i class="fa fa-check"></i><b>5.2</b> Installing and configuring Git</a></li>
+<li class="chapter" data-level="5.3" data-path="git.html"><a href="git.html#git-init"><i class="fa fa-check"></i><b>5.3</b> Creating a repository</a></li>
+<li class="chapter" data-level="5.4" data-path="git.html"><a href="git.html#git-workflow"><i class="fa fa-check"></i><b>5.4</b> Track, stage, commit</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="git.html"><a href="git.html#git-status"><i class="fa fa-check"></i><b>5.4.1</b> Checking the status of your files</a></li>
+<li class="chapter" data-level="5.4.2" data-path="git.html"><a href="git.html#git-add"><i class="fa fa-check"></i><b>5.4.2</b> Tracking files with <code>git add</code></a></li>
+<li class="chapter" data-level="5.4.3" data-path="git.html"><a href="git.html#git-stage"><i class="fa fa-check"></i><b>5.4.3</b> Staging changes with <code>git add</code></a></li>
+<li class="chapter" data-level="5.4.4" data-path="git.html"><a href="git.html#git-commit"><i class="fa fa-check"></i><b>5.4.4</b> Storing changes with <code>git commit</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="git.html"><a href="git.html#git-restore"><i class="fa fa-check"></i><b>5.5</b> Undoing changes</a></li>
+<li class="chapter" data-level="5.6" data-path="git.html"><a href="git.html#gitignore"><i class="fa fa-check"></i><b>5.6</b> Ignoring files with <code>.gitignore</code></a></li>
+<li class="chapter" data-level="5.7" data-path="git.html"><a href="git.html#git-log"><i class="fa fa-check"></i><b>5.7</b> Viewing history with <code>git log</code></a></li>
+<li class="chapter" data-level="5.8" data-path="git.html"><a href="git.html#git-diff"><i class="fa fa-check"></i><b>5.8</b> Seeing what changed with <code>git diff</code></a></li>
+<li class="chapter" data-level="5.9" data-path="git.html"><a href="git.html#git-mv"><i class="fa fa-check"></i><b>5.9</b> Renaming and deleting files</a></li>
+<li class="chapter" data-level="5.10" data-path="git.html"><a href="git.html#git-old-versions"><i class="fa fa-check"></i><b>5.10</b> Retrieving an old version</a></li>
+<li class="chapter" data-level="5.11" data-path="git.html"><a href="git.html#branches"><i class="fa fa-check"></i><b>5.11</b> Branches</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="git.html"><a href="git.html#git-switch"><i class="fa fa-check"></i><b>5.11.1</b> Creating, switching, and merging</a></li>
+<li class="chapter" data-level="5.11.2" data-path="git.html"><a href="git.html#merge-conflicts"><i class="fa fa-check"></i><b>5.11.2</b> Merge conflicts</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="git.html"><a href="git.html#github"><i class="fa fa-check"></i><b>5.12</b> Remote repositories and GitHub</a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="git.html"><a href="git.html#git-clone"><i class="fa fa-check"></i><b>5.12.1</b> Cloning a repository</a></li>
+<li class="chapter" data-level="5.12.2" data-path="git.html"><a href="git.html#github-setup"><i class="fa fa-check"></i><b>5.12.2</b> Setting up GitHub</a></li>
+<li class="chapter" data-level="5.12.3" data-path="git.html"><a href="git.html#git-push"><i class="fa fa-check"></i><b>5.12.3</b> Pushing a local repository to GitHub</a></li>
+<li class="chapter" data-level="5.12.4" data-path="git.html"><a href="git.html#git-everyday"><i class="fa fa-check"></i><b>5.12.4</b> The everyday workflow</a></li>
+<li class="chapter" data-level="5.12.5" data-path="git.html"><a href="git.html#github-readme"><i class="fa fa-check"></i><b>5.12.5</b> README files and Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="git.html"><a href="git.html#git-summary"><i class="fa fa-check"></i><b>5.13</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a>
+<ul>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html#books"><i class="fa fa-check"></i>Books</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html#articles"><i class="fa fa-check"></i>Articles</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/andrewalverson/BIOL51573-2026S" target="_blank">Course GitHub page</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Practical Programming for Biologists</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="remote" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Working remotely<a href="remote.html#remote" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="goals">
+<p><strong>In this chapter</strong></p>
+<ul>
+<li>how to log onto a remote computer, such as the university’s computing
+cluster, with <code>ssh</code></li>
+<li>how to copy files between computers with <code>scp</code> and <code>rsync</code></li>
+<li>how to download data from the web with <code>curl</code> and <code>wget</code></li>
+<li>how to compress and archive files with <code>gzip</code> and <code>tar</code></li>
+<li>how to check that data arrived intact with checksums (<code>md5sum</code>)</li>
+<li>how to write a job script and submit it to the SLURM job scheduler</li>
+<li>how to set up SSH keys so you don’t have to type your password every time</li>
+</ul>
+</div>
+<p>Sooner or later, your data will be too big or your analyses too slow for your
+laptop. Then it’s time to use a <strong>high-performance computing (HPC) cluster</strong>:
+a large collection of computers that many people share. At the University of
+Arkansas, that’s the Arkansas High Performance Computing Center (AHPCC).</p>
+<p>Working on a cluster involves a few related tasks, which this chapter covers
+in order: logging on, copying files, retrieving data, compressing data,
+verifying data, preparing job scripts, and submitting jobs.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:cluster"></span>
+<img src="images/02-remote/cluster.svg" alt="How the pieces fit together. You log onto the cluster's login node from your own computer. From there, you submit jobs to the SLURM scheduler, which runs them on the compute nodes. The login node and compute nodes share the same storage, so your files are available everywhere." width="100%" />
+<p class="caption">
+Figure 4.1: How the pieces fit together. You log onto the cluster’s login node from your own computer. From there, you submit jobs to the SLURM scheduler, which runs them on the compute nodes. The login node and compute nodes share the same storage, so your files are available everywhere.
+</p>
+</div>
+<div id="ssh" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Logging onto a remote system<a href="remote.html#ssh" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>ssh</code> establishes a <strong>s</strong>ecure <strong>sh</strong>ell on a remote computer. Once you’re
+logged in, you type commands exactly as you would in your own Terminal, but
+they run on the remote machine.</p>
+<ul>
+<li><code>ssh</code> requires you to authenticate, usually with a password (or with keys,
+Section <a href="remote.html#ssh-keys">4.7</a>).</li>
+<li>It’s <em>secure</em>: your login and everything else you send are encrypted as
+they travel across the network. Older, insecure ways of connecting (<code>telnet</code>,
+<code>rlogin</code>, and <code>ftp</code>) send everything, including your password, as plain
+text. Don’t use them.</li>
+<li>OpenSSH, the standard <code>ssh</code> program, comes with macOS and Linux, and with
+Windows 10 and 11 (run it in PowerShell or Windows Terminal).</li>
+</ul>
+<p>To log onto the AHPCC cluster:</p>
+<div class="sourceCode" id="cb280"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb280-1"><a href="remote.html#cb280-1" tabindex="-1"></a><span class="fu">ssh</span> username@hpc-portal2.hpc.uark.edu</span></code></pre></div>
+<p>Replace <code>username</code> with your UARK username, and use your UARK password. A few
+things to know the first time:</p>
+<ul>
+<li><code>ssh</code> will ask whether you trust the remote computer (“The authenticity of
+host … can’t be established”). Type <code>yes</code>. It won’t ask again.</li>
+<li>When you type your password, <em>nothing appears on the screen</em>, not even
+dots. That’s normal. Type it and press <kbd>Return</kbd>.</li>
+<li>Your prompt changes to show that you’re on the remote computer. Use <code>exit</code>
+to log off and return to your own computer.</li>
+</ul>
+<p>The cluster runs Linux, and your shell there is Bash, not Zsh. Your aliases
+and other settings from your Mac don’t come with you; to customize your shell
+on the cluster, edit <code>~/.bashrc</code> there (Section <a href="shell-config.html#config-files">2.2</a>).</p>
+<div class="tip">
+<p><strong>Adopt a single username.</strong> If your username on your own computer is the same
+as on the remote computer, you can leave it out:</p>
+<div class="sourceCode" id="cb281"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb281-1"><a href="remote.html#cb281-1" tabindex="-1"></a><span class="fu">ssh</span> hpc-portal2.hpc.uark.edu                 <span class="co"># instead of...</span></span>
+<span id="cb281-2"><a href="remote.html#cb281-2" tabindex="-1"></a><span class="fu">ssh</span> username@hpc-portal2.hpc.uark.edu</span></code></pre></div>
+<p>Save time by using the same username for all your accounts.</p>
+</div>
+<div id="ahpcc-files" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> The file system on AHPCC<a href="remote.html#ahpcc-files" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<colgroup>
+<col width="28%" />
+<col width="71%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Location</th>
+<th>What it’s for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>/home/username</code></td>
+<td>where you are when you log in (on the login node)</td>
+</tr>
+<tr class="even">
+<td><code>/storage/username</code></td>
+<td>where to store your data</td>
+</tr>
+<tr class="odd">
+<td><code>$HOME</code> or <code>/storage</code></td>
+<td>where to run standard jobs from</td>
+</tr>
+<tr class="even">
+<td><code>/scratch/$SLURM_JOB_ID</code></td>
+<td>where to run jobs that do lots of reading and writing (Section <a href="remote.html#scratch">4.6.2</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>/share/apps</code></td>
+<td>where programs are installed</td>
+</tr>
+</tbody>
+</table>
+<div class="warning">
+<p><strong>Don’t run analyses on the login node.</strong> The login node is shared by
+everyone who is logged in. It’s for editing files, moving data, and submitting
+jobs. Anything that takes more than a minute or so, or uses lots of memory,
+belongs in a job on the compute nodes (Section <a href="remote.html#slurm">4.6</a>). Heavy work on
+the login node slows it down for everyone.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-27" class="exercise"><strong>Exercise 4.1  </strong></span></p>
+<ol style="list-style-type: decimal">
+<li>Log onto <code>hpc-portal2.hpc.uark.edu</code>.</li>
+<li>Where are you? Use <code>pwd</code> and <code>ls -la</code> to look around your home directory.</li>
+<li>Find your storage directory and check how much space you’re using there
+with <code>du -sh</code>.</li>
+<li>Use <code>ls /share/apps</code> to see what programs are installed.</li>
+<li>Log off.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="copying-files" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Copying files between computers<a href="remote.html#copying-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="scp" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> <code>scp</code><a href="remote.html#scp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>scp</code> (<strong>s</strong>ecure <strong>c</strong>o<strong>p</strong>y) copies files between computers. It uses <code>ssh</code>
+to transfer the data, so it offers the same security as <code>ssh</code>, and asks for
+the same password.</p>
+<p>It works just like <code>cp</code>: source first, destination second.</p>
+<pre class="text"><code>scp [options] source destination</code></pre>
+<p>The difference is that either the source or the destination (or both) can be
+on another computer. A remote location looks like this:</p>
+<pre class="text"><code>username@host:path/to/filename
+└──┬───┘ └┬─┘ └──────┬───────┘
+   │      │          └── path on the remote computer (relative to your home directory there,
+   │      │              unless it starts with /); leave it out to mean your home directory
+   │      └── the remote computer, followed by a colon (:)
+   └── your username on the remote computer, followed by @ (optional if it&#39;s the same)</code></pre>
+<p>The <strong>colon</strong> is what tells <code>scp</code> that a location is on another computer.
+Forget it, and <code>scp</code> just makes a local copy with a strange name.</p>
+<p><strong>Copying to a remote computer:</strong></p>
+<div class="sourceCode" id="cb284"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb284-1"><a href="remote.html#cb284-1" tabindex="-1"></a><span class="co"># copy a file to your remote home directory, giving it a new name</span></span>
+<span id="cb284-2"><a href="remote.html#cb284-2" tabindex="-1"></a><span class="fu">scp</span> nad4.fasta aja@hpc-portal2.hpc.uark.edu:new_file.fasta</span>
+<span id="cb284-3"><a href="remote.html#cb284-3" tabindex="-1"></a></span>
+<span id="cb284-4"><a href="remote.html#cb284-4" tabindex="-1"></a><span class="co"># copy a file to your remote home directory, keeping its name</span></span>
+<span id="cb284-5"><a href="remote.html#cb284-5" tabindex="-1"></a><span class="fu">scp</span> nad4.fasta aja@hpc-portal2.hpc.uark.edu:</span></code></pre></div>
+<p>To copy a directory, add <code>-r</code>, just like <code>cp -r</code>:</p>
+<div class="sourceCode" id="cb285"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb285-1"><a href="remote.html#cb285-1" tabindex="-1"></a><span class="co"># keep the same directory name, in your remote home directory</span></span>
+<span id="cb285-2"><a href="remote.html#cb285-2" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> nt aja@hpc-portal2.hpc.uark.edu:</span>
+<span id="cb285-3"><a href="remote.html#cb285-3" tabindex="-1"></a></span>
+<span id="cb285-4"><a href="remote.html#cb285-4" tabindex="-1"></a><span class="co"># copy into an existing remote directory, with a new name</span></span>
+<span id="cb285-5"><a href="remote.html#cb285-5" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> nt aja@hpc-portal2.hpc.uark.edu:test_dir/copied_nt</span>
+<span id="cb285-6"><a href="remote.html#cb285-6" tabindex="-1"></a></span>
+<span id="cb285-7"><a href="remote.html#cb285-7" tabindex="-1"></a><span class="co"># copy into your storage directory (an absolute path), keeping the same name</span></span>
+<span id="cb285-8"><a href="remote.html#cb285-8" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> nt aja@hpc-portal2.hpc.uark.edu:/storage/aja</span></code></pre></div>
+<p><strong>Copying from a remote computer</strong> just swaps the order. Run these on <em>your</em>
+computer, not on the cluster:</p>
+<div class="sourceCode" id="cb286"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb286-1"><a href="remote.html#cb286-1" tabindex="-1"></a><span class="co"># copy from your remote home directory into the current directory, with a new name</span></span>
+<span id="cb286-2"><a href="remote.html#cb286-2" tabindex="-1"></a><span class="fu">scp</span> aja@hpc-portal2.hpc.uark.edu:nad4.fasta nad4_copied.fasta</span>
+<span id="cb286-3"><a href="remote.html#cb286-3" tabindex="-1"></a></span>
+<span id="cb286-4"><a href="remote.html#cb286-4" tabindex="-1"></a><span class="co"># copy from a remote directory into the current directory (.), keeping the same name</span></span>
+<span id="cb286-5"><a href="remote.html#cb286-5" tabindex="-1"></a><span class="fu">scp</span> aja@hpc-portal2.hpc.uark.edu:blast_output/nad4.blastn .</span>
+<span id="cb286-6"><a href="remote.html#cb286-6" tabindex="-1"></a></span>
+<span id="cb286-7"><a href="remote.html#cb286-7" tabindex="-1"></a><span class="co"># copy into a local directory, keeping the same name</span></span>
+<span id="cb286-8"><a href="remote.html#cb286-8" tabindex="-1"></a><span class="fu">scp</span> aja@hpc-portal2.hpc.uark.edu:nad4.fasta biol5153/watermelon_genome/</span>
+<span id="cb286-9"><a href="remote.html#cb286-9" tabindex="-1"></a></span>
+<span id="cb286-10"><a href="remote.html#cb286-10" tabindex="-1"></a><span class="co"># copy a whole directory from the remote computer</span></span>
+<span id="cb286-11"><a href="remote.html#cb286-11" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> hpc-portal2.hpc.uark.edu:blast_output biol5153/watermelon_genome/</span></code></pre></div>
+<div class="note">
+<p><strong>Where do I run <code>scp</code>?</strong> Almost always on your own computer. Your laptop
+knows how to find the cluster (<code>hpc-portal2.hpc.uark.edu</code>), but the cluster
+has no way to find your laptop.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-28" class="exercise"><strong>Exercise 4.2  </strong></span></p>
+<ol style="list-style-type: decimal">
+<li>Copy <code>watermelon_genome/nt/nad4.fasta</code> to your home directory on the
+cluster. Log on and check that it’s there.</li>
+<li>On the cluster, make a directory called <code>biol5153</code>. Back on your own
+computer, copy the whole <code>watermelon_genome/nt</code> directory into it.</li>
+<li>On the cluster, rename <code>nad4.fasta</code> to <code>nad4_remote.fasta</code>. Then copy it
+back to your own computer’s Desktop.</li>
+</ol>
+</div>
+</div>
+<div id="rsync" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> <code>rsync</code>: bigger, smarter copies<a href="remote.html#rsync" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>rsync</code> <strong>sync</strong>hronizes files and directories, locally or between computers.
+For anything big, it’s better than <code>scp</code>:</p>
+<ul>
+<li>It only sends the <em>differences</em> between versions. If a transfer gets
+interrupted, or you change a few files, running the same <code>rsync</code> command
+again sends only what’s missing or changed.</li>
+<li>It can compress data while sending it.</li>
+<li>Its archive option preserves links, timestamps, permissions, ownership, and
+other attributes.</li>
+</ul>
+<pre class="text"><code>rsync [options] source destination</code></pre>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="74%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-a</code>, <code>--archive</code></td>
+<td>archive mode: recursive, and preserve links, timestamps, etc.</td>
+</tr>
+<tr class="even">
+<td><code>-r</code>, <code>--recursive</code></td>
+<td>recurse into directories (included in <code>-a</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>-l</code>, <code>--links</code></td>
+<td>preserve symbolic links (included in <code>-a</code>)</td>
+</tr>
+<tr class="even">
+<td><code>-v</code>, <code>--verbose</code></td>
+<td>print lots of information about what it’s doing</td>
+</tr>
+<tr class="odd">
+<td><code>-z</code>, <code>--compress</code></td>
+<td>compress data as it’s sent</td>
+</tr>
+<tr class="even">
+<td><code>-n</code>, <code>--dry-run</code></td>
+<td>show what <em>would</em> be copied, without copying anything</td>
+</tr>
+</tbody>
+</table>
+<p>In practice, <code>rsync -av</code> (local) and <code>rsync -azv</code> (between computers) are all
+you’ll usually need.</p>
+<div class="sourceCode" id="cb288"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb288-1"><a href="remote.html#cb288-1" tabindex="-1"></a><span class="co"># synchronize a local directory to the cluster</span></span>
+<span id="cb288-2"><a href="remote.html#cb288-2" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-azv</span> my_data aja@hpc-portal2.hpc.uark.edu:</span>
+<span id="cb288-3"><a href="remote.html#cb288-3" tabindex="-1"></a></span>
+<span id="cb288-4"><a href="remote.html#cb288-4" tabindex="-1"></a><span class="co"># ...into a new destination directory name</span></span>
+<span id="cb288-5"><a href="remote.html#cb288-5" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-azv</span> my_data aja@hpc-portal2.hpc.uark.edu:my_data_new_name</span>
+<span id="cb288-6"><a href="remote.html#cb288-6" tabindex="-1"></a></span>
+<span id="cb288-7"><a href="remote.html#cb288-7" tabindex="-1"></a><span class="co"># synchronize from the cluster to your computer</span></span>
+<span id="cb288-8"><a href="remote.html#cb288-8" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-azv</span> aja@hpc-portal2.hpc.uark.edu:blast_output .</span></code></pre></div>
+<div id="rsync-mind-the" class="section level4 unnumbered hasAnchor">
+<h4><code>rsync</code>: mind the <code>/</code><a href="remote.html#rsync-mind-the" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><code>rsync</code> is picky about a trailing slash on the <em>source</em>:</p>
+<ul>
+<li><strong>No trailing slash</strong> (<code>mt_genomes</code>) copies the directory itself, including
+everything in it.</li>
+<li><strong>Trailing slash</strong> (<code>mt_genomes/</code>) copies only the <em>contents</em> of the
+directory, not the directory itself.</li>
+</ul>
+<p>Here’s the difference, copying into two empty directories:</p>
+<div class="sourceCode" id="cb289"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb289-1"><a href="remote.html#cb289-1" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> copy1 copy2</span>
+<span id="cb289-2"><a href="remote.html#cb289-2" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-a</span> nt copy1         <span class="co"># no slash: copies the directory</span></span>
+<span id="cb289-3"><a href="remote.html#cb289-3" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-a</span> nt/ copy2        <span class="co"># slash: copies what&#39;s inside it</span></span>
+<span id="cb289-4"><a href="remote.html#cb289-4" tabindex="-1"></a><span class="fu">ls</span> copy1 <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 3</span>
+<span id="cb289-5"><a href="remote.html#cb289-5" tabindex="-1"></a><span class="bu">echo</span> <span class="at">---</span></span>
+<span id="cb289-6"><a href="remote.html#cb289-6" tabindex="-1"></a><span class="fu">ls</span> copy2 <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 3</span></code></pre></div>
+<pre><code>nt
+---
+atp1.fasta
+atp4.fasta
+atp6.fasta</code></pre>
+<div class="tip">
+<p><strong>Use <code>-n</code> first.</strong> <code>rsync -avn</code> lists exactly what would be copied, without
+copying anything. When the list looks right, run it again without the <code>n</code>.</p>
+</div>
+</div>
+<div id="moving-files-with-a-graphical-program" class="section level4 unnumbered hasAnchor">
+<h4>Moving files with a graphical program<a href="remote.html#moving-files-with-a-graphical-program" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>If you prefer drag and drop, programs such as
+<a href="https://filezilla-project.org/">FileZilla</a> and
+<a href="https://cyberduck.io/">Cyberduck</a> provide a graphical front end for copying
+files over SSH. Choose the <strong>SFTP</strong> protocol when you connect.</p>
+</div>
+</div>
+</div>
+<div id="download" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Getting data from the web<a href="remote.html#download" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Most public data (genomes, sequencing reads, protein structures) is
+distributed through websites and FTP servers. Clicking “Download” works for
+one file on your laptop, but not for 200 files, or on a cluster with no web
+browser. Use <code>curl</code> or <code>wget</code> instead.</p>
+<div id="curl" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> <code>curl</code><a href="remote.html#curl" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>curl</code> (“see URL”) downloads files without any interaction. It’s installed on
+macOS, Linux, and Windows.</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="87%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-o name</code></td>
+<td>write the output to a file named <code>name</code></td>
+</tr>
+<tr class="even">
+<td><code>-O</code></td>
+<td>write the output to a file with the same name as on the server</td>
+</tr>
+<tr class="odd">
+<td><code>-L</code></td>
+<td>follow redirects (if the file has moved, go to its new location)</td>
+</tr>
+<tr class="even">
+<td><code>-C -</code></td>
+<td>continue (resume) an interrupted download</td>
+</tr>
+</tbody>
+</table>
+<p>By default, <code>curl</code> writes the file to STDOUT, so you’ll almost always want
+<code>-o</code> or <code>-O</code>:</p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb291-1"><a href="remote.html#cb291-1" tabindex="-1"></a><span class="co"># download green fluorescent protein&#39;s structure from the Protein Data Bank,</span></span>
+<span id="cb291-2"><a href="remote.html#cb291-2" tabindex="-1"></a><span class="co"># printing it to the screen (not very useful)</span></span>
+<span id="cb291-3"><a href="remote.html#cb291-3" tabindex="-1"></a><span class="ex">curl</span> https://files.rcsb.org/download/1EMA.pdb</span>
+<span id="cb291-4"><a href="remote.html#cb291-4" tabindex="-1"></a></span>
+<span id="cb291-5"><a href="remote.html#cb291-5" tabindex="-1"></a><span class="co"># write it to a file of your choosing</span></span>
+<span id="cb291-6"><a href="remote.html#cb291-6" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-o</span> gfp.pdb https://files.rcsb.org/download/1EMA.pdb</span>
+<span id="cb291-7"><a href="remote.html#cb291-7" tabindex="-1"></a></span>
+<span id="cb291-8"><a href="remote.html#cb291-8" tabindex="-1"></a><span class="co"># write it to a file with the same name as on the server (1EMA.pdb)</span></span>
+<span id="cb291-9"><a href="remote.html#cb291-9" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-O</span> https://files.rcsb.org/download/1EMA.pdb</span>
+<span id="cb291-10"><a href="remote.html#cb291-10" tabindex="-1"></a></span>
+<span id="cb291-11"><a href="remote.html#cb291-11" tabindex="-1"></a><span class="co"># download several files at once (the braces work in curl itself; keep the quotes)</span></span>
+<span id="cb291-12"><a href="remote.html#cb291-12" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-O</span> <span class="st">&quot;https://files.rcsb.org/download/{1EMA,1GFL,1G7K}.pdb&quot;</span></span></code></pre></div>
+<div class="warning">
+<p><strong>Use <code>-L</code> when files have moved.</strong> Websites reorganize. When a file has
+moved, the server sends back a “redirect” pointing to the new location, and
+<code>curl</code> stops there unless you add <code>-L</code>. You’ll end up with an empty or tiny
+file instead of your data. If a download is suspiciously small, check it with
+<code>less</code>, and add <code>-L</code>.</p>
+</div>
+</div>
+<div id="wget" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> <code>wget</code><a href="remote.html#wget" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>wget</code> is another tool for downloading files, especially good at downloading
+many files from a site at once. It’s installed on most Linux systems,
+including the cluster. It isn’t installed on macOS by default; you can get it
+with <a href="https://brew.sh/">Homebrew</a> (<code>brew install wget</code>).</p>
+<p>Unlike <code>curl</code>, <code>wget</code> saves files with their original names by default.</p>
+<table>
+<colgroup>
+<col width="29%" />
+<col width="70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-A</code>, <code>--accept</code></td>
+<td>only download files matching this pattern</td>
+</tr>
+<tr class="even">
+<td><code>-R</code>, <code>--reject</code></td>
+<td>don’t download files matching this pattern</td>
+</tr>
+<tr class="odd">
+<td><code>-r</code>, <code>--recursive</code></td>
+<td>download recursively (warning: very aggressive)</td>
+</tr>
+<tr class="even">
+<td><code>--no-parent</code></td>
+<td>don’t climb up into parent directories when recursing</td>
+</tr>
+<tr class="odd">
+<td><code>-c</code>, <code>--continue</code></td>
+<td>resume an interrupted download</td>
+</tr>
+<tr class="even">
+<td><code>--user=username</code></td>
+<td>username for password-protected sites</td>
+</tr>
+<tr class="odd">
+<td><code>--ask-password</code></td>
+<td>prompt for the password</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb292"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb292-1"><a href="remote.html#cb292-1" tabindex="-1"></a><span class="co"># download human chromosome 22 from the UCSC Genome Browser</span></span>
+<span id="cb292-2"><a href="remote.html#cb292-2" tabindex="-1"></a><span class="fu">wget</span> https://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr22.fa.gz</span>
+<span id="cb292-3"><a href="remote.html#cb292-3" tabindex="-1"></a></span>
+<span id="cb292-4"><a href="remote.html#cb292-4" tabindex="-1"></a><span class="co"># download all the GFF files from a colleague&#39;s server</span></span>
+<span id="cb292-5"><a href="remote.html#cb292-5" tabindex="-1"></a><span class="fu">wget</span> <span class="at">--accept</span> <span class="st">&quot;*.gff&quot;</span> <span class="at">--level</span> 2 <span class="at">-r</span> <span class="at">--no-directories</span> <span class="at">--no-parent</span> <span class="dt">\</span></span>
+<span id="cb292-6"><a href="remote.html#cb292-6" tabindex="-1"></a>    ftp://server.university.edu/labsite/annotations/</span>
+<span id="cb292-7"><a href="remote.html#cb292-7" tabindex="-1"></a></span>
+<span id="cb292-8"><a href="remote.html#cb292-8" tabindex="-1"></a><span class="co"># download from a password-protected FTP site (a sequencing center, for example)</span></span>
+<span id="cb292-9"><a href="remote.html#cb292-9" tabindex="-1"></a><span class="fu">wget</span> <span class="at">--recursive</span> <span class="at">--user</span><span class="op">=</span>username <span class="at">--ask-password</span> ftp://192.169.8.66/CleanData</span></code></pre></div>
+<p>(A <code>\</code> at the very end of a line continues the command on the next line.)</p>
+<div class="warning">
+<p><strong>Keep passwords out of your commands.</strong> You may see instructions that put a
+password right in the URL (<code>ftp://username:password@server/...</code>). It works,
+but the password is saved in your shell history, where anyone with access to
+your account can read it. Use <code>--ask-password</code> instead.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-29" class="exercise"><strong>Exercise 4.3  </strong></span></p>
+<ol style="list-style-type: decimal">
+<li>Use <code>curl</code> to download the structure of green fluorescent protein (PDB ID
+<code>1EMA</code>) and save it as <code>gfp.pdb</code>.</li>
+<li>The atomic coordinates are on lines that start with <code>ATOM</code>. How many atoms
+are in the structure?</li>
+<li>Column 4 of the <code>ATOM</code> lines is the amino acid. How many <em>different</em> amino
+acids are there? (Hint: <code>awk '$1 == "ATOM" { print $4 }'</code>, then <code>sort</code> and
+<code>uniq</code>.)</li>
+<li>Try <code>curl -O http://www.rcsb.org/pdb/files/1ema.pdb</code>, an old address for the
+same file. What did you get? Fix it.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="compression" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Compressing data<a href="remote.html#compression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Compress big files before moving them. Sequence data compress well, often to a
+quarter of their original size, which means faster transfers and less storage.</p>
+<div id="gzip-and-gunzip" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> <code>gzip</code> and <code>gunzip</code><a href="remote.html#gzip-and-gunzip" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>gzip</code> compresses files, and <code>gunzip</code> decompresses them. Compressed files end
+in <code>.gz</code>.</p>
+<ul>
+<li>By default, <code>gzip</code> and <code>gunzip</code> work <strong>in place</strong>: <code>gzip file</code> replaces
+<code>file</code> with <code>file.gz</code>, and <code>gunzip file.gz</code> replaces <code>file.gz</code> with <code>file</code>.
+No new copy is created.</li>
+<li><code>gzip</code> can also compress STDIN, writing the result to STDOUT, so it works at
+the end of a pipe.</li>
+</ul>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="90%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-c</code></td>
+<td>write to STDOUT and leave the original alone (useful for making copies)</td>
+</tr>
+<tr class="even">
+<td><code>-d</code></td>
+<td>decompress (the same as <code>gunzip</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>-k</code></td>
+<td>keep the original file instead of replacing it</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb293"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb293-1"><a href="remote.html#cb293-1" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> watermelon.fsa</span>
+<span id="cb293-2"><a href="remote.html#cb293-2" tabindex="-1"></a><span class="fu">gzip</span> watermelon.fsa       <span class="co"># compress (watermelon.fsa is replaced)</span></span>
+<span id="cb293-3"><a href="remote.html#cb293-3" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> watermelon.fsa<span class="pp">*</span></span></code></pre></div>
+<pre><code>-rw-------  1 aja  staff   371K Nov  2 18:15 watermelon.fsa
+-rw-------  1 aja  staff   108K Nov  2 18:15 watermelon.fsa.gz</code></pre>
+<div class="sourceCode" id="cb295"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb295-1"><a href="remote.html#cb295-1" tabindex="-1"></a><span class="fu">gunzip</span> watermelon.fsa.gz  <span class="co"># decompress (watermelon.fsa.gz is replaced)</span></span>
+<span id="cb295-2"><a href="remote.html#cb295-2" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> watermelon.fsa<span class="pp">*</span></span></code></pre></div>
+<pre><code>-rw-------  1 aja  staff   371K Nov  2 18:15 watermelon.fsa</code></pre>
+<div class="sourceCode" id="cb297"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb297-1"><a href="remote.html#cb297-1" tabindex="-1"></a><span class="fu">gzip</span> <span class="at">-c</span> watermelon.fsa <span class="op">&gt;</span> wat.fsa.gz     <span class="co"># make a compressed copy; keep the original</span></span>
+<span id="cb297-2"><a href="remote.html#cb297-2" tabindex="-1"></a><span class="fu">gzip</span> <span class="at">-d</span> wat.fsa.gz                      <span class="co"># decompress, same as gunzip</span></span>
+<span id="cb297-3"><a href="remote.html#cb297-3" tabindex="-1"></a><span class="ex">my_program.py</span> reads.fa <span class="kw">|</span> <span class="fu">gzip</span> <span class="op">&gt;</span> out.fa.gz   <span class="co"># compress a program&#39;s output on the fly</span></span></code></pre></div>
+</div>
+<div id="working-with-compressed-files" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Working with compressed files<a href="remote.html#working-with-compressed-files" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You often don’t need to decompress a file to work with it:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Like</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>zcat</code></td>
+<td><code>cat</code></td>
+<td>print a compressed file</td>
+</tr>
+<tr class="even">
+<td><code>zless</code></td>
+<td><code>less</code></td>
+<td>page through a compressed file</td>
+</tr>
+<tr class="odd">
+<td><code>zgrep</code></td>
+<td><code>grep</code></td>
+<td>search a compressed file</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb298"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb298-1"><a href="remote.html#cb298-1" tabindex="-1"></a><span class="fu">gzip</span> <span class="at">-k</span> watermelon.fsa</span>
+<span id="cb298-2"><a href="remote.html#cb298-2" tabindex="-1"></a><span class="fu">zgrep</span> <span class="at">-o</span> GAATTC watermelon.fsa.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span>   <span class="co"># how many EcoRI sites in the genome?</span></span></code></pre></div>
+<pre><code>     168</code></pre>
+<div class="warning">
+<p><strong>On a Mac, use <code>gzcat</code>, not <code>zcat</code>.</strong> For historical reasons, macOS’s <code>zcat</code>
+only works on an old compression format (<code>.Z</code> files) and fails on <code>.gz</code> files
+with a confusing error. Use <code>gzcat</code> on a Mac, and <code>zcat</code> on Linux and the
+cluster. <code>gunzip -c</code> works everywhere.</p>
+</div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb300-1"><a href="remote.html#cb300-1" tabindex="-1"></a><span class="ex">gzcat</span> watermelon.fsa.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 2 <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-c</span> 1-60    <span class="co"># zcat on Linux</span></span></code></pre></div>
+<pre><code>&gt;watermelon [organism=Citrullus lanatus] [common=watermelon]
+ACGACAAATCCGGTCCGATGGCTGTTCTCCACTAACCACAAGGATATAGGGACTCTATAT</code></pre>
+</div>
+<div id="tar" class="section level3 hasAnchor" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> <code>tar</code>: archiving directories<a href="remote.html#tar" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>gzip</code> compresses single files. To bundle a whole directory into one file,
+use <code>tar</code> (originally for <strong>t</strong>ape <strong>ar</strong>chives). <code>tar</code> preserves the
+directory structure, and with <code>-z</code> it compresses the archive with <code>gzip</code>. The
+result is a “tarball,” ending in <code>.tar.gz</code> or <code>.tgz</code>, like the <code>files.tgz</code>
+you downloaded for this course.</p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-c</code></td>
+<td><strong>c</strong>reate an archive</td>
+</tr>
+<tr class="even">
+<td><code>-x</code></td>
+<td>e<strong>x</strong>tract an archive</td>
+</tr>
+<tr class="odd">
+<td><code>-t</code></td>
+<td>lis<strong>t</strong> the contents of an archive</td>
+</tr>
+<tr class="even">
+<td><code>-z</code></td>
+<td>compress or decompress with g<strong>z</strong>ip</td>
+</tr>
+<tr class="odd">
+<td><code>-v</code></td>
+<td><strong>v</strong>erbose: list each file as it’s processed</td>
+</tr>
+<tr class="even">
+<td><code>-f name</code></td>
+<td>the archive <strong>f</strong>ile to create or read</td>
+</tr>
+</tbody>
+</table>
+<p>The trickiest part is that <code>-f</code> must be followed by the name of the archive.
+Put it last in the group of options, and you’ll get it right: <code>-czf</code>, <code>-xzf</code>,
+<code>-tzf</code>. To remember the first letter: <strong>c</strong>reate, e<strong>x</strong>tract, lis<strong>t</strong>.</p>
+<div class="sourceCode" id="cb302"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb302-1"><a href="remote.html#cb302-1" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-czf</span> genomes.tgz mt_genomes/          <span class="co"># create a compressed archive of mt_genomes</span></span>
+<span id="cb302-2"><a href="remote.html#cb302-2" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> genomes.tgz</span>
+<span id="cb302-3"><a href="remote.html#cb302-3" tabindex="-1"></a><span class="fu">du</span> <span class="at">-sh</span> mt_genomes</span></code></pre></div>
+<pre><code>-rw-r--r--  1 aja  staff   3.3M Nov  2 18:15 genomes.tgz
+ 11M    mt_genomes</code></pre>
+<div class="sourceCode" id="cb304"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb304-1"><a href="remote.html#cb304-1" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-tzf</span> genomes.tgz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 4          <span class="co"># list what&#39;s inside, without extracting</span></span></code></pre></div>
+<pre><code>mt_genomes/
+mt_genomes/nicotiana_tabacum.fasta
+mt_genomes/cycas_taitungensis.fasta
+mt_genomes/zea_mays_parviglumis.fasta</code></pre>
+<div class="sourceCode" id="cb306"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb306-1"><a href="remote.html#cb306-1" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzf</span> genomes.tgz                      <span class="co"># extract everything</span></span>
+<span id="cb306-2"><a href="remote.html#cb306-2" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzvf</span> genomes.tgz                     <span class="co"># ...and list each file as it&#39;s extracted</span></span></code></pre></div>
+<p>To extract a single file, give its path <em>exactly as it appears in the
+archive</em> (use <code>tar -tzf</code> to check):</p>
+<div class="sourceCode" id="cb307"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb307-1"><a href="remote.html#cb307-1" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> extracted <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> extracted</span>
+<span id="cb307-2"><a href="remote.html#cb307-2" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzf</span> ../genomes.tgz mt_genomes/ricinus.fasta</span>
+<span id="cb307-3"><a href="remote.html#cb307-3" tabindex="-1"></a><span class="fu">find</span> .</span></code></pre></div>
+<pre><code>.
+./mt_genomes
+./mt_genomes/ricinus.fasta</code></pre>
+<div class="warning">
+<p><strong><code>tar -c</code> overwrites.</strong> Like <code>&gt;</code>, creating an archive overwrites any existing
+file with the same name, without asking. And watch the order of the arguments:
+<code>tar -czf mt_genomes/ genomes.tgz</code> is wrong, and will try to create an archive
+named <code>mt_genomes/</code>.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-30" class="exercise"><strong>Exercise 4.4  </strong></span></p>
+<ol style="list-style-type: decimal">
+<li>Compress a copy of <code>watermelon.gbf</code> with <code>gzip -k</code>. How much smaller is the
+compressed file?</li>
+<li>Without decompressing it, count the lines in the compressed file.</li>
+<li>Make a single file of all the sequences in <code>watermelon_genome/nt</code>, compress
+it, and copy it to a new directory, <code>$HOME/mt_seqs</code>, on the cluster.</li>
+<li>Archive and compress the whole <code>watermelon_genome/aa</code> directory into
+<code>aa.tgz</code>. List its contents. Then, in a new empty directory, extract only
+<code>cox1.fasta</code> from it.</li>
+<li>Copy <code>aa.tgz</code> to the cluster, log on, and extract it there.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="checksums" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Verifying data integrity<a href="remote.html#checksums" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Downloads of large files (raw sequence data, for example) can take hours, and
+network connections can drop out partway through, leaving you with partial or
+corrupted data that may look perfectly normal. You need a way to verify that
+your copy is identical to the original.</p>
+<p>The solution is a <strong>checksum</strong>: a short “fingerprint” calculated from every
+byte of a file.</p>
+<ul>
+<li>Checksum algorithms are <em>deterministic</em>: the same data always give the same
+checksum.</li>
+<li>Changing even a single byte gives a completely different checksum.</li>
+<li>Checksums are written in hexadecimal (the digits 0–9 and letters a–f).</li>
+<li><strong>MD5</strong> checksums are 32 characters long. <strong>SHA-1</strong> checksums are 40
+characters, and <strong>SHA-256</strong> checksums are 64. MD5 is the most common for
+checking data transfers; SHA-256 is preferred when security matters.</li>
+</ul>
+<p>The process:</p>
+<ol style="list-style-type: decimal">
+<li>Whoever provides the data calculates checksums for the original files and
+stores them in a text file.</li>
+<li>You download the data <em>and</em> the checksum file.</li>
+<li>You calculate checksums for your downloaded copies.</li>
+<li>You compare the two sets of values. Any difference means a file is
+corrupted, so download it again.</li>
+</ol>
+<div id="md5sum" class="section level3 hasAnchor" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> <code>md5sum</code><a href="remote.html#md5sum" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>md5sum</code> calculates MD5 checksums. Each line of output has the checksum, then
+the file name:</p>
+<div class="sourceCode" id="cb309"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb309-1"><a href="remote.html#cb309-1" tabindex="-1"></a><span class="fu">md5sum</span> cowboy_carter.txt</span></code></pre></div>
+<pre><code>18fbb44d29fe657a1ce63b5f78b2675c  cowboy_carter.txt</code></pre>
+<p>The course files include <code>cowboy_carter.md5sum</code>, a checksum file of the kind
+that a sequencing center would give you:</p>
+<div class="sourceCode" id="cb311"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb311-1"><a href="remote.html#cb311-1" tabindex="-1"></a><span class="fu">cat</span> cowboy_carter.md5sum</span></code></pre></div>
+<pre><code>18fbb44d29fe657a1ce63b5f78b2675c  cowboy_carter.txt</code></pre>
+<p>The checksums match, so the file is intact. Rather than comparing long
+strings by eye, let <code>md5sum -c</code> (<strong>c</strong>heck) do it. It reads the checksum file,
+recalculates each file’s checksum, and reports <code>OK</code> or <code>FAILED</code>:</p>
+<div class="sourceCode" id="cb313"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb313-1"><a href="remote.html#cb313-1" tabindex="-1"></a><span class="fu">md5sum</span> <span class="at">-c</span> cowboy_carter.md5sum</span></code></pre></div>
+<pre><code>cowboy_carter.txt: OK</code></pre>
+<p>You can also save your own checksums and compare the two files with <code>diff</code>
+(Section <a href="unix.html#diff">1.10.7</a>). No output means they’re identical:</p>
+<div class="sourceCode" id="cb315"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb315-1"><a href="remote.html#cb315-1" tabindex="-1"></a><span class="fu">md5sum</span> cowboy_carter.txt <span class="op">&gt;</span> my_checksums.md5sum</span>
+<span id="cb315-2"><a href="remote.html#cb315-2" tabindex="-1"></a><span class="fu">diff</span> my_checksums.md5sum cowboy_carter.md5sum</span></code></pre></div>
+<p>Here’s what happens when a file changes by a single character:</p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb316-1"><a href="remote.html#cb316-1" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i.bak</span> <span class="st">&#39;s/PROTECTOR/PROTECTER/&#39;</span> cowboy_carter.txt</span>
+<span id="cb316-2"><a href="remote.html#cb316-2" tabindex="-1"></a><span class="fu">md5sum</span> <span class="at">-c</span> cowboy_carter.md5sum</span></code></pre></div>
+<pre><code>md5sum: WARNING: 1 computed checksum did NOT match
+cowboy_carter.txt: FAILED</code></pre>
+<div class="note">
+<p><strong>Checksums on a Mac.</strong> Recent versions of macOS include <code>md5sum</code>. On older
+versions, use <code>md5 -r</code>, which prints the same format. For SHA checksums, use
+<code>shasum -a 256 file</code> on a Mac and <code>sha256sum file</code> on Linux. Both accept
+<code>-c</code>.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-31" class="exercise"><strong>Exercise 4.5  </strong></span></p>
+<ol style="list-style-type: decimal">
+<li>Calculate the MD5 checksum of <code>watermelon.fsa</code>. Compress it with <code>gzip -k</code>
+and calculate the checksum of <code>watermelon.fsa.gz</code>. Are they the same? Why
+not?</li>
+<li>Calculate MD5 checksums for every file in <code>watermelon_genome/nt</code> and save
+them to <code>nt.md5sum</code> (one command).</li>
+<li>Copy <code>nt</code> and <code>nt.md5sum</code> to the cluster with <code>scp -r</code>. On the cluster, use
+<code>md5sum -c</code> to verify that every file arrived intact.</li>
+<li>Make a copy of <code>nt</code> on your own computer, change one letter in one of the
+files, and show that <code>md5sum -c</code> catches it.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="slurm" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Running jobs on the cluster<a href="remote.html#slurm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To run an analysis on the cluster, you don’t run it directly. You describe it
+in a <strong>job script</strong> and submit the script to a <strong>job scheduler</strong>, which puts
+it in a queue and runs it on the compute nodes when the resources you asked
+for become available.</p>
+<p>There are different scheduling systems. Older clusters often use TORQUE/PBS;
+AHPCC uses <strong>SLURM</strong>. The ideas are the same in all of them.</p>
+<p>The process:</p>
+<ol style="list-style-type: decimal">
+<li>Get all your data in place on the cluster (Section <a href="remote.html#ahpcc-files">4.1.1</a>).</li>
+<li>Write a job script that includes:
+<ul>
+<li>all the information the scheduler needs to run your job (how many
+processors, for how long, and so on);</li>
+<li>all the commands you want to run, exactly as you would type them on the
+command line.</li>
+</ul></li>
+<li>Submit your job script to the queue.</li>
+</ol>
+<div id="anatomy-of-a-slurm-script" class="section level3 hasAnchor" number="4.6.1">
+<h3><span class="header-section-number">4.6.1</span> Anatomy of a SLURM script<a href="remote.html#anatomy-of-a-slurm-script" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A SLURM job script is a Bash script (Section <a href="unix.html#bash-scripts">1.15</a>) with some
+extra lines at the top. Lines starting with <code>#SBATCH</code> are instructions for the
+scheduler. Bash treats them as comments, but SLURM reads them.</p>
+<div class="sourceCode" id="cb318"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb318-1"><a href="remote.html#cb318-1" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb318-2"><a href="remote.html#cb318-2" tabindex="-1"></a><span class="co">#SBATCH --job-name=atp9.blast</span></span>
+<span id="cb318-3"><a href="remote.html#cb318-3" tabindex="-1"></a><span class="co">#SBATCH --partition comp72</span></span>
+<span id="cb318-4"><a href="remote.html#cb318-4" tabindex="-1"></a><span class="co">#SBATCH --qos comp</span></span>
+<span id="cb318-5"><a href="remote.html#cb318-5" tabindex="-1"></a><span class="co">#SBATCH --nodes=1</span></span>
+<span id="cb318-6"><a href="remote.html#cb318-6" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=32</span></span>
+<span id="cb318-7"><a href="remote.html#cb318-7" tabindex="-1"></a><span class="co">#SBATCH --time=72:00:00</span></span>
+<span id="cb318-8"><a href="remote.html#cb318-8" tabindex="-1"></a><span class="co">#SBATCH -o %j.out</span></span>
+<span id="cb318-9"><a href="remote.html#cb318-9" tabindex="-1"></a><span class="co">#SBATCH -e %j.err</span></span>
+<span id="cb318-10"><a href="remote.html#cb318-10" tabindex="-1"></a><span class="co">#SBATCH --mail-type=ALL</span></span>
+<span id="cb318-11"><a href="remote.html#cb318-11" tabindex="-1"></a><span class="co">#SBATCH --mail-user=username@uark.edu</span></span>
+<span id="cb318-12"><a href="remote.html#cb318-12" tabindex="-1"></a></span>
+<span id="cb318-13"><a href="remote.html#cb318-13" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$SLURM_SUBMIT_DIR</span></span>
+<span id="cb318-14"><a href="remote.html#cb318-14" tabindex="-1"></a></span>
+<span id="cb318-15"><a href="remote.html#cb318-15" tabindex="-1"></a><span class="co"># job commands here</span></span>
+<span id="cb318-16"><a href="remote.html#cb318-16" tabindex="-1"></a><span class="ex">command1</span></span>
+<span id="cb318-17"><a href="remote.html#cb318-17" tabindex="-1"></a><span class="ex">command2</span></span></code></pre></div>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="69%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Line</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>#!/bin/bash</code></td>
+<td>the shebang: this is a Bash script</td>
+</tr>
+<tr class="even">
+<td><code>--job-name=atp9.blast</code></td>
+<td>a name for your job, so you can recognize it in the queue</td>
+</tr>
+<tr class="odd">
+<td><code>--partition comp72</code></td>
+<td>which queue (partition) to run in</td>
+</tr>
+<tr class="even">
+<td><code>--qos comp</code></td>
+<td>the quality of service, which goes with the partition</td>
+</tr>
+<tr class="odd">
+<td><code>--nodes=1</code></td>
+<td>how many compute nodes</td>
+</tr>
+<tr class="even">
+<td><code>--cpus-per-task=32</code></td>
+<td>how many processor cores. Take only what you need.</td>
+</tr>
+<tr class="odd">
+<td><code>--time=72:00:00</code></td>
+<td>the maximum wall time (hours:minutes:seconds); the job is killed after this</td>
+</tr>
+<tr class="even">
+<td><code>-o %j.out</code>, <code>-e %j.err</code></td>
+<td>files for STDOUT and STDERR; any names you want (<code>%j</code> is the job ID number)</td>
+</tr>
+<tr class="odd">
+<td><code>--mail-type=ALL</code></td>
+<td>email you when the job starts, ends, or fails</td>
+</tr>
+<tr class="even">
+<td><code>--mail-user=...</code></td>
+<td>where to send the email</td>
+</tr>
+<tr class="odd">
+<td><code>cd $SLURM_SUBMIT_DIR</code></td>
+<td>move into the directory you submitted the job from</td>
+</tr>
+<tr class="even">
+<td><code>command1</code>, …</td>
+<td>the commands to run</td>
+</tr>
+</tbody>
+</table>
+<p><code>files/other_files/slurm-template.slurm</code> in the course files is a template to
+start from. Ask what partitions are available with <code>sinfo</code> (below), and check
+the <a href="https://hpc.uark.edu/">AHPCC documentation</a> for which to use.</p>
+<div class="note">
+<p><strong>Why <code>cd $SLURM_SUBMIT_DIR</code>?</strong> SLURM sets the variable <code>$SLURM_SUBMIT_DIR</code>
+to the directory you ran <code>sbatch</code> from. SLURM starts jobs in that directory
+anyway, but other schedulers (like PBS) start them in your home directory, and
+your script may <code>cd</code> somewhere else along the way. This line makes it explicit
+where the job runs, so the script behaves the same everywhere.</p>
+</div>
+</div>
+<div id="scratch" class="section level3 hasAnchor" number="4.6.2">
+<h3><span class="header-section-number">4.6.2</span> Using the scratch disk<a href="remote.html#scratch" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For jobs that read and write lots of data, run them on the fast <strong>scratch
+disk</strong> of the compute node, then copy the results back. SLURM creates a
+directory for each job at <code>/scratch/$SLURM_JOB_ID</code>. Put something like this
+in the commands part of your script:</p>
+<div class="sourceCode" id="cb319"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb319-1"><a href="remote.html#cb319-1" tabindex="-1"></a><span class="co"># copy input files to the scratch disk</span></span>
+<span id="cb319-2"><a href="remote.html#cb319-2" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-arl</span> <span class="pp">*</span> /scratch/<span class="va">$SLURM_JOB_ID</span>/</span>
+<span id="cb319-3"><a href="remote.html#cb319-3" tabindex="-1"></a></span>
+<span id="cb319-4"><a href="remote.html#cb319-4" tabindex="-1"></a><span class="co"># cd into the scratch folder to run the job</span></span>
+<span id="cb319-5"><a href="remote.html#cb319-5" tabindex="-1"></a><span class="bu">cd</span> /scratch/<span class="va">$SLURM_JOB_ID</span></span>
+<span id="cb319-6"><a href="remote.html#cb319-6" tabindex="-1"></a></span>
+<span id="cb319-7"><a href="remote.html#cb319-7" tabindex="-1"></a><span class="co"># run the job</span></span>
+<span id="cb319-8"><a href="remote.html#cb319-8" tabindex="-1"></a><span class="ex">command1</span></span>
+<span id="cb319-9"><a href="remote.html#cb319-9" tabindex="-1"></a><span class="ex">command2</span></span>
+<span id="cb319-10"><a href="remote.html#cb319-10" tabindex="-1"></a></span>
+<span id="cb319-11"><a href="remote.html#cb319-11" tabindex="-1"></a><span class="co"># copy the output files back to the original folder when the job has finished</span></span>
+<span id="cb319-12"><a href="remote.html#cb319-12" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-arl</span> /scratch/<span class="va">$SLURM_JOB_ID</span>/<span class="pp">*</span> <span class="va">$SLURM_SUBMIT_DIR</span>/</span></code></pre></div>
+</div>
+<div id="submitting-and-checking-jobs" class="section level3 hasAnchor" number="4.6.3">
+<h3><span class="header-section-number">4.6.3</span> Submitting and checking jobs<a href="remote.html#submitting-and-checking-jobs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<colgroup>
+<col width="46%" />
+<col width="53%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sinfo -l</code></td>
+<td>list the partitions (queues) on the cluster</td>
+</tr>
+<tr class="even">
+<td><code>sbatch job_script.slurm</code></td>
+<td>submit a job; prints the job ID</td>
+</tr>
+<tr class="odd">
+<td><code>squeue -l -u username</code></td>
+<td>check the status of your jobs</td>
+</tr>
+<tr class="even">
+<td><code>squeue --start -j jobID</code></td>
+<td>when will my job start?</td>
+</tr>
+<tr class="odd">
+<td><code>scancel jobID</code></td>
+<td>cancel (kill) a job</td>
+</tr>
+<tr class="even">
+<td><code>scancel -u username</code></td>
+<td>cancel all your jobs</td>
+</tr>
+<tr class="odd">
+<td><code>scancel -t PENDING -u username</code></td>
+<td>cancel all your jobs that haven’t started</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="software-modules" class="section level3 hasAnchor" number="4.6.4">
+<h3><span class="header-section-number">4.6.4</span> Software modules<a href="remote.html#software-modules" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The cluster has hundreds of programs installed, many in several versions. To
+keep them from conflicting, they’re packaged as <strong>modules</strong> that you load when
+you need them, either at the command line or in your job script:</p>
+<div class="sourceCode" id="cb320"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb320-1"><a href="remote.html#cb320-1" tabindex="-1"></a><span class="ex">module</span> avail               <span class="co"># what modules are available?</span></span>
+<span id="cb320-2"><a href="remote.html#cb320-2" tabindex="-1"></a><span class="ex">module</span> avail blast         <span class="co"># ...matching &quot;blast&quot;</span></span>
+<span id="cb320-3"><a href="remote.html#cb320-3" tabindex="-1"></a><span class="ex">module</span> load blast          <span class="co"># load a module</span></span>
+<span id="cb320-4"><a href="remote.html#cb320-4" tabindex="-1"></a><span class="ex">module</span> list                <span class="co"># what modules do I have loaded?</span></span>
+<span id="cb320-5"><a href="remote.html#cb320-5" tabindex="-1"></a><span class="ex">module</span> purge               <span class="co"># unload all modules</span></span></code></pre></div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-32" class="exercise"><strong>Exercise 4.6  </strong></span></p>
+<ol style="list-style-type: decimal">
+<li>Log onto the cluster and use <code>sinfo</code> to see what partitions are available.
+Use <code>module avail blast</code> to find the BLAST module.</li>
+<li>Copy <code>files/other_files/slurm-template.slurm</code> and the <code>files/data</code> folder to
+the cluster. Edit the template with <code>nano</code> so that it runs in the <code>data</code>
+directory and prints <code>letters.txt</code> to STDOUT. Submit it with <code>sbatch</code>, and
+check on it with <code>squeue</code>.</li>
+<li>When the job finishes, look at its <code>.out</code> and <code>.err</code> files. What’s in each?</li>
+<li>Write a SLURM script that BLASTs the watermelon <em>atp9</em> gene
+(<code>nt/atp9.fasta</code>) against the watermelon genome (<code>watermelon.fsa</code>). You’ll
+need <code>makeblastdb -in watermelon.fsa -dbtype nucl</code> to build a BLAST
+database first, then <code>blastn -query nt/atp9.fasta -db watermelon.fsa</code>.
+Write the output to <code>atp9.vs.watermelon.blastn</code>.</li>
+<li>Modify your script from question 4 so that it runs on the scratch disk.</li>
+<li>Submit a job, then cancel it with <code>scancel</code> before it finishes.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="ssh-keys" class="section level2 hasAnchor" number="4.7">
+<h2><span class="header-section-number">4.7</span> Authentication with SSH keys<a href="remote.html#ssh-keys" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Typing your password every time you use <code>ssh</code>, <code>scp</code>, or <code>rsync</code> gets old.
+<strong>SSH keys</strong> are a safe and easy alternative: you create a matched pair of
+keys on your computer, a <strong>private key</strong> that never leaves your computer and a
+<strong>public key</strong> that you put on any computer you want to log onto. When you
+connect, <code>ssh</code> uses the pair to prove that you are who you say you are,
+without sending a password.</p>
+<p>You’ll also need SSH keys (or something similar) to push your work to GitHub,
+later in the course.</p>
+<div class="note">
+<p><strong>Do this on your own.</strong> Setting up keys is straightforward, but every
+computer is a little different. Work through it outside of class, and ask if
+you get stuck.</p>
+</div>
+<div id="check-for-existing-keys" class="section level3 unnumbered hasAnchor">
+<h3>1. Check for existing keys<a href="remote.html#check-for-existing-keys" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>On your <strong>own computer</strong>, look in the hidden <code>.ssh</code> directory in your home
+directory:</p>
+<div class="sourceCode" id="cb321"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb321-1"><a href="remote.html#cb321-1" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> ~/.ssh</span></code></pre></div>
+<p>If you see a pair of files like <code>id_ed25519</code> and <code>id_ed25519.pub</code> (or
+<code>id_rsa</code> and <code>id_rsa.pub</code>), you already have keys. Skip to step 3.</p>
+</div>
+<div id="create-a-key-pair" class="section level3 unnumbered hasAnchor">
+<h3>2. Create a key pair<a href="remote.html#create-a-key-pair" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb322"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb322-1"><a href="remote.html#cb322-1" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519</span></code></pre></div>
+<ul>
+<li><code>-t ed25519</code> sets the <strong>t</strong>ype of key. Ed25519 is the current recommended
+type: it’s short, fast, and secure. (Older instructions use
+<code>ssh-keygen -t rsa -b 2048</code>. RSA keys still work, but if you make one, use
+at least <code>-b 4096</code> bits.)</li>
+<li>When asked where to save the key, press <kbd>Return</kbd> to accept the
+default.</li>
+<li>When asked for a passphrase, you can press <kbd>Return</kbd> for no
+passphrase, or enter one for extra security (step 5 shows how to avoid
+typing it every time).</li>
+</ul>
+<p>This creates two files in <code>~/.ssh</code>:</p>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="80%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>id_ed25519</code></td>
+<td>your <strong>private</strong> key. Never share it, copy it to another computer, or email it.</td>
+</tr>
+<tr class="even">
+<td><code>id_ed25519.pub</code></td>
+<td>your <strong>public</strong> key. Safe to share; this is what goes on remote computers.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="copy-your-public-key-to-the-remote-computer" class="section level3 unnumbered hasAnchor">
+<h3>3. Copy your public key to the remote computer<a href="remote.html#copy-your-public-key-to-the-remote-computer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The easiest way is <code>ssh-copy-id</code>, which comes with macOS and Linux:</p>
+<div class="sourceCode" id="cb323"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb323-1"><a href="remote.html#cb323-1" tabindex="-1"></a><span class="ex">ssh-copy-id</span> username@hpc-portal2.hpc.uark.edu</span></code></pre></div>
+<p>Enter your password one last time. <code>ssh-copy-id</code> appends your public key to the
+file <code>~/.ssh/authorized_keys</code> on the remote computer and sets its permissions
+correctly.</p>
+<p>If <code>ssh-copy-id</code> isn’t available, do the same thing by hand:</p>
+<ol style="list-style-type: decimal">
+<li>On your computer, print your public key and copy the whole line:
+<code>cat ~/.ssh/id_ed25519.pub</code></li>
+<li>Log onto the remote computer: <code>ssh username@hpc-portal2.hpc.uark.edu</code></li>
+<li>Make sure the <code>.ssh</code> directory exists: <code>mkdir -p ~/.ssh</code></li>
+<li>Paste your public key onto the end of <code>authorized_keys</code>, as one line:
+<code>nano ~/.ssh/authorized_keys</code></li>
+<li>Set the permissions (step 4, below), then <code>exit</code>.</li>
+</ol>
+</div>
+<div id="check-permissions" class="section level3 unnumbered hasAnchor">
+<h3>4. Check permissions<a href="remote.html#check-permissions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>ssh</code> refuses to use keys if other people could change them. If you’re still
+asked for a password, set the permissions on the <strong>remote computer</strong> so that
+only you can read and write these files:</p>
+<div class="sourceCode" id="cb324"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb324-1"><a href="remote.html#cb324-1" tabindex="-1"></a><span class="fu">chmod</span> 700 ~/.ssh                    <span class="co"># only you can enter the directory</span></span>
+<span id="cb324-2"><a href="remote.html#cb324-2" tabindex="-1"></a><span class="fu">chmod</span> 600 ~/.ssh/authorized_keys    <span class="co"># only you can read or write the file</span></span></code></pre></div>
+<p>These use the numeric form of <code>chmod</code>: <code>7</code> means read + write + execute, <code>6</code>
+means read + write, and <code>0</code> means nothing, for the user, group, and others, in
+that order. (On your own computer, the private key should also be <code>600</code>.)</p>
+</div>
+<div id="log-on" class="section level3 unnumbered hasAnchor">
+<h3>5. Log on<a href="remote.html#log-on" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb325"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb325-1"><a href="remote.html#cb325-1" tabindex="-1"></a><span class="fu">ssh</span> username@hpc-portal2.hpc.uark.edu</span></code></pre></div>
+<p>You should be logged in without a password. If you set a passphrase on your
+key, you’ll be asked for it instead. To avoid typing the passphrase every
+time, add the key to the <strong>SSH agent</strong>, which remembers it for you:</p>
+<div class="sourceCode" id="cb326"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb326-1"><a href="remote.html#cb326-1" tabindex="-1"></a><span class="bu">eval</span> <span class="st">&quot;</span><span class="va">$(</span><span class="fu">ssh-agent</span> <span class="at">-s</span><span class="va">)</span><span class="st">&quot;</span>                           <span class="co"># start the SSH agent</span></span>
+<span id="cb326-2"><a href="remote.html#cb326-2" tabindex="-1"></a><span class="fu">ssh-add</span> <span class="at">--apple-use-keychain</span> ~/.ssh/id_ed25519   <span class="co"># Mac: remember the passphrase in your Keychain</span></span>
+<span id="cb326-3"><a href="remote.html#cb326-3" tabindex="-1"></a><span class="fu">ssh-add</span> ~/.ssh/id_ed25519                        <span class="co"># Linux</span></span></code></pre></div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-33" class="exercise"><strong>Exercise 4.7  </strong></span></p>
+<ol style="list-style-type: decimal">
+<li>Set up SSH keys for the cluster, and log on without a password.</li>
+<li>Copy a file to the cluster with <code>scp</code>. Were you asked for a password?</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="remote-summary" class="section level2 hasAnchor" number="4.8">
+<h2><span class="header-section-number">4.8</span> Command summary<a href="remote.html#remote-summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="35%" />
+<col width="64%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ssh user@host</code></td>
+<td>log onto a remote computer</td>
+</tr>
+<tr class="even">
+<td><code>scp source user@host:dest</code></td>
+<td>copy a file to a remote computer (<code>-r</code> for directories)</td>
+</tr>
+<tr class="odd">
+<td><code>scp user@host:source dest</code></td>
+<td>copy a file from a remote computer</td>
+</tr>
+<tr class="even">
+<td><code>rsync -av source dest</code></td>
+<td>synchronize files and directories (<code>-z</code> to compress, <code>-n</code> for a dry run)</td>
+</tr>
+<tr class="odd">
+<td><code>curl -O url</code></td>
+<td>download a file, keeping its name (<code>-L</code> to follow redirects)</td>
+</tr>
+<tr class="even">
+<td><code>curl -o name url</code></td>
+<td>download a file to a name of your choosing</td>
+</tr>
+<tr class="odd">
+<td><code>wget url</code></td>
+<td>download a file</td>
+</tr>
+<tr class="even">
+<td><code>gzip</code>, <code>gunzip</code></td>
+<td>compress, decompress (<code>-k</code> to keep the original)</td>
+</tr>
+<tr class="odd">
+<td><code>zcat</code>/<code>gzcat</code>, <code>zless</code>, <code>zgrep</code></td>
+<td>print, page through, or search a compressed file</td>
+</tr>
+<tr class="even">
+<td><code>tar -czf archive.tgz dir/</code></td>
+<td>create a compressed archive of a directory</td>
+</tr>
+<tr class="odd">
+<td><code>tar -tzf archive.tgz</code></td>
+<td>list the contents of an archive</td>
+</tr>
+<tr class="even">
+<td><code>tar -xzf archive.tgz</code></td>
+<td>extract an archive</td>
+</tr>
+<tr class="odd">
+<td><code>md5sum file</code></td>
+<td>calculate a checksum</td>
+</tr>
+<tr class="even">
+<td><code>md5sum -c checksums.md5sum</code></td>
+<td>verify files against a list of checksums</td>
+</tr>
+<tr class="odd">
+<td><code>sinfo</code></td>
+<td>list the cluster’s partitions (queues)</td>
+</tr>
+<tr class="even">
+<td><code>sbatch script.slurm</code></td>
+<td>submit a job</td>
+</tr>
+<tr class="odd">
+<td><code>squeue -u user</code></td>
+<td>check on your jobs</td>
+</tr>
+<tr class="even">
+<td><code>scancel jobID</code></td>
+<td>cancel a job</td>
+</tr>
+<tr class="odd">
+<td><code>module avail</code>, <code>module load</code></td>
+<td>find and load installed software</td>
+</tr>
+<tr class="even">
+<td><code>ssh-keygen</code>, <code>ssh-copy-id</code></td>
+<td>create SSH keys; install your public key on a remote computer</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="project.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="git.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": null,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

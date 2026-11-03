@@ -1,0 +1,841 @@
+# Working remotely {#remote}
+
+::: {.goals}
+**In this chapter**
+
+- how to log onto a remote computer, such as the university's computing
+  cluster, with `ssh`
+- how to copy files between computers with `scp` and `rsync`
+- how to download data from the web with `curl` and `wget`
+- how to compress and archive files with `gzip` and `tar`
+- how to check that data arrived intact with checksums (`md5sum`)
+- how to write a job script and submit it to the SLURM job scheduler
+- how to set up SSH keys so you don't have to type your password every time
+:::
+
+Sooner or later, your data will be too big or your analyses too slow for your
+laptop. Then it's time to use a **high-performance computing (HPC) cluster**:
+a large collection of computers that many people share. At the University of
+Arkansas, that's the Arkansas High Performance Computing Center (AHPCC).
+
+Working on a cluster involves a few related tasks, which this chapter covers
+in order: logging on, copying files, retrieving data, compressing data,
+verifying data, preparing job scripts, and submitting jobs.
+
+```{r cluster, echo = FALSE, out.width = "100%", fig.cap = "How the pieces fit together. You log onto the cluster's login node from your own computer. From there, you submit jobs to the SLURM scheduler, which runs them on the compute nodes. The login node and compute nodes share the same storage, so your files are available everywhere."}
+knitr::include_graphics("images/02-remote/cluster.svg")
+```
+
+## Logging onto a remote system {#ssh}
+
+`ssh` establishes a **s**ecure **sh**ell on a remote computer. Once you're
+logged in, you type commands exactly as you would in your own Terminal, but
+they run on the remote machine.
+
+- `ssh` requires you to authenticate, usually with a password (or with keys,
+  Section \@ref(ssh-keys)).
+- It's *secure*: your login and everything else you send are encrypted as
+  they travel across the network. Older, insecure ways of connecting (`telnet`,
+  `rlogin`, and `ftp`) send everything, including your password, as plain
+  text. Don't use them.
+- OpenSSH, the standard `ssh` program, comes with macOS and Linux, and with
+  Windows 10 and 11 (run it in PowerShell or Windows Terminal).
+
+To log onto the AHPCC cluster:
+
+```{bash, eval = FALSE}
+ssh username@hpc-portal2.hpc.uark.edu
+```
+
+Replace `username` with your UARK username, and use your UARK password. A few
+things to know the first time:
+
+- `ssh` will ask whether you trust the remote computer ("The authenticity of
+  host ... can't be established"). Type `yes`. It won't ask again.
+- When you type your password, *nothing appears on the screen*, not even
+  dots. That's normal. Type it and press <kbd>Return</kbd>.
+- Your prompt changes to show that you're on the remote computer. Use `exit`
+  to log off and return to your own computer.
+
+The cluster runs Linux, and your shell there is Bash, not Zsh. Your aliases
+and other settings from your Mac don't come with you; to customize your shell
+on the cluster, edit `~/.bashrc` there (Section \@ref(config-files)).
+
+::: {.tip}
+**Adopt a single username.** If your username on your own computer is the same
+as on the remote computer, you can leave it out:
+
+```{bash, eval = FALSE}
+ssh hpc-portal2.hpc.uark.edu                 # instead of...
+ssh username@hpc-portal2.hpc.uark.edu
+```
+
+Save time by using the same username for all your accounts.
+:::
+
+### The file system on AHPCC {#ahpcc-files}
+
+| Location                   | What it's for                                                         |
+|----------------------------|-----------------------------------------------------------------------|
+| `/home/username`           | where you are when you log in (on the login node)                     |
+| `/storage/username`        | where to store your data                                              |
+| `$HOME` or `/storage`      | where to run standard jobs from                                       |
+| `/scratch/$SLURM_JOB_ID`   | where to run jobs that do lots of reading and writing (Section \@ref(scratch)) |
+| `/share/apps`              | where programs are installed                                          |
+
+::: {.warning}
+**Don't run analyses on the login node.** The login node is shared by
+everyone who is logged in. It's for editing files, moving data, and submitting
+jobs. Anything that takes more than a minute or so, or uses lots of memory,
+belongs in a job on the compute nodes (Section \@ref(slurm)). Heavy work on
+the login node slows it down for everyone.
+:::
+
+::: {.exercise}
+1. Log onto `hpc-portal2.hpc.uark.edu`.
+2. Where are you? Use `pwd` and `ls -la` to look around your home directory.
+3. Find your storage directory and check how much space you're using there
+   with `du -sh`.
+4. Use `ls /share/apps` to see what programs are installed.
+5. Log off.
+:::
+
+## Copying files between computers {#copying-files}
+
+### `scp`
+
+`scp` (**s**ecure **c**o**p**y) copies files between computers. It uses `ssh`
+to transfer the data, so it offers the same security as `ssh`, and asks for
+the same password.
+
+It works just like `cp`: source first, destination second.
+
+```text
+scp [options] source destination
+```
+
+The difference is that either the source or the destination (or both) can be
+on another computer. A remote location looks like this:
+
+```text
+username@host:path/to/filename
+└──┬───┘ └┬─┘ └──────┬───────┘
+   │      │          └── path on the remote computer (relative to your home directory there,
+   │      │              unless it starts with /); leave it out to mean your home directory
+   │      └── the remote computer, followed by a colon (:)
+   └── your username on the remote computer, followed by @ (optional if it's the same)
+```
+
+The **colon** is what tells `scp` that a location is on another computer.
+Forget it, and `scp` just makes a local copy with a strange name.
+
+**Copying to a remote computer:**
+
+```{bash, eval = FALSE}
+# copy a file to your remote home directory, giving it a new name
+scp nad4.fasta aja@hpc-portal2.hpc.uark.edu:new_file.fasta
+
+# copy a file to your remote home directory, keeping its name
+scp nad4.fasta aja@hpc-portal2.hpc.uark.edu:
+```
+
+To copy a directory, add `-r`, just like `cp -r`:
+
+```{bash, eval = FALSE}
+# keep the same directory name, in your remote home directory
+scp -r nt aja@hpc-portal2.hpc.uark.edu:
+
+# copy into an existing remote directory, with a new name
+scp -r nt aja@hpc-portal2.hpc.uark.edu:test_dir/copied_nt
+
+# copy into your storage directory (an absolute path), keeping the same name
+scp -r nt aja@hpc-portal2.hpc.uark.edu:/storage/aja
+```
+
+**Copying from a remote computer** just swaps the order. Run these on *your*
+computer, not on the cluster:
+
+```{bash, eval = FALSE}
+# copy from your remote home directory into the current directory, with a new name
+scp aja@hpc-portal2.hpc.uark.edu:nad4.fasta nad4_copied.fasta
+
+# copy from a remote directory into the current directory (.), keeping the same name
+scp aja@hpc-portal2.hpc.uark.edu:blast_output/nad4.blastn .
+
+# copy into a local directory, keeping the same name
+scp aja@hpc-portal2.hpc.uark.edu:nad4.fasta biol5153/watermelon_genome/
+
+# copy a whole directory from the remote computer
+scp -r hpc-portal2.hpc.uark.edu:blast_output biol5153/watermelon_genome/
+```
+
+::: {.note}
+**Where do I run `scp`?** Almost always on your own computer. Your laptop
+knows how to find the cluster (`hpc-portal2.hpc.uark.edu`), but the cluster
+has no way to find your laptop.
+:::
+
+::: {.exercise}
+1. Copy `watermelon_genome/nt/nad4.fasta` to your home directory on the
+   cluster. Log on and check that it's there.
+2. On the cluster, make a directory called `biol5153`. Back on your own
+   computer, copy the whole `watermelon_genome/nt` directory into it.
+3. On the cluster, rename `nad4.fasta` to `nad4_remote.fasta`. Then copy it
+   back to your own computer's Desktop.
+:::
+
+### `rsync`: bigger, smarter copies {#rsync}
+
+`rsync` **sync**hronizes files and directories, locally or between computers.
+For anything big, it's better than `scp`:
+
+- It only sends the *differences* between versions. If a transfer gets
+  interrupted, or you change a few files, running the same `rsync` command
+  again sends only what's missing or changed.
+- It can compress data while sending it.
+- Its archive option preserves links, timestamps, permissions, ownership, and
+  other attributes.
+
+```text
+rsync [options] source destination
+```
+
+| Option               | Effect                                                         |
+|----------------------|----------------------------------------------------------------|
+| `-a`, `--archive`    | archive mode: recursive, and preserve links, timestamps, etc.  |
+| `-r`, `--recursive`  | recurse into directories (included in `-a`)                    |
+| `-l`, `--links`      | preserve symbolic links (included in `-a`)                     |
+| `-v`, `--verbose`    | print lots of information about what it's doing                |
+| `-z`, `--compress`   | compress data as it's sent                                     |
+| `-n`, `--dry-run`    | show what *would* be copied, without copying anything          |
+
+In practice, `rsync -av` (local) and `rsync -azv` (between computers) are all
+you'll usually need.
+
+```{bash, eval = FALSE}
+# synchronize a local directory to the cluster
+rsync -azv my_data aja@hpc-portal2.hpc.uark.edu:
+
+# ...into a new destination directory name
+rsync -azv my_data aja@hpc-portal2.hpc.uark.edu:my_data_new_name
+
+# synchronize from the cluster to your computer
+rsync -azv aja@hpc-portal2.hpc.uark.edu:blast_output .
+```
+
+#### `rsync`: mind the `/` {-}
+
+`rsync` is picky about a trailing slash on the *source*:
+
+- **No trailing slash** (`mt_genomes`) copies the directory itself, including
+  everything in it.
+- **Trailing slash** (`mt_genomes/`) copies only the *contents* of the
+  directory, not the directory itself.
+
+Here's the difference, copying into two empty directories:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+mkdir -p copy1 copy2
+rsync -a nt copy1         # no slash: copies the directory
+rsync -a nt/ copy2        # slash: copies what's inside it
+ls copy1 | head -n 3
+echo ---
+ls copy2 | head -n 3
+```
+
+::: {.tip}
+**Use `-n` first.** `rsync -avn` lists exactly what would be copied, without
+copying anything. When the list looks right, run it again without the `n`.
+:::
+
+#### Moving files with a graphical program {-}
+
+If you prefer drag and drop, programs such as
+[FileZilla](https://filezilla-project.org/) and
+[Cyberduck](https://cyberduck.io/) provide a graphical front end for copying
+files over SSH. Choose the **SFTP** protocol when you connect.
+
+## Getting data from the web {#download}
+
+Most public data (genomes, sequencing reads, protein structures) is
+distributed through websites and FTP servers. Clicking "Download" works for
+one file on your laptop, but not for 200 files, or on a cluster with no web
+browser. Use `curl` or `wget` instead.
+
+### `curl`
+
+`curl` ("see URL") downloads files without any interaction. It's installed on
+macOS, Linux, and Windows.
+
+| Option   | Effect                                                               |
+|----------|----------------------------------------------------------------------|
+| `-o name`| write the output to a file named `name`                              |
+| `-O`     | write the output to a file with the same name as on the server       |
+| `-L`     | follow redirects (if the file has moved, go to its new location)     |
+| `-C -`   | continue (resume) an interrupted download                            |
+
+By default, `curl` writes the file to STDOUT, so you'll almost always want
+`-o` or `-O`:
+
+```{bash, eval = FALSE}
+# download green fluorescent protein's structure from the Protein Data Bank,
+# printing it to the screen (not very useful)
+curl https://files.rcsb.org/download/1EMA.pdb
+
+# write it to a file of your choosing
+curl -o gfp.pdb https://files.rcsb.org/download/1EMA.pdb
+
+# write it to a file with the same name as on the server (1EMA.pdb)
+curl -O https://files.rcsb.org/download/1EMA.pdb
+
+# download several files at once (the braces work in curl itself; keep the quotes)
+curl -O "https://files.rcsb.org/download/{1EMA,1GFL,1G7K}.pdb"
+```
+
+::: {.warning}
+**Use `-L` when files have moved.** Websites reorganize. When a file has
+moved, the server sends back a "redirect" pointing to the new location, and
+`curl` stops there unless you add `-L`. You'll end up with an empty or tiny
+file instead of your data. If a download is suspiciously small, check it with
+`less`, and add `-L`.
+:::
+
+### `wget`
+
+`wget` is another tool for downloading files, especially good at downloading
+many files from a site at once. It's installed on most Linux systems,
+including the cluster. It isn't installed on macOS by default; you can get it
+with [Homebrew](https://brew.sh/) (`brew install wget`).
+
+Unlike `curl`, `wget` saves files with their original names by default.
+
+| Option                  | Effect                                                    |
+|-------------------------|-----------------------------------------------------------|
+| `-A`, `--accept`        | only download files matching this pattern                 |
+| `-R`, `--reject`        | don't download files matching this pattern                |
+| `-r`, `--recursive`     | download recursively (warning: very aggressive)           |
+| `--no-parent`           | don't climb up into parent directories when recursing     |
+| `-c`, `--continue`      | resume an interrupted download                            |
+| `--user=username`       | username for password-protected sites                     |
+| `--ask-password`        | prompt for the password                                   |
+
+```{bash, eval = FALSE}
+# download human chromosome 22 from the UCSC Genome Browser
+wget https://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr22.fa.gz
+
+# download all the GFF files from a colleague's server
+wget --accept "*.gff" --level 2 -r --no-directories --no-parent \
+    ftp://server.university.edu/labsite/annotations/
+
+# download from a password-protected FTP site (a sequencing center, for example)
+wget --recursive --user=username --ask-password ftp://192.169.8.66/CleanData
+```
+
+(A `\` at the very end of a line continues the command on the next line.)
+
+::: {.warning}
+**Keep passwords out of your commands.** You may see instructions that put a
+password right in the URL (`ftp://username:password@server/...`). It works,
+but the password is saved in your shell history, where anyone with access to
+your account can read it. Use `--ask-password` instead.
+:::
+
+::: {.exercise}
+1. Use `curl` to download the structure of green fluorescent protein (PDB ID
+   `1EMA`) and save it as `gfp.pdb`.
+2. The atomic coordinates are on lines that start with `ATOM`. How many atoms
+   are in the structure?
+3. Column 4 of the `ATOM` lines is the amino acid. How many *different* amino
+   acids are there? (Hint: `awk '$1 == "ATOM" { print $4 }'`, then `sort` and
+   `uniq`.)
+4. Try `curl -O http://www.rcsb.org/pdb/files/1ema.pdb`, an old address for the
+   same file. What did you get? Fix it.
+:::
+
+## Compressing data {#compression}
+
+Compress big files before moving them. Sequence data compress well, often to a
+quarter of their original size, which means faster transfers and less storage.
+
+### `gzip` and `gunzip`
+
+`gzip` compresses files, and `gunzip` decompresses them. Compressed files end
+in `.gz`.
+
+- By default, `gzip` and `gunzip` work **in place**: `gzip file` replaces
+  `file` with `file.gz`, and `gunzip file.gz` replaces `file.gz` with `file`.
+  No new copy is created.
+- `gzip` can also compress STDIN, writing the result to STDOUT, so it works at
+  the end of a pipe.
+
+| Option | Effect                                                                  |
+|--------|-------------------------------------------------------------------------|
+| `-c`   | write to STDOUT and leave the original alone (useful for making copies) |
+| `-d`   | decompress (the same as `gunzip`)                                       |
+| `-k`   | keep the original file instead of replacing it                          |
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+ls -lh watermelon.fsa
+gzip watermelon.fsa       # compress (watermelon.fsa is replaced)
+ls -lh watermelon.fsa*
+```
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+gunzip watermelon.fsa.gz  # decompress (watermelon.fsa.gz is replaced)
+ls -lh watermelon.fsa*
+```
+
+```{bash, eval = FALSE}
+gzip -c watermelon.fsa > wat.fsa.gz     # make a compressed copy; keep the original
+gzip -d wat.fsa.gz                      # decompress, same as gunzip
+my_program.py reads.fa | gzip > out.fa.gz   # compress a program's output on the fly
+```
+
+### Working with compressed files
+
+You often don't need to decompress a file to work with it:
+
+| Command  | Like     | Does                                     |
+|----------|----------|------------------------------------------|
+| `zcat`   | `cat`    | print a compressed file                  |
+| `zless`  | `less`   | page through a compressed file           |
+| `zgrep`  | `grep`   | search a compressed file                 |
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+gzip -k watermelon.fsa
+zgrep -o GAATTC watermelon.fsa.gz | wc -l   # how many EcoRI sites in the genome?
+```
+
+::: {.warning}
+**On a Mac, use `gzcat`, not `zcat`.** For historical reasons, macOS's `zcat`
+only works on an old compression format (`.Z` files) and fails on `.gz` files
+with a confusing error. Use `gzcat` on a Mac, and `zcat` on Linux and the
+cluster. `gunzip -c` works everywhere.
+:::
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+gzcat watermelon.fsa.gz | head -n 2 | cut -c 1-60    # zcat on Linux
+```
+
+### `tar`: archiving directories {#tar}
+
+`gzip` compresses single files. To bundle a whole directory into one file,
+use `tar` (originally for **t**ape **ar**chives). `tar` preserves the
+directory structure, and with `-z` it compresses the archive with `gzip`. The
+result is a "tarball," ending in `.tar.gz` or `.tgz`, like the `files.tgz`
+you downloaded for this course.
+
+| Option      | Effect                                                     |
+|-------------|------------------------------------------------------------|
+| `-c`        | **c**reate an archive                                      |
+| `-x`        | e**x**tract an archive                                     |
+| `-t`        | lis**t** the contents of an archive                        |
+| `-z`        | compress or decompress with g**z**ip                       |
+| `-v`        | **v**erbose: list each file as it's processed              |
+| `-f name`   | the archive **f**ile to create or read                     |
+
+The trickiest part is that `-f` must be followed by the name of the archive.
+Put it last in the group of options, and you'll get it right: `-czf`, `-xzf`,
+`-tzf`. To remember the first letter: **c**reate, e**x**tract, lis**t**.
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+tar -czf genomes.tgz mt_genomes/          # create a compressed archive of mt_genomes
+ls -lh genomes.tgz
+du -sh mt_genomes
+```
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+tar -tzf genomes.tgz | head -n 4          # list what's inside, without extracting
+```
+
+```{bash, eval = FALSE}
+tar -xzf genomes.tgz                      # extract everything
+tar -xzvf genomes.tgz                     # ...and list each file as it's extracted
+```
+
+To extract a single file, give its path *exactly as it appears in the
+archive* (use `tar -tzf` to check):
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+mkdir -p extracted && cd extracted
+tar -xzf ../genomes.tgz mt_genomes/ricinus.fasta
+find .
+```
+
+::: {.warning}
+**`tar -c` overwrites.** Like `>`, creating an archive overwrites any existing
+file with the same name, without asking. And watch the order of the arguments:
+`tar -czf mt_genomes/ genomes.tgz` is wrong, and will try to create an archive
+named `mt_genomes/`.
+:::
+
+::: {.exercise}
+1. Compress a copy of `watermelon.gbf` with `gzip -k`. How much smaller is the
+   compressed file?
+2. Without decompressing it, count the lines in the compressed file.
+3. Make a single file of all the sequences in `watermelon_genome/nt`, compress
+   it, and copy it to a new directory, `$HOME/mt_seqs`, on the cluster.
+4. Archive and compress the whole `watermelon_genome/aa` directory into
+   `aa.tgz`. List its contents. Then, in a new empty directory, extract only
+   `cox1.fasta` from it.
+5. Copy `aa.tgz` to the cluster, log on, and extract it there.
+:::
+
+## Verifying data integrity {#checksums}
+
+Downloads of large files (raw sequence data, for example) can take hours, and
+network connections can drop out partway through, leaving you with partial or
+corrupted data that may look perfectly normal. You need a way to verify that
+your copy is identical to the original.
+
+The solution is a **checksum**: a short "fingerprint" calculated from every
+byte of a file.
+
+- Checksum algorithms are *deterministic*: the same data always give the same
+  checksum.
+- Changing even a single byte gives a completely different checksum.
+- Checksums are written in hexadecimal (the digits 0–9 and letters a–f).
+- **MD5** checksums are 32 characters long. **SHA-1** checksums are 40
+  characters, and **SHA-256** checksums are 64. MD5 is the most common for
+  checking data transfers; SHA-256 is preferred when security matters.
+
+The process:
+
+1. Whoever provides the data calculates checksums for the original files and
+   stores them in a text file.
+2. You download the data *and* the checksum file.
+3. You calculate checksums for your downloaded copies.
+4. You compare the two sets of values. Any difference means a file is
+   corrupted, so download it again.
+
+### `md5sum`
+
+`md5sum` calculates MD5 checksums. Each line of output has the checksum, then
+the file name:
+
+```{bash}
+md5sum cowboy_carter.txt
+```
+
+The course files include `cowboy_carter.md5sum`, a checksum file of the kind
+that a sequencing center would give you:
+
+```{bash}
+cat cowboy_carter.md5sum
+```
+
+The checksums match, so the file is intact. Rather than comparing long
+strings by eye, let `md5sum -c` (**c**heck) do it. It reads the checksum file,
+recalculates each file's checksum, and reports `OK` or `FAILED`:
+
+```{bash}
+md5sum -c cowboy_carter.md5sum
+```
+
+You can also save your own checksums and compare the two files with `diff`
+(Section \@ref(diff)). No output means they're identical:
+
+```{bash, sandbox = TRUE}
+md5sum cowboy_carter.txt > my_checksums.md5sum
+diff my_checksums.md5sum cowboy_carter.md5sum
+```
+
+Here's what happens when a file changes by a single character:
+
+```{bash, sandbox = TRUE, error = TRUE}
+sed -i.bak 's/PROTECTOR/PROTECTER/' cowboy_carter.txt
+md5sum -c cowboy_carter.md5sum
+```
+
+::: {.note}
+**Checksums on a Mac.** Recent versions of macOS include `md5sum`. On older
+versions, use `md5 -r`, which prints the same format. For SHA checksums, use
+`shasum -a 256 file` on a Mac and `sha256sum file` on Linux. Both accept
+`-c`.
+:::
+
+::: {.exercise}
+1. Calculate the MD5 checksum of `watermelon.fsa`. Compress it with `gzip -k`
+   and calculate the checksum of `watermelon.fsa.gz`. Are they the same? Why
+   not?
+2. Calculate MD5 checksums for every file in `watermelon_genome/nt` and save
+   them to `nt.md5sum` (one command).
+3. Copy `nt` and `nt.md5sum` to the cluster with `scp -r`. On the cluster, use
+   `md5sum -c` to verify that every file arrived intact.
+4. Make a copy of `nt` on your own computer, change one letter in one of the
+   files, and show that `md5sum -c` catches it.
+:::
+
+## Running jobs on the cluster {#slurm}
+
+To run an analysis on the cluster, you don't run it directly. You describe it
+in a **job script** and submit the script to a **job scheduler**, which puts
+it in a queue and runs it on the compute nodes when the resources you asked
+for become available.
+
+There are different scheduling systems. Older clusters often use TORQUE/PBS;
+AHPCC uses **SLURM**. The ideas are the same in all of them.
+
+The process:
+
+1. Get all your data in place on the cluster (Section \@ref(ahpcc-files)).
+2. Write a job script that includes:
+   - all the information the scheduler needs to run your job (how many
+     processors, for how long, and so on);
+   - all the commands you want to run, exactly as you would type them on the
+     command line.
+3. Submit your job script to the queue.
+
+### Anatomy of a SLURM script
+
+A SLURM job script is a Bash script (Section \@ref(bash-scripts)) with some
+extra lines at the top. Lines starting with `#SBATCH` are instructions for the
+scheduler. Bash treats them as comments, but SLURM reads them.
+
+```{bash, eval = FALSE}
+#!/bin/bash
+#SBATCH --job-name=atp9.blast
+#SBATCH --partition comp72
+#SBATCH --qos comp
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=32
+#SBATCH --time=72:00:00
+#SBATCH -o %j.out
+#SBATCH -e %j.err
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=username@uark.edu
+
+cd $SLURM_SUBMIT_DIR
+
+# job commands here
+command1
+command2
+```
+
+| Line                              | What it does                                                                 |
+|-----------------------------------|------------------------------------------------------------------------------|
+| `#!/bin/bash`                     | the shebang: this is a Bash script                                           |
+| `--job-name=atp9.blast`           | a name for your job, so you can recognize it in the queue                    |
+| `--partition comp72`              | which queue (partition) to run in                                            |
+| `--qos comp`                      | the quality of service, which goes with the partition                        |
+| `--nodes=1`                       | how many compute nodes                                                       |
+| `--cpus-per-task=32`              | how many processor cores. Take only what you need.                           |
+| `--time=72:00:00`                 | the maximum wall time (hours:minutes:seconds); the job is killed after this  |
+| `-o %j.out`, `-e %j.err`          | files for STDOUT and STDERR; any names you want (`%j` is the job ID number)  |
+| `--mail-type=ALL`                 | email you when the job starts, ends, or fails                                |
+| `--mail-user=...`                 | where to send the email                                                      |
+| `cd $SLURM_SUBMIT_DIR`            | move into the directory you submitted the job from                           |
+| `command1`, ...                   | the commands to run                                                          |
+
+`files/other_files/slurm-template.slurm` in the course files is a template to
+start from. Ask what partitions are available with `sinfo` (below), and check
+the [AHPCC documentation](https://hpc.uark.edu/) for which to use.
+
+::: {.note}
+**Why `cd $SLURM_SUBMIT_DIR`?** SLURM sets the variable `$SLURM_SUBMIT_DIR`
+to the directory you ran `sbatch` from. SLURM starts jobs in that directory
+anyway, but other schedulers (like PBS) start them in your home directory, and
+your script may `cd` somewhere else along the way. This line makes it explicit
+where the job runs, so the script behaves the same everywhere.
+:::
+
+### Using the scratch disk {#scratch}
+
+For jobs that read and write lots of data, run them on the fast **scratch
+disk** of the compute node, then copy the results back. SLURM creates a
+directory for each job at `/scratch/$SLURM_JOB_ID`. Put something like this
+in the commands part of your script:
+
+```{bash, eval = FALSE}
+# copy input files to the scratch disk
+rsync -arl * /scratch/$SLURM_JOB_ID/
+
+# cd into the scratch folder to run the job
+cd /scratch/$SLURM_JOB_ID
+
+# run the job
+command1
+command2
+
+# copy the output files back to the original folder when the job has finished
+rsync -arl /scratch/$SLURM_JOB_ID/* $SLURM_SUBMIT_DIR/
+```
+
+### Submitting and checking jobs
+
+| Command                                   | What it does                                    |
+|-------------------------------------------|-------------------------------------------------|
+| `sinfo -l`                                | list the partitions (queues) on the cluster     |
+| `sbatch job_script.slurm`                 | submit a job; prints the job ID                 |
+| `squeue -l -u username`                   | check the status of your jobs                   |
+| `squeue --start -j jobID`                 | when will my job start?                         |
+| `scancel jobID`                           | cancel (kill) a job                             |
+| `scancel -u username`                     | cancel all your jobs                            |
+| `scancel -t PENDING -u username`          | cancel all your jobs that haven't started       |
+
+### Software modules
+
+The cluster has hundreds of programs installed, many in several versions. To
+keep them from conflicting, they're packaged as **modules** that you load when
+you need them, either at the command line or in your job script:
+
+```{bash, eval = FALSE}
+module avail               # what modules are available?
+module avail blast         # ...matching "blast"
+module load blast          # load a module
+module list                # what modules do I have loaded?
+module purge               # unload all modules
+```
+
+::: {.exercise}
+1. Log onto the cluster and use `sinfo` to see what partitions are available.
+   Use `module avail blast` to find the BLAST module.
+2. Copy `files/other_files/slurm-template.slurm` and the `files/data` folder to
+   the cluster. Edit the template with `nano` so that it runs in the `data`
+   directory and prints `letters.txt` to STDOUT. Submit it with `sbatch`, and
+   check on it with `squeue`.
+3. When the job finishes, look at its `.out` and `.err` files. What's in each?
+4. Write a SLURM script that BLASTs the watermelon *atp9* gene
+   (`nt/atp9.fasta`) against the watermelon genome (`watermelon.fsa`). You'll
+   need `makeblastdb -in watermelon.fsa -dbtype nucl` to build a BLAST
+   database first, then `blastn -query nt/atp9.fasta -db watermelon.fsa`.
+   Write the output to `atp9.vs.watermelon.blastn`.
+5. Modify your script from question 4 so that it runs on the scratch disk.
+6. Submit a job, then cancel it with `scancel` before it finishes.
+:::
+
+## Authentication with SSH keys {#ssh-keys}
+
+Typing your password every time you use `ssh`, `scp`, or `rsync` gets old.
+**SSH keys** are a safe and easy alternative: you create a matched pair of
+keys on your computer, a **private key** that never leaves your computer and a
+**public key** that you put on any computer you want to log onto. When you
+connect, `ssh` uses the pair to prove that you are who you say you are,
+without sending a password.
+
+You'll also need SSH keys (or something similar) to push your work to GitHub,
+later in the course.
+
+::: {.note}
+**Do this on your own.** Setting up keys is straightforward, but every
+computer is a little different. Work through it outside of class, and ask if
+you get stuck.
+:::
+
+### 1. Check for existing keys {-}
+
+On your **own computer**, look in the hidden `.ssh` directory in your home
+directory:
+
+```{bash, eval = FALSE}
+ls -la ~/.ssh
+```
+
+If you see a pair of files like `id_ed25519` and `id_ed25519.pub` (or
+`id_rsa` and `id_rsa.pub`), you already have keys. Skip to step 3.
+
+### 2. Create a key pair {-}
+
+```{bash, eval = FALSE}
+ssh-keygen -t ed25519
+```
+
+- `-t ed25519` sets the **t**ype of key. Ed25519 is the current recommended
+  type: it's short, fast, and secure. (Older instructions use
+  `ssh-keygen -t rsa -b 2048`. RSA keys still work, but if you make one, use
+  at least `-b 4096` bits.)
+- When asked where to save the key, press <kbd>Return</kbd> to accept the
+  default.
+- When asked for a passphrase, you can press <kbd>Return</kbd> for no
+  passphrase, or enter one for extra security (step 5 shows how to avoid
+  typing it every time).
+
+This creates two files in `~/.ssh`:
+
+| File               | What it is                                                                       |
+|--------------------|----------------------------------------------------------------------------------|
+| `id_ed25519`       | your **private** key. Never share it, copy it to another computer, or email it.  |
+| `id_ed25519.pub`   | your **public** key. Safe to share; this is what goes on remote computers.       |
+
+### 3. Copy your public key to the remote computer {-}
+
+The easiest way is `ssh-copy-id`, which comes with macOS and Linux:
+
+```{bash, eval = FALSE}
+ssh-copy-id username@hpc-portal2.hpc.uark.edu
+```
+
+Enter your password one last time. `ssh-copy-id` appends your public key to the
+file `~/.ssh/authorized_keys` on the remote computer and sets its permissions
+correctly.
+
+If `ssh-copy-id` isn't available, do the same thing by hand:
+
+1. On your computer, print your public key and copy the whole line:
+   `cat ~/.ssh/id_ed25519.pub`
+2. Log onto the remote computer: `ssh username@hpc-portal2.hpc.uark.edu`
+3. Make sure the `.ssh` directory exists: `mkdir -p ~/.ssh`
+4. Paste your public key onto the end of `authorized_keys`, as one line:
+   `nano ~/.ssh/authorized_keys`
+5. Set the permissions (step 4, below), then `exit`.
+
+### 4. Check permissions {-}
+
+`ssh` refuses to use keys if other people could change them. If you're still
+asked for a password, set the permissions on the **remote computer** so that
+only you can read and write these files:
+
+```{bash, eval = FALSE}
+chmod 700 ~/.ssh                    # only you can enter the directory
+chmod 600 ~/.ssh/authorized_keys    # only you can read or write the file
+```
+
+These use the numeric form of `chmod`: `7` means read + write + execute, `6`
+means read + write, and `0` means nothing, for the user, group, and others, in
+that order. (On your own computer, the private key should also be `600`.)
+
+### 5. Log on {-}
+
+```{bash, eval = FALSE}
+ssh username@hpc-portal2.hpc.uark.edu
+```
+
+You should be logged in without a password. If you set a passphrase on your
+key, you'll be asked for it instead. To avoid typing the passphrase every
+time, add the key to the **SSH agent**, which remembers it for you:
+
+```{bash, eval = FALSE}
+eval "$(ssh-agent -s)"                           # start the SSH agent
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519   # Mac: remember the passphrase in your Keychain
+ssh-add ~/.ssh/id_ed25519                        # Linux
+```
+
+::: {.exercise}
+1. Set up SSH keys for the cluster, and log on without a password.
+2. Copy a file to the cluster with `scp`. Were you asked for a password?
+:::
+
+## Command summary {#remote-summary}
+
+| Command                         | What it does                                               |
+|---------------------------------|------------------------------------------------------------|
+| `ssh user@host`                 | log onto a remote computer                                 |
+| `scp source user@host:dest`     | copy a file to a remote computer (`-r` for directories)    |
+| `scp user@host:source dest`     | copy a file from a remote computer                         |
+| `rsync -av source dest`         | synchronize files and directories (`-z` to compress, `-n` for a dry run) |
+| `curl -O url`                   | download a file, keeping its name (`-L` to follow redirects) |
+| `curl -o name url`              | download a file to a name of your choosing                 |
+| `wget url`                      | download a file                                            |
+| `gzip`, `gunzip`                | compress, decompress (`-k` to keep the original)           |
+| `zcat`/`gzcat`, `zless`, `zgrep`| print, page through, or search a compressed file           |
+| `tar -czf archive.tgz dir/`     | create a compressed archive of a directory                 |
+| `tar -tzf archive.tgz`          | list the contents of an archive                            |
+| `tar -xzf archive.tgz`          | extract an archive                                         |
+| `md5sum file`                   | calculate a checksum                                       |
+| `md5sum -c checksums.md5sum`    | verify files against a list of checksums                   |
+| `sinfo`                         | list the cluster's partitions (queues)                     |
+| `sbatch script.slurm`           | submit a job                                               |
+| `squeue -u user`                | check on your jobs                                         |
+| `scancel jobID`                 | cancel a job                                               |
+| `module avail`, `module load`   | find and load installed software                           |
+| `ssh-keygen`, `ssh-copy-id`     | create SSH keys; install your public key on a remote computer |

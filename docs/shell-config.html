@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Tailoring your shell | Practical Programming for Biologists</title>
+  <meta name="description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Tailoring your shell | Practical Programming for Biologists" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Tailoring your shell | Practical Programming for Biologists" />
+  
+  <meta name="twitter:description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  
+
+<meta name="author" content="Andrew Alverson" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="unix.html"/>
+<link rel="next" href="project.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Practical Programming for Biologists</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#before-the-first-class"><i class="fa fa-check"></i>Before the first class</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-read-this-book"><i class="fa fa-check"></i>How to read this book</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="unix.html"><a href="unix.html"><i class="fa fa-check"></i><b>1</b> Introduction to Unix</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="unix.html"><a href="unix.html#why-command-line"><i class="fa fa-check"></i><b>1.1</b> Why the command line?</a></li>
+<li class="chapter" data-level="1.2" data-path="unix.html"><a href="unix.html#choosing-os"><i class="fa fa-check"></i><b>1.2</b> Choosing an operating system</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="unix.html"><a href="unix.html#macos"><i class="fa fa-check"></i><b>1.2.1</b> macOS</a></li>
+<li class="chapter" data-level="1.2.2" data-path="unix.html"><a href="unix.html#linux"><i class="fa fa-check"></i><b>1.2.2</b> Linux</a></li>
+<li class="chapter" data-level="1.2.3" data-path="unix.html"><a href="unix.html#windows"><i class="fa fa-check"></i><b>1.2.3</b> Windows</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="unix.html"><a href="unix.html#shell"><i class="fa fa-check"></i><b>1.3</b> The shell</a></li>
+<li class="chapter" data-level="1.4" data-path="unix.html"><a href="unix.html#file-system"><i class="fa fa-check"></i><b>1.4</b> The file system</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="unix.html"><a href="unix.html#paths"><i class="fa fa-check"></i><b>1.4.1</b> Paths</a></li>
+<li class="chapter" data-level="1.4.2" data-path="unix.html"><a href="unix.html#course-files"><i class="fa fa-check"></i><b>1.4.2</b> The course files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="unix.html"><a href="unix.html#getting-around"><i class="fa fa-check"></i><b>1.5</b> Getting around</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="unix.html"><a href="unix.html#pwd-cd-and-echo"><i class="fa fa-check"></i><b>1.5.1</b> <code>pwd</code>, <code>cd</code>, and <code>echo</code></a></li>
+<li class="chapter" data-level="1.5.2" data-path="unix.html"><a href="unix.html#clear-and-exit"><i class="fa fa-check"></i><b>1.5.2</b> <code>clear</code> and <code>exit</code></a></li>
+<li class="chapter" data-level="1.5.3" data-path="unix.html"><a href="unix.html#ctrl-c"><i class="fa fa-check"></i><b>1.5.3</b> Stopping a command: <kbd>Ctrl</kbd>+<kbd>C</kbd></a></li>
+<li class="chapter" data-level="1.5.4" data-path="unix.html"><a href="unix.html#ls"><i class="fa fa-check"></i><b>1.5.4</b> <code>ls</code>: listing directory contents</a></li>
+<li class="chapter" data-level="1.5.5" data-path="unix.html"><a href="unix.html#reading-ls--l-output"><i class="fa fa-check"></i><b>1.5.5</b> Reading <code>ls -l</code> output</a></li>
+<li class="chapter" data-level="1.5.6" data-path="unix.html"><a href="unix.html#wildcards"><i class="fa fa-check"></i><b>1.5.6</b> Wildcards</a></li>
+<li class="chapter" data-level="1.5.7" data-path="unix.html"><a href="unix.html#find"><i class="fa fa-check"></i><b>1.5.7</b> Finding files: <code>find</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="unix.html"><a href="unix.html#viewing-files"><i class="fa fa-check"></i><b>1.6</b> Looking at files</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="unix.html"><a href="unix.html#cat"><i class="fa fa-check"></i><b>1.6.1</b> <code>cat</code></a></li>
+<li class="chapter" data-level="1.6.2" data-path="unix.html"><a href="unix.html#head-and-tail"><i class="fa fa-check"></i><b>1.6.2</b> <code>head</code> and <code>tail</code></a></li>
+<li class="chapter" data-level="1.6.3" data-path="unix.html"><a href="unix.html#less"><i class="fa fa-check"></i><b>1.6.3</b> <code>less</code></a></li>
+<li class="chapter" data-level="1.6.4" data-path="unix.html"><a href="unix.html#man"><i class="fa fa-check"></i><b>1.6.4</b> Getting help: <code>man</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="unix.html"><a href="unix.html#data-streams"><i class="fa fa-check"></i><b>1.7</b> Data streams and redirection</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="unix.html"><a href="unix.html#redirecting-stdout"><i class="fa fa-check"></i><b>1.7.1</b> Redirecting STDOUT</a></li>
+<li class="chapter" data-level="1.7.2" data-path="unix.html"><a href="unix.html#redirecting-stderr"><i class="fa fa-check"></i><b>1.7.2</b> Redirecting STDERR</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="unix.html"><a href="unix.html#text-files"><i class="fa fa-check"></i><b>1.8</b> Text files and text editors</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="unix.html"><a href="unix.html#plain-text"><i class="fa fa-check"></i><b>1.8.1</b> Plain text</a></li>
+<li class="chapter" data-level="1.8.2" data-path="unix.html"><a href="unix.html#line-breaks-matter"><i class="fa fa-check"></i><b>1.8.2</b> Line breaks matter</a></li>
+<li class="chapter" data-level="1.8.3" data-path="unix.html"><a href="unix.html#text-editors"><i class="fa fa-check"></i><b>1.8.3</b> Text editors</a></li>
+<li class="chapter" data-level="1.8.4" data-path="unix.html"><a href="unix.html#fonts"><i class="fa fa-check"></i><b>1.8.4</b> Fonts</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="unix.html"><a href="unix.html#managing-files"><i class="fa fa-check"></i><b>1.9</b> Managing files and directories</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="unix.html"><a href="unix.html#copying-and-moving-cp-and-mv"><i class="fa fa-check"></i><b>1.9.1</b> Copying and moving: <code>cp</code> and <code>mv</code></a></li>
+<li class="chapter" data-level="1.9.2" data-path="unix.html"><a href="unix.html#making-directories-mkdir"><i class="fa fa-check"></i><b>1.9.2</b> Making directories: <code>mkdir</code></a></li>
+<li class="chapter" data-level="1.9.3" data-path="unix.html"><a href="unix.html#deleting-rm-and-rmdir"><i class="fa fa-check"></i><b>1.9.3</b> Deleting: <code>rm</code> and <code>rmdir</code></a></li>
+<li class="chapter" data-level="1.9.4" data-path="unix.html"><a href="unix.html#ln"><i class="fa fa-check"></i><b>1.9.4</b> Links: <code>ln</code></a></li>
+<li class="chapter" data-level="1.9.5" data-path="unix.html"><a href="unix.html#how-much-space-du-and-df"><i class="fa fa-check"></i><b>1.9.5</b> How much space? <code>du</code> and <code>df</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="unix.html"><a href="unix.html#working-with-data"><i class="fa fa-check"></i><b>1.10</b> Working with data</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="unix.html"><a href="unix.html#wc"><i class="fa fa-check"></i><b>1.10.1</b> <code>wc</code>: counting</a></li>
+<li class="chapter" data-level="1.10.2" data-path="unix.html"><a href="unix.html#sort"><i class="fa fa-check"></i><b>1.10.2</b> <code>sort</code>: sorting</a></li>
+<li class="chapter" data-level="1.10.3" data-path="unix.html"><a href="unix.html#grep"><i class="fa fa-check"></i><b>1.10.3</b> <code>grep</code>: searching</a></li>
+<li class="chapter" data-level="1.10.4" data-path="unix.html"><a href="unix.html#cut-extracting-columns"><i class="fa fa-check"></i><b>1.10.4</b> <code>cut</code>: extracting columns</a></li>
+<li class="chapter" data-level="1.10.5" data-path="unix.html"><a href="unix.html#uniq-removing-duplicates"><i class="fa fa-check"></i><b>1.10.5</b> <code>uniq</code>: removing duplicates</a></li>
+<li class="chapter" data-level="1.10.6" data-path="unix.html"><a href="unix.html#column-viewing-tables"><i class="fa fa-check"></i><b>1.10.6</b> <code>column</code>: viewing tables</a></li>
+<li class="chapter" data-level="1.10.7" data-path="unix.html"><a href="unix.html#diff"><i class="fa fa-check"></i><b>1.10.7</b> <code>diff</code>: comparing files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="unix.html"><a href="unix.html#pipes"><i class="fa fa-check"></i><b>1.11</b> Pipes</a></li>
+<li class="chapter" data-level="1.12" data-path="unix.html"><a href="unix.html#quoting"><i class="fa fa-check"></i><b>1.12</b> Variables and quoting</a>
+<ul>
+<li class="chapter" data-level="1.12.1" data-path="unix.html"><a href="unix.html#variables"><i class="fa fa-check"></i><b>1.12.1</b> Variables</a></li>
+<li class="chapter" data-level="1.12.2" data-path="unix.html"><a href="unix.html#quotes-and-special-characters"><i class="fa fa-check"></i><b>1.12.2</b> Quotes and special characters</a></li>
+</ul></li>
+<li class="chapter" data-level="1.13" data-path="unix.html"><a href="unix.html#awk"><i class="fa fa-check"></i><b>1.13</b> <code>awk</code>: working with columns</a>
+<ul>
+<li class="chapter" data-level="1.13.1" data-path="unix.html"><a href="unix.html#how-awk-reads-a-file"><i class="fa fa-check"></i><b>1.13.1</b> How <code>awk</code> reads a file</a></li>
+<li class="chapter" data-level="1.13.2" data-path="unix.html"><a href="unix.html#printing-columns-the-action"><i class="fa fa-check"></i><b>1.13.2</b> Printing columns (the action)</a></li>
+<li class="chapter" data-level="1.13.3" data-path="unix.html"><a href="unix.html#filtering-rows-the-pattern"><i class="fa fa-check"></i><b>1.13.3</b> Filtering rows (the pattern)</a></li>
+<li class="chapter" data-level="1.13.4" data-path="unix.html"><a href="unix.html#both-together"><i class="fa fa-check"></i><b>1.13.4</b> Both together</a></li>
+<li class="chapter" data-level="1.13.5" data-path="unix.html"><a href="unix.html#awk-fs"><i class="fa fa-check"></i><b>1.13.5</b> Tabs and commas: setting the field separator</a></li>
+<li class="chapter" data-level="1.13.6" data-path="unix.html"><a href="unix.html#doing-math"><i class="fa fa-check"></i><b>1.13.6</b> Doing math</a></li>
+<li class="chapter" data-level="1.13.7" data-path="unix.html"><a href="unix.html#summarizing-end"><i class="fa fa-check"></i><b>1.13.7</b> Summarizing: <code>END</code></a></li>
+<li class="chapter" data-level="1.13.8" data-path="unix.html"><a href="unix.html#awk-cheat-sheet"><i class="fa fa-check"></i><b>1.13.8</b> <code>awk</code> cheat sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="1.14" data-path="unix.html"><a href="unix.html#sed"><i class="fa fa-check"></i><b>1.14</b> <code>sed</code>: find and replace</a>
+<ul>
+<li class="chapter" data-level="1.14.1" data-path="unix.html"><a href="unix.html#substitution-soldnew"><i class="fa fa-check"></i><b>1.14.1</b> Substitution: <code>s/old/new/</code></a></li>
+<li class="chapter" data-level="1.14.2" data-path="unix.html"><a href="unix.html#replacing-every-match-g"><i class="fa fa-check"></i><b>1.14.2</b> Replacing every match: <code>g</code></a></li>
+<li class="chapter" data-level="1.14.3" data-path="unix.html"><a href="unix.html#practical-examples"><i class="fa fa-check"></i><b>1.14.3</b> Practical examples</a></li>
+<li class="chapter" data-level="1.14.4" data-path="unix.html"><a href="unix.html#deleting-and-printing-lines"><i class="fa fa-check"></i><b>1.14.4</b> Deleting and printing lines</a></li>
+<li class="chapter" data-level="1.14.5" data-path="unix.html"><a href="unix.html#sed-i"><i class="fa fa-check"></i><b>1.14.5</b> Editing a file in place: <code>-i</code></a></li>
+<li class="chapter" data-level="1.14.6" data-path="unix.html"><a href="unix.html#sed-cheat-sheet"><i class="fa fa-check"></i><b>1.14.6</b> <code>sed</code> cheat sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="1.15" data-path="unix.html"><a href="unix.html#bash-scripts"><i class="fa fa-check"></i><b>1.15</b> Bash scripts</a>
+<ul>
+<li class="chapter" data-level="1.15.1" data-path="unix.html"><a href="unix.html#running-several-commands"><i class="fa fa-check"></i><b>1.15.1</b> Running several commands</a></li>
+<li class="chapter" data-level="1.15.2" data-path="unix.html"><a href="unix.html#writing-a-script"><i class="fa fa-check"></i><b>1.15.2</b> Writing a script</a></li>
+<li class="chapter" data-level="1.15.3" data-path="unix.html"><a href="unix.html#chmod"><i class="fa fa-check"></i><b>1.15.3</b> File permissions: <code>chmod</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.16" data-path="unix.html"><a href="unix.html#loops"><i class="fa fa-check"></i><b>1.16</b> Loops</a>
+<ul>
+<li class="chapter" data-level="1.16.1" data-path="unix.html"><a href="unix.html#for-loops"><i class="fa fa-check"></i><b>1.16.1</b> <code>for</code> loops</a></li>
+<li class="chapter" data-level="1.16.2" data-path="unix.html"><a href="unix.html#parameter-expansion"><i class="fa fa-check"></i><b>1.16.2</b> Changing file names in a loop</a></li>
+</ul></li>
+<li class="chapter" data-level="1.17" data-path="unix.html"><a href="unix.html#unix-summary"><i class="fa fa-check"></i><b>1.17</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="shell-config.html"><a href="shell-config.html"><i class="fa fa-check"></i><b>2</b> Tailoring your shell</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="shell-config.html"><a href="shell-config.html#path"><i class="fa fa-check"></i><b>2.1</b> Where are executable programs installed?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="shell-config.html"><a href="shell-config.html#which-and-type"><i class="fa fa-check"></i><b>2.1.1</b> <code>which</code> and <code>type</code></a></li>
+<li class="chapter" data-level="2.1.2" data-path="shell-config.html"><a href="shell-config.html#the-path-variable"><i class="fa fa-check"></i><b>2.1.2</b> The <code>$PATH</code> variable</a></li>
+<li class="chapter" data-level="2.1.3" data-path="shell-config.html"><a href="shell-config.html#order-matters"><i class="fa fa-check"></i><b>2.1.3</b> Order matters</a></li>
+<li class="chapter" data-level="2.1.4" data-path="shell-config.html"><a href="shell-config.html#why-.script.sh"><i class="fa fa-check"></i><b>2.1.4</b> Why <code>./script.sh</code>?</a></li>
+<li class="chapter" data-level="2.1.5" data-path="shell-config.html"><a href="shell-config.html#change-path"><i class="fa fa-check"></i><b>2.1.5</b> Changing the <code>PATH</code></a></li>
+<li class="chapter" data-level="2.1.6" data-path="shell-config.html"><a href="shell-config.html#local-scripts"><i class="fa fa-check"></i><b>2.1.6</b> A home for your own scripts</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="shell-config.html"><a href="shell-config.html#config-files"><i class="fa fa-check"></i><b>2.2</b> The shell’s configuration files</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="shell-config.html"><a href="shell-config.html#which-file-it-depends-on-your-shell"><i class="fa fa-check"></i><b>2.2.1</b> Which file? It depends on your shell</a></li>
+<li class="chapter" data-level="2.2.2" data-path="shell-config.html"><a href="shell-config.html#zsh-use-.zshrc"><i class="fa fa-check"></i><b>2.2.2</b> Zsh: use <code>~/.zshrc</code></a></li>
+<li class="chapter" data-level="2.2.3" data-path="shell-config.html"><a href="shell-config.html#bash-.bash_profile-vs.-.bashrc"><i class="fa fa-check"></i><b>2.2.3</b> Bash: <code>.bash_profile</code> vs. <code>.bashrc</code></a></li>
+<li class="chapter" data-level="2.2.4" data-path="shell-config.html"><a href="shell-config.html#in-short"><i class="fa fa-check"></i><b>2.2.4</b> In short</a></li>
+<li class="chapter" data-level="2.2.5" data-path="shell-config.html"><a href="shell-config.html#editing-your-configuration-file"><i class="fa fa-check"></i><b>2.2.5</b> Editing your configuration file</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="shell-config.html"><a href="shell-config.html#aliases"><i class="fa fa-check"></i><b>2.3</b> Aliases</a></li>
+<li class="chapter" data-level="2.4" data-path="shell-config.html"><a href="shell-config.html#colors"><i class="fa fa-check"></i><b>2.4</b> Colors</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="shell-config.html"><a href="shell-config.html#colors-in-ls-output"><i class="fa fa-check"></i><b>2.4.1</b> Colors in <code>ls</code> output</a></li>
+<li class="chapter" data-level="2.4.2" data-path="shell-config.html"><a href="shell-config.html#terminal-colors-fonts-and-themes"><i class="fa fa-check"></i><b>2.4.2</b> Terminal colors, fonts, and themes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="shell-config.html"><a href="shell-config.html#history"><i class="fa fa-check"></i><b>2.5</b> History</a></li>
+<li class="chapter" data-level="2.6" data-path="shell-config.html"><a href="shell-config.html#noclobber"><i class="fa fa-check"></i><b>2.6</b> A safety net: <code>noclobber</code></a></li>
+<li class="chapter" data-level="2.7" data-path="shell-config.html"><a href="shell-config.html#customizing-your-prompt"><i class="fa fa-check"></i><b>2.7</b> Customizing your prompt</a></li>
+<li class="chapter" data-level="2.8" data-path="shell-config.html"><a href="shell-config.html#example-config"><i class="fa fa-check"></i><b>2.8</b> Putting it together</a></li>
+<li class="chapter" data-level="2.9" data-path="shell-config.html"><a href="shell-config.html#shell-summary"><i class="fa fa-check"></i><b>2.9</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>3</b> Organizing your project</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="project.html"><a href="project.html#why-organize"><i class="fa fa-check"></i><b>3.1</b> Why organize?</a></li>
+<li class="chapter" data-level="3.2" data-path="project.html"><a href="project.html#project-layout"><i class="fa fa-check"></i><b>3.2</b> A directory for each project</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="project.html"><a href="project.html#mkdir-braces"><i class="fa fa-check"></i><b>3.2.1</b> Making the directories</a></li>
+<li class="chapter" data-level="3.2.2" data-path="project.html"><a href="project.html#project-rules"><i class="fa fa-check"></i><b>3.2.2</b> Rules of thumb</a></li>
+<li class="chapter" data-level="3.2.3" data-path="project.html"><a href="project.html#final-result"><i class="fa fa-check"></i><b>3.2.3</b> Marking the final result</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="project.html"><a href="project.html#data-readme"><i class="fa fa-check"></i><b>3.3</b> Documenting your data</a></li>
+<li class="chapter" data-level="3.4" data-path="project.html"><a href="project.html#rstudio-projects"><i class="fa fa-check"></i><b>3.4</b> RStudio projects</a></li>
+<li class="chapter" data-level="3.5" data-path="project.html"><a href="project.html#notebook"><i class="fa fa-check"></i><b>3.5</b> The project notebook</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="project.html"><a href="project.html#make-notebook"><i class="fa fa-check"></i><b>3.5.1</b> Making the notebook</a></li>
+<li class="chapter" data-level="3.5.2" data-path="project.html"><a href="project.html#notebook-contents"><i class="fa fa-check"></i><b>3.5.2</b> What goes in the notebook</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="project.html"><a href="project.html#markdown"><i class="fa fa-check"></i><b>3.6</b> Markdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#text"><i class="fa fa-check"></i>Text</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#headings"><i class="fa fa-check"></i>Headings</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#lists"><i class="fa fa-check"></i>Lists</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#code"><i class="fa fa-check"></i>Code</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#images-tables-and-quotes"><i class="fa fa-check"></i>Images, tables, and quotes</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#learning-more"><i class="fa fa-check"></i>Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="project.html"><a href="project.html#project-summary"><i class="fa fa-check"></i><b>3.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="remote.html"><a href="remote.html"><i class="fa fa-check"></i><b>4</b> Working remotely</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="remote.html"><a href="remote.html#ssh"><i class="fa fa-check"></i><b>4.1</b> Logging onto a remote system</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="remote.html"><a href="remote.html#ahpcc-files"><i class="fa fa-check"></i><b>4.1.1</b> The file system on AHPCC</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="remote.html"><a href="remote.html#copying-files"><i class="fa fa-check"></i><b>4.2</b> Copying files between computers</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="remote.html"><a href="remote.html#scp"><i class="fa fa-check"></i><b>4.2.1</b> <code>scp</code></a></li>
+<li class="chapter" data-level="4.2.2" data-path="remote.html"><a href="remote.html#rsync"><i class="fa fa-check"></i><b>4.2.2</b> <code>rsync</code>: bigger, smarter copies</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="remote.html"><a href="remote.html#download"><i class="fa fa-check"></i><b>4.3</b> Getting data from the web</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="remote.html"><a href="remote.html#curl"><i class="fa fa-check"></i><b>4.3.1</b> <code>curl</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="remote.html"><a href="remote.html#wget"><i class="fa fa-check"></i><b>4.3.2</b> <code>wget</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="remote.html"><a href="remote.html#compression"><i class="fa fa-check"></i><b>4.4</b> Compressing data</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="remote.html"><a href="remote.html#gzip-and-gunzip"><i class="fa fa-check"></i><b>4.4.1</b> <code>gzip</code> and <code>gunzip</code></a></li>
+<li class="chapter" data-level="4.4.2" data-path="remote.html"><a href="remote.html#working-with-compressed-files"><i class="fa fa-check"></i><b>4.4.2</b> Working with compressed files</a></li>
+<li class="chapter" data-level="4.4.3" data-path="remote.html"><a href="remote.html#tar"><i class="fa fa-check"></i><b>4.4.3</b> <code>tar</code>: archiving directories</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="remote.html"><a href="remote.html#checksums"><i class="fa fa-check"></i><b>4.5</b> Verifying data integrity</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="remote.html"><a href="remote.html#md5sum"><i class="fa fa-check"></i><b>4.5.1</b> <code>md5sum</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="remote.html"><a href="remote.html#slurm"><i class="fa fa-check"></i><b>4.6</b> Running jobs on the cluster</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="remote.html"><a href="remote.html#anatomy-of-a-slurm-script"><i class="fa fa-check"></i><b>4.6.1</b> Anatomy of a SLURM script</a></li>
+<li class="chapter" data-level="4.6.2" data-path="remote.html"><a href="remote.html#scratch"><i class="fa fa-check"></i><b>4.6.2</b> Using the scratch disk</a></li>
+<li class="chapter" data-level="4.6.3" data-path="remote.html"><a href="remote.html#submitting-and-checking-jobs"><i class="fa fa-check"></i><b>4.6.3</b> Submitting and checking jobs</a></li>
+<li class="chapter" data-level="4.6.4" data-path="remote.html"><a href="remote.html#software-modules"><i class="fa fa-check"></i><b>4.6.4</b> Software modules</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="remote.html"><a href="remote.html#ssh-keys"><i class="fa fa-check"></i><b>4.7</b> Authentication with SSH keys</a>
+<ul>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#check-for-existing-keys"><i class="fa fa-check"></i>1. Check for existing keys</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#create-a-key-pair"><i class="fa fa-check"></i>2. Create a key pair</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#copy-your-public-key-to-the-remote-computer"><i class="fa fa-check"></i>3. Copy your public key to the remote computer</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#check-permissions"><i class="fa fa-check"></i>4. Check permissions</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#log-on"><i class="fa fa-check"></i>5. Log on</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="remote.html"><a href="remote.html#remote-summary"><i class="fa fa-check"></i><b>4.8</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="git.html"><a href="git.html"><i class="fa fa-check"></i><b>5</b> Version control with Git and GitHub</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="git.html"><a href="git.html#why-git"><i class="fa fa-check"></i><b>5.1</b> Why version control?</a></li>
+<li class="chapter" data-level="5.2" data-path="git.html"><a href="git.html#git-setup"><i class="fa fa-check"></i><b>5.2</b> Installing and configuring Git</a></li>
+<li class="chapter" data-level="5.3" data-path="git.html"><a href="git.html#git-init"><i class="fa fa-check"></i><b>5.3</b> Creating a repository</a></li>
+<li class="chapter" data-level="5.4" data-path="git.html"><a href="git.html#git-workflow"><i class="fa fa-check"></i><b>5.4</b> Track, stage, commit</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="git.html"><a href="git.html#git-status"><i class="fa fa-check"></i><b>5.4.1</b> Checking the status of your files</a></li>
+<li class="chapter" data-level="5.4.2" data-path="git.html"><a href="git.html#git-add"><i class="fa fa-check"></i><b>5.4.2</b> Tracking files with <code>git add</code></a></li>
+<li class="chapter" data-level="5.4.3" data-path="git.html"><a href="git.html#git-stage"><i class="fa fa-check"></i><b>5.4.3</b> Staging changes with <code>git add</code></a></li>
+<li class="chapter" data-level="5.4.4" data-path="git.html"><a href="git.html#git-commit"><i class="fa fa-check"></i><b>5.4.4</b> Storing changes with <code>git commit</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="git.html"><a href="git.html#git-restore"><i class="fa fa-check"></i><b>5.5</b> Undoing changes</a></li>
+<li class="chapter" data-level="5.6" data-path="git.html"><a href="git.html#gitignore"><i class="fa fa-check"></i><b>5.6</b> Ignoring files with <code>.gitignore</code></a></li>
+<li class="chapter" data-level="5.7" data-path="git.html"><a href="git.html#git-log"><i class="fa fa-check"></i><b>5.7</b> Viewing history with <code>git log</code></a></li>
+<li class="chapter" data-level="5.8" data-path="git.html"><a href="git.html#git-diff"><i class="fa fa-check"></i><b>5.8</b> Seeing what changed with <code>git diff</code></a></li>
+<li class="chapter" data-level="5.9" data-path="git.html"><a href="git.html#git-mv"><i class="fa fa-check"></i><b>5.9</b> Renaming and deleting files</a></li>
+<li class="chapter" data-level="5.10" data-path="git.html"><a href="git.html#git-old-versions"><i class="fa fa-check"></i><b>5.10</b> Retrieving an old version</a></li>
+<li class="chapter" data-level="5.11" data-path="git.html"><a href="git.html#branches"><i class="fa fa-check"></i><b>5.11</b> Branches</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="git.html"><a href="git.html#git-switch"><i class="fa fa-check"></i><b>5.11.1</b> Creating, switching, and merging</a></li>
+<li class="chapter" data-level="5.11.2" data-path="git.html"><a href="git.html#merge-conflicts"><i class="fa fa-check"></i><b>5.11.2</b> Merge conflicts</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="git.html"><a href="git.html#github"><i class="fa fa-check"></i><b>5.12</b> Remote repositories and GitHub</a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="git.html"><a href="git.html#git-clone"><i class="fa fa-check"></i><b>5.12.1</b> Cloning a repository</a></li>
+<li class="chapter" data-level="5.12.2" data-path="git.html"><a href="git.html#github-setup"><i class="fa fa-check"></i><b>5.12.2</b> Setting up GitHub</a></li>
+<li class="chapter" data-level="5.12.3" data-path="git.html"><a href="git.html#git-push"><i class="fa fa-check"></i><b>5.12.3</b> Pushing a local repository to GitHub</a></li>
+<li class="chapter" data-level="5.12.4" data-path="git.html"><a href="git.html#git-everyday"><i class="fa fa-check"></i><b>5.12.4</b> The everyday workflow</a></li>
+<li class="chapter" data-level="5.12.5" data-path="git.html"><a href="git.html#github-readme"><i class="fa fa-check"></i><b>5.12.5</b> README files and Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="git.html"><a href="git.html#git-summary"><i class="fa fa-check"></i><b>5.13</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a>
+<ul>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html#books"><i class="fa fa-check"></i>Books</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html#articles"><i class="fa fa-check"></i>Articles</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/andrewalverson/BIOL51573-2026S" target="_blank">Course GitHub page</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Practical Programming for Biologists</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="shell-config" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Tailoring your shell<a href="shell-config.html#shell-config" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="goals">
+<p><strong>In this chapter</strong></p>
+<ul>
+<li>where the programs you run actually live, and how the shell finds them (your
+<code>$PATH</code>)</li>
+<li>how to make your own scripts runnable from anywhere</li>
+<li>the shell’s configuration files (<code>.zshrc</code>, <code>.bashrc</code>, and <code>.bash_profile</code>),
+and which one to use</li>
+<li>how to make aliases (keyboard shortcuts) for commands you use a lot</li>
+<li>how to add color, a longer history, and a safety net against overwriting
+files</li>
+</ul>
+</div>
+<div id="path" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Where are executable programs installed?<a href="shell-config.html#path" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When you type <code>ls</code>, the shell runs a program called <code>ls</code>. That program is a
+file, sitting in a directory somewhere on your computer. So where is it, and
+how did the shell know where to look?</p>
+<div id="which-and-type" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> <code>which</code> and <code>type</code><a href="shell-config.html#which-and-type" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>which</code> tells you where a command lives on the file system:</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb226-1"><a href="shell-config.html#cb226-1" tabindex="-1"></a><span class="fu">which</span> ls</span>
+<span id="cb226-2"><a href="shell-config.html#cb226-2" tabindex="-1"></a><span class="fu">which</span> less</span>
+<span id="cb226-3"><a href="shell-config.html#cb226-3" tabindex="-1"></a><span class="fu">which</span> python3</span></code></pre></div>
+<pre><code>/bin/ls
+/usr/bin/less
+/opt/miniconda3/bin/python3</code></pre>
+<p>So <code>ls</code> is the file <code>/bin/ls</code>. You could run it by typing its full path, and
+it would do exactly the same thing:</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb228-1"><a href="shell-config.html#cb228-1" tabindex="-1"></a><span class="ex">/bin/ls</span></span></code></pre></div>
+<p>Now try <code>which cd</code>. In Zsh, you’ll get <code>cd: shell built-in command</code>. That’s
+because <code>cd</code> isn’t a program at all: it’s built into the shell itself (Section <a href="unix.html#shell">1.3</a>). <code>type</code> tells
+you what kind of command something is, whether it’s a builtin, a program, or
+an alias (Section <a href="shell-config.html#aliases">2.3</a>):</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb229-1"><a href="shell-config.html#cb229-1" tabindex="-1"></a><span class="bu">type</span> cd</span>
+<span id="cb229-2"><a href="shell-config.html#cb229-2" tabindex="-1"></a><span class="bu">type</span> ls</span></code></pre></div>
+<pre><code>cd is a shell builtin
+ls is /bin/ls</code></pre>
+</div>
+<div id="the-path-variable" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> The <code>$PATH</code> variable<a href="shell-config.html#the-path-variable" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The shell finds programs using a variable called <code>PATH</code>, a list of
+directories separated by colons:</p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb231-1"><a href="shell-config.html#cb231-1" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$PATH</span></span></code></pre></div>
+<pre class="text"><code>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</code></pre>
+<p>Yours will look different. Colons are hard to read, so here’s a trick to print
+one directory per line. This is the <code>PATH</code> on the computer that built this
+book:</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb233-1"><a href="shell-config.html#cb233-1" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$PATH</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&#39;:&#39;</span> <span class="st">&#39;\n&#39;</span></span></code></pre></div>
+<pre><code>/opt/miniconda3/bin
+/opt/miniconda3/condabin
+/opt/homebrew/bin
+/opt/homebrew/sbin
+/Users/aja/perl5/bin
+/usr/local/bin
+/System/Cryptexes/App/usr/bin
+/usr/bin
+/bin
+/usr/sbin
+/sbin
+/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin
+/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin
+/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
+/opt/X11/bin
+/Users/aja/local/bin
+/Users/aja/local/src/scripts
+/Users/aja/.local/bin
+/Users/aja/local/src/phylogenomic_dataset_construction3/scripts3
+/Library/Frameworks/Python.framework/Versions/3.6/bin
+/Users/aja/Library/Python/3.7/bin</code></pre>
+<p>When you type a command, the shell:</p>
+<ol style="list-style-type: decimal">
+<li>checks whether it’s an <strong>alias</strong>, a shortcut name you’ve defined for a
+longer command (Section <a href="shell-config.html#aliases">2.3</a>), or a <strong>builtin</strong>, a command built
+into the shell itself, like <code>cd</code> (see <code>type</code>, above);</li>
+<li>if it’s neither, looks in each directory in your <code>PATH</code>, <strong>in order</strong>, for
+a program with that name;</li>
+<li>runs the <strong>first</strong> one it finds.</li>
+</ol>
+<p>If it doesn’t find the program in any of those directories, you get the
+dreaded message:</p>
+<pre class="text"><code>zsh: command not found: blastn</code></pre>
+<p>This means “I looked in every directory in your <code>PATH</code>, and no program has
+that name.” Either the program isn’t installed, or it is installed but in a
+directory that isn’t in your <code>PATH</code>.</p>
+</div>
+<div id="order-matters" class="section level3 hasAnchor" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Order matters<a href="shell-config.html#order-matters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can have several programs with the same name in different directories.
+<code>which -a</code> lists all of them, in the order the shell searches:</p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb236-1"><a href="shell-config.html#cb236-1" tabindex="-1"></a><span class="fu">which</span> <span class="at">-a</span> python3</span></code></pre></div>
+<pre><code>/opt/miniconda3/bin/python3
+/opt/homebrew/bin/python3
+/usr/bin/python3</code></pre>
+<p>This computer has three different <code>python3</code> programs: one from conda, one from
+Homebrew, and one from Apple. Typing <code>python3</code> runs the first one, the conda
+version, because <code>/opt/miniconda3/bin</code> comes first in the <code>PATH</code>. This is
+the source of many “but it works on my computer!” mysteries. When a program
+behaves unexpectedly, <code>which</code> is one of the first things to check.</p>
+<div class="note">
+<p><strong>Package managers edit your <code>PATH</code>.</strong> When you install conda or Homebrew,
+the installer adds lines to your shell’s configuration file (Section
+<a href="shell-config.html#config-files">2.2</a>) that put its directories at the front of your <code>PATH</code>.
+That’s how conda’s <code>python3</code> wins in the example above.</p>
+</div>
+</div>
+<div id="why-.script.sh" class="section level3 hasAnchor" number="2.1.4">
+<h3><span class="header-section-number">2.1.4</span> Why <code>./script.sh</code>?<a href="shell-config.html#why-.script.sh" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This also explains why you have to type <code>./</code> to run your own script (Section
+<a href="unix.html#bash-scripts">1.15</a>). The current directory (<code>.</code>) isn’t in your <code>PATH</code>, so
+the shell won’t look there unless you give it the path to the script
+explicitly. (Leaving <code>.</code> out of the <code>PATH</code> is deliberate. It keeps a
+malicious program named, say, <code>ls</code> in some directory you <code>cd</code> into from
+running when you type <code>ls</code>.)</p>
+</div>
+<div id="change-path" class="section level3 hasAnchor" number="2.1.5">
+<h3><span class="header-section-number">2.1.5</span> Changing the <code>PATH</code><a href="shell-config.html#change-path" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>PATH</code> is a variable, so you can change it like any other variable (Section
+<a href="unix.html#variables">1.12.1</a>). To <strong>add</strong> a directory, include the current value,
+<code>$PATH</code>, plus the new directory, separated by a colon:</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb238-1"><a href="shell-config.html#cb238-1" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$PATH</span><span class="st">:</span><span class="va">$HOME</span><span class="st">/local/scripts&quot;</span>    <span class="co"># add to the end: searched last</span></span>
+<span id="cb238-2"><a href="shell-config.html#cb238-2" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$HOME</span><span class="st">/local/scripts:</span><span class="va">$PATH</span><span class="st">&quot;</span>    <span class="co"># add to the front: searched first</span></span></code></pre></div>
+<p><code>export</code> makes the variable available to programs that the shell runs, not
+just to the shell itself. <code>PATH</code> needs it.</p>
+<p>Adding to the end is the safer choice: your directory is searched last, so
+nothing in it can accidentally replace a standard command. Add to the front
+only when you specifically want your version of a program to win.</p>
+<div class="warning">
+<p><strong>Don’t forget the <code>$PATH</code>.</strong> What’s the difference between these two lines?</p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb239-1"><a href="shell-config.html#cb239-1" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$PATH</span><span class="st">:</span><span class="va">$HOME</span><span class="st">/local/scripts&quot;</span></span>
+<span id="cb239-2"><a href="shell-config.html#cb239-2" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$HOME</span><span class="st">/local/scripts&quot;</span></span></code></pre></div>
+<p>The first <em>adds</em> a directory to your <code>PATH</code>. The second <em>replaces</em> your
+entire <code>PATH</code> with a single directory, and suddenly nothing works:</p>
+<div class="sourceCode" id="cb240"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb240-1"><a href="shell-config.html#cb240-1" tabindex="-1"></a><span class="va">PATH</span><span class="op">=</span>/nowhere</span>
+<span id="cb240-2"><a href="shell-config.html#cb240-2" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb240-3"><a href="shell-config.html#cb240-3" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;The shell can&#39;t find ls anymore.&quot;</span></span></code></pre></div>
+<pre><code>bash: line 1: ls: command not found
+The shell can&#39;t find ls anymore.</code></pre>
+<p>If this happens, don’t panic. A change typed at the command line only lasts
+until you close the Terminal window, so just open a new one. If the bad line
+is in a configuration file, open a new window anyway and fix the file by
+calling the editor by its full path (for example, <code>/usr/bin/nano ~/.zshrc</code>).</p>
+</div>
+<p>A <code>PATH</code> change typed at the command line lasts only for the current Terminal
+window. To make it permanent, put the <code>export</code> line in your shell’s
+configuration file, which runs every time you open a new window. That’s the
+subject of the rest of this chapter.</p>
+</div>
+<div id="local-scripts" class="section level3 hasAnchor" number="2.1.6">
+<h3><span class="header-section-number">2.1.6</span> A home for your own scripts<a href="shell-config.html#local-scripts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As you write more scripts, you’ll want to run them from anywhere, just like
+<code>ls</code> or <code>grep</code>, without typing <code>./</code> or a long path. The standard way to do
+that:</p>
+<ol style="list-style-type: decimal">
+<li>Make a directory for your scripts, such as <code>~/local/scripts</code>.</li>
+<li>Add that directory to your <code>PATH</code>, permanently.</li>
+<li>Put each script there, with a shebang line (Section <a href="unix.html#bash-scripts">1.15</a>)
+and execute permission (<code>chmod u+x</code>).</li>
+</ol>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:local-scripts"></span>
+<img src="images/02-shell/local-scripts.png" alt="Keep your own scripts in one directory, like `~/local/scripts`, and add that directory to your `PATH`. Then you can run `orf.py` from any directory, just by typing its name." width="60%" />
+<p class="caption">
+Figure 2.1: Keep your own scripts in one directory, like <code>~/local/scripts</code>, and add that directory to your <code>PATH</code>. Then you can run <code>orf.py</code> from any directory, just by typing its name.
+</p>
+</div>
+<p>A common arrangement, borrowed from how Unix organizes its own files:</p>
+<table>
+<colgroup>
+<col width="23%" />
+<col width="76%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Directory</th>
+<th>What goes there</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>~/local/scripts</code></td>
+<td>scripts you write yourself (Python, Bash, …)</td>
+</tr>
+<tr class="even">
+<td><code>~/local/src</code></td>
+<td>source code and downloaded software</td>
+</tr>
+<tr class="odd">
+<td><code>~/local/bin</code></td>
+<td>executable programs you’ve installed or compiled yourself</td>
+</tr>
+</tbody>
+</table>
+<p>Add both <code>~/local/scripts</code> and <code>~/local/bin</code> to your <code>PATH</code>, and anything you
+put in them is always available.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-22" class="exercise"><strong>Exercise 2.1  </strong></span></p>
+<ol style="list-style-type: decimal">
+<li>Use <code>which</code> to find where <code>grep</code>, <code>sort</code>, <code>nano</code>, and <code>python3</code> are
+installed. Use <code>type</code> on <code>echo</code>, <code>pwd</code>, and <code>cd</code>. Which are builtins?</li>
+<li>Print your <code>PATH</code>, one directory per line. How many directories does the
+shell search? Which is searched first?</li>
+<li>How many <code>python3</code> programs are on your computer? Which one runs when you
+type <code>python3</code>?</li>
+<li>In a new Terminal window, run <code>PATH=/nowhere</code>, then try <code>ls</code>, <code>pwd</code>, and
+<code>/bin/ls</code>. Explain what works, what doesn’t, and why. Then close the
+window.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="config-files" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> The shell’s configuration files<a href="shell-config.html#config-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Every time you open a Terminal window, the shell runs a configuration file
+(sometimes called a startup file or “dotfile”) from your home directory.
+Anything in that file, such as <code>PATH</code> changes, aliases, colors, and other
+settings, is applied before you see your first prompt. There’s virtually no
+limit to what you can set there.</p>
+<p>These files start with a <code>.</code>, so they’re hidden. Use <code>ls -a</code> to see them:</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb242-1"><a href="shell-config.html#cb242-1" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-a</span> ~</span></code></pre></div>
+<div id="which-file-it-depends-on-your-shell" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Which file? It depends on your shell<a href="shell-config.html#which-file-it-depends-on-your-shell" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>First, find out which shell you’re using:</p>
+<div class="sourceCode" id="cb243"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb243-1"><a href="shell-config.html#cb243-1" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$SHELL</span></span></code></pre></div>
+<p>On a Mac, it’s almost certainly <code>/bin/zsh</code>, the default since 2019. On Linux,
+including the computing cluster, it’s usually <code>/bin/bash</code>. Each shell reads
+different files:</p>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="7%" />
+<col width="73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Shell</th>
+<th>When it runs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>~/.zshrc</code></td>
+<td>Zsh</td>
+<td>every interactive shell: every new Terminal window or tab</td>
+</tr>
+<tr class="even">
+<td><code>~/.zprofile</code></td>
+<td>Zsh</td>
+<td>login shells only, before <code>.zshrc</code></td>
+</tr>
+<tr class="odd">
+<td><code>~/.zshenv</code></td>
+<td>Zsh</td>
+<td><em>every</em> Zsh, even ones that run scripts</td>
+</tr>
+<tr class="even">
+<td><code>~/.bash_profile</code></td>
+<td>Bash</td>
+<td><strong>login</strong> shells: logging in with <code>ssh</code>, and every window in Mac Terminal</td>
+</tr>
+<tr class="odd">
+<td><code>~/.bashrc</code></td>
+<td>Bash</td>
+<td><strong>non-login</strong> interactive shells: new windows in most Linux terminals, or typing <code>bash</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="zsh-use-.zshrc" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Zsh: use <code>~/.zshrc</code><a href="shell-config.html#zsh-use-.zshrc" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If you use Zsh (most Mac users), put your settings in <strong><code>~/.zshrc</code></strong>. It runs
+for every new Terminal window and tab, and it’s where you’ll find advice
+online telling you to put things.</p>
+<div class="note">
+<p><strong>What about <code>.zshenv</code>?</strong> Some guides, and earlier versions of this course,
+put <code>PATH</code> changes in <code>~/.zshenv</code>. That works too, but on macOS a system file
+that runs after <code>.zshenv</code> (<code>/etc/zprofile</code>) can reorder your <code>PATH</code>, moving
+your directories behind the system’s. Setting <code>PATH</code> in <code>~/.zshrc</code> avoids
+that surprise.</p>
+</div>
+</div>
+<div id="bash-.bash_profile-vs.-.bashrc" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Bash: <code>.bash_profile</code> vs. <code>.bashrc</code><a href="shell-config.html#bash-.bash_profile-vs.-.bashrc" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Bash is more confusing, because it reads different files depending on whether
+the shell is a <strong>login shell</strong>:</p>
+<ul>
+<li>A <strong>login shell</strong> is the first shell you get when you log in: when you <code>ssh</code>
+into the cluster, for example. Bash runs <code>~/.bash_profile</code>.</li>
+<li>A <strong>non-login shell</strong> is any other interactive shell: a new window in most
+Linux terminal programs, or a shell started by typing <code>bash</code>. Bash runs
+<code>~/.bashrc</code>.</li>
+<li>To add to the confusion, the Mac Terminal app treats every new window as a
+login shell, so Bash on a Mac reads <code>~/.bash_profile</code>.</li>
+</ul>
+<p>The usual solution is to put all your settings in <code>~/.bashrc</code>, and have
+<code>~/.bash_profile</code> read <code>~/.bashrc</code>. Then your settings apply no matter how the
+shell starts. Make sure your <code>~/.bash_profile</code> contains these lines (on most
+Linux systems, including the cluster, it already does):</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb244-1"><a href="shell-config.html#cb244-1" tabindex="-1"></a><span class="co"># in ~/.bash_profile: also read ~/.bashrc, if it exists</span></span>
+<span id="cb244-2"><a href="shell-config.html#cb244-2" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-f</span> ~/.bashrc <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb244-3"><a href="shell-config.html#cb244-3" tabindex="-1"></a>    <span class="bu">source</span> ~/.bashrc</span>
+<span id="cb244-4"><a href="shell-config.html#cb244-4" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+</div>
+<div id="in-short" class="section level3 hasAnchor" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> In short<a href="shell-config.html#in-short" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<colgroup>
+<col width="37%" />
+<col width="62%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>You’re using…</th>
+<th>Put your settings in…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Zsh (the Mac default)</td>
+<td><code>~/.zshrc</code></td>
+</tr>
+<tr class="even">
+<td>Bash on the cluster or Linux</td>
+<td><code>~/.bashrc</code> (and check that <code>~/.bash_profile</code> reads it)</td>
+</tr>
+<tr class="odd">
+<td>Bash on a Mac</td>
+<td><code>~/.bash_profile</code>, or <code>~/.bashrc</code> read by <code>~/.bash_profile</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="editing-your-configuration-file" class="section level3 hasAnchor" number="2.2.5">
+<h3><span class="header-section-number">2.2.5</span> Editing your configuration file<a href="shell-config.html#editing-your-configuration-file" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Your configuration file is an ordinary text file, so edit it with <code>nano</code> or
+any text editor. Make a backup first: a mistake in this file can make every
+new Terminal window misbehave.</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb245-1"><a href="shell-config.html#cb245-1" tabindex="-1"></a><span class="fu">cp</span> ~/.zshrc ~/.zshrc.bak   <span class="co"># back it up (skip this if the file doesn&#39;t exist yet)</span></span>
+<span id="cb245-2"><a href="shell-config.html#cb245-2" tabindex="-1"></a><span class="fu">nano</span> ~/.zshrc              <span class="co"># edit it; nano creates it if it doesn&#39;t exist</span></span></code></pre></div>
+<p>Changes take effect in <strong>new</strong> Terminal windows. To apply them to the window
+you’re in, <code>source</code> the file, which runs it in your current shell:</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb246-1"><a href="shell-config.html#cb246-1" tabindex="-1"></a><span class="bu">source</span> ~/.zshrc</span></code></pre></div>
+<p>Lines starting with <code>#</code> are comments. To turn a setting off without deleting
+it, “comment it out” by putting a <code>#</code> at the start of the line.</p>
+<div class="warning">
+<p><strong>Don’t delete what you didn’t write.</strong> Conda, Homebrew, and other installers
+add blocks to your configuration file, often marked with comments like <code>&gt;&gt;&gt; conda initialize &gt;&gt;&gt;</code>. Leave those alone, and add your own settings above or
+below them.</p>
+</div>
+</div>
+</div>
+<div id="aliases" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Aliases<a href="shell-config.html#aliases" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An <strong>alias</strong> is a shortcut: a short name that the shell replaces with a longer
+command. Make one with <code>alias name='command'</code>:</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb247-1"><a href="shell-config.html#cb247-1" tabindex="-1"></a><span class="bu">alias</span> cl=<span class="st">&#39;clear&#39;</span></span>
+<span id="cb247-2"><a href="shell-config.html#cb247-2" tabindex="-1"></a><span class="bu">alias</span> cx=<span class="st">&#39;chmod u+x&#39;</span></span>
+<span id="cb247-3"><a href="shell-config.html#cb247-3" tabindex="-1"></a><span class="bu">alias</span> ll=<span class="st">&#39;ls -lh&#39;</span></span>
+<span id="cb247-4"><a href="shell-config.html#cb247-4" tabindex="-1"></a><span class="bu">alias</span> pin=<span class="st">&#39;ssh username@hpc-portal2.hpc.uark.edu&#39;</span></span></code></pre></div>
+<p>Now typing <code>cl</code> clears the screen, <code>cx myscript.sh</code> makes a script
+executable, <code>ll</code> gives a long listing with human-readable sizes, and <code>pin</code>
+logs you onto the cluster.</p>
+<ul>
+<li>There are <strong>no spaces</strong> around the <code>=</code>, just like a variable.</li>
+<li>Put the command in <strong>single quotes</strong>, especially if it contains spaces.</li>
+<li>Anything you type after the alias is added to the end of the command, so
+<code>cx myscript.sh</code> becomes <code>chmod u+x myscript.sh</code>.</li>
+</ul>
+<p>An alias typed at the command line lasts until you close the window. Put it
+in your configuration file to keep it.</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb248-1"><a href="shell-config.html#cb248-1" tabindex="-1"></a><span class="bu">alias</span>              <span class="co"># list all your aliases</span></span>
+<span id="cb248-2"><a href="shell-config.html#cb248-2" tabindex="-1"></a><span class="bu">type</span> ll            <span class="co"># what does this alias stand for?</span></span>
+<span id="cb248-3"><a href="shell-config.html#cb248-3" tabindex="-1"></a><span class="bu">unalias</span> ll         <span class="co"># remove an alias (for this session)</span></span></code></pre></div>
+<div class="tip">
+<p><strong>A safety alias.</strong> Many people add <code>alias rm='rm -i'</code>, so <code>rm</code> always asks
+before deleting. It’s a good idea while you’re learning. The catch: you can
+come to depend on it and then get burned on a computer that doesn’t have it.
+To skip an alias once, put a backslash in front of the command: <code>\rm file</code>.</p>
+</div>
+<p>Aliases work only when you’re typing commands interactively; they don’t work
+inside scripts. For anything more complicated than a shortcut, write a script
+and put it in <code>~/local/scripts</code> (Section <a href="shell-config.html#local-scripts">2.1.6</a>).</p>
+</div>
+<div id="colors" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Colors<a href="shell-config.html#colors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="colors-in-ls-output" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Colors in <code>ls</code> output<a href="shell-config.html#colors-in-ls-output" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Color makes <code>ls</code> output much easier to scan: directories, executable programs,
+and links stand out from ordinary files. On a Mac, turn colors on and choose
+them with two variables in your configuration file:</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb249-1"><a href="shell-config.html#cb249-1" tabindex="-1"></a><span class="bu">export</span> <span class="va">CLICOLOR</span><span class="op">=</span>1</span>
+<span id="cb249-2"><a href="shell-config.html#cb249-2" tabindex="-1"></a><span class="bu">export</span> <span class="va">LSCOLORS</span><span class="op">=</span>cxfxcxdxDxegedabagacad</span></code></pre></div>
+<p><code>CLICOLOR=1</code> turns colors on. <code>LSCOLORS</code> chooses them. It’s a code of 11
+pairs of letters; in each pair, the first letter is the text color and the
+second is the background color, for a different kind of file:</p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="31%" />
+<col width="9%" />
+<col width="45%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Position</th>
+<th>Kind of file</th>
+<th>Above</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>directory</td>
+<td><code>cx</code></td>
+<td>green text, default background</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>symbolic link</td>
+<td><code>fx</code></td>
+<td>magenta</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>socket</td>
+<td><code>cx</code></td>
+<td>green</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>pipe</td>
+<td><code>dx</code></td>
+<td>brown</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>executable</td>
+<td><code>Dx</code></td>
+<td>bold brown (yellow)</td>
+</tr>
+<tr class="even">
+<td>6–11</td>
+<td>special files you’ll rarely see</td>
+<td><code>egedabagacad</code></td>
+<td>various</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>Letter</th>
+<th>Color</th>
+<th>Letter</th>
+<th>Color</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>a</code></td>
+<td>black</td>
+<td><code>A</code></td>
+<td>bold black (gray)</td>
+</tr>
+<tr class="even">
+<td><code>b</code></td>
+<td>red</td>
+<td><code>B</code></td>
+<td>bold red</td>
+</tr>
+<tr class="odd">
+<td><code>c</code></td>
+<td>green</td>
+<td><code>C</code></td>
+<td>bold green</td>
+</tr>
+<tr class="even">
+<td><code>d</code></td>
+<td>brown</td>
+<td><code>D</code></td>
+<td>bold brown (yellow)</td>
+</tr>
+<tr class="odd">
+<td><code>e</code></td>
+<td>blue</td>
+<td><code>E</code></td>
+<td>bold blue</td>
+</tr>
+<tr class="even">
+<td><code>f</code></td>
+<td>magenta</td>
+<td><code>F</code></td>
+<td>bold magenta</td>
+</tr>
+<tr class="odd">
+<td><code>g</code></td>
+<td>cyan</td>
+<td><code>G</code></td>
+<td>bold cyan</td>
+</tr>
+<tr class="even">
+<td><code>h</code></td>
+<td>light gray</td>
+<td><code>H</code></td>
+<td>bold light gray (white)</td>
+</tr>
+<tr class="odd">
+<td><code>x</code></td>
+<td>default</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>So to make directories bold blue instead of green, change the first pair
+from <code>cx</code> to <code>Ex</code>.</p>
+<div class="note">
+<p><strong>Colors on Linux.</strong> The GNU <code>ls</code> on Linux uses a different system: colors
+are turned on with <code>ls --color=auto</code> (usually already set up as an alias) and
+chosen with a variable called <code>LS_COLORS</code>, in a different format. On the
+cluster, colors are probably on already.</p>
+<p>Older guides, including earlier versions of this course, also set
+<code>export TERM=xterm-color</code>. Modern versions of Terminal don’t need it, and it
+limits you to 8 colors, so leave it out.</p>
+</div>
+</div>
+<div id="terminal-colors-fonts-and-themes" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Terminal colors, fonts, and themes<a href="shell-config.html#terminal-colors-fonts-and-themes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Terminal app itself has color themes. Open <em>Terminal &gt; Settings</em>
+(<em>Preferences</em> on older versions of macOS), then the <strong>Profiles</strong> tab. Pick a
+theme from the list (Basic, Homebrew, Pro, Ocean, …), and click
+<strong>Default</strong> to use it for every new window. On the same tab, you can change
+the font and its size (stick with a monospace font) and the window size.</p>
+</div>
+</div>
+<div id="history" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> History<a href="shell-config.html#history" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The shell remembers the commands you’ve typed (Section <a href="unix.html#getting-around">1.5</a>).
+By default, it doesn’t remember many. Since your history is a record of what
+you did, it’s worth keeping a lot more of it, with dates.</p>
+<p><strong>Zsh</strong> (in <code>~/.zshrc</code>):</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb250-1"><a href="shell-config.html#cb250-1" tabindex="-1"></a><span class="va">HISTSIZE</span><span class="op">=</span>50000              <span class="co"># commands to remember in the current session</span></span>
+<span id="cb250-2"><a href="shell-config.html#cb250-2" tabindex="-1"></a><span class="va">SAVEHIST</span><span class="op">=</span>50000              <span class="co"># commands to save in the history file</span></span>
+<span id="cb250-3"><a href="shell-config.html#cb250-3" tabindex="-1"></a><span class="ex">setopt</span> EXTENDED_HISTORY     <span class="co"># save the date and time of each command</span></span></code></pre></div>
+<p>In Zsh, <code>history</code> shows only the last 16 commands. Use <code>history 1</code> to see
+everything, and <code>history -i 1</code> to include dates and times.</p>
+<p><strong>Bash</strong> (in <code>~/.bashrc</code>):</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb251-1"><a href="shell-config.html#cb251-1" tabindex="-1"></a><span class="va">HISTSIZE</span><span class="op">=</span>50000                <span class="co"># commands to remember in the current session</span></span>
+<span id="cb251-2"><a href="shell-config.html#cb251-2" tabindex="-1"></a><span class="va">HISTFILESIZE</span><span class="op">=</span>50000            <span class="co"># commands to save in the history file</span></span>
+<span id="cb251-3"><a href="shell-config.html#cb251-3" tabindex="-1"></a><span class="va">HISTTIMEFORMAT</span><span class="op">=</span><span class="st">&quot;%Y-%m-%d &quot;</span>    <span class="co"># show the date of each command in `history`</span></span></code></pre></div>
+<p>Combine your history with <code>grep</code> to find that command you ran last month:</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb252-1"><a href="shell-config.html#cb252-1" tabindex="-1"></a><span class="bu">history</span> 1 <span class="kw">|</span> <span class="fu">grep</span> blastn     <span class="co"># Zsh</span></span>
+<span id="cb252-2"><a href="shell-config.html#cb252-2" tabindex="-1"></a><span class="bu">history</span> <span class="kw">|</span> <span class="fu">grep</span> blastn       <span class="co"># Bash</span></span></code></pre></div>
+</div>
+<div id="noclobber" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> A safety net: <code>noclobber</code><a href="shell-config.html#noclobber" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In Section <a href="unix.html#data-streams">1.7</a>, you saw that <code>&gt;</code> overwrites an existing file
+without warning. Turn on the <code>noclobber</code> option, and the shell refuses to
+overwrite files with <code>&gt;</code>:</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb253-1"><a href="shell-config.html#cb253-1" tabindex="-1"></a><span class="bu">set</span> <span class="at">-o</span> noclobber</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb254-1"><a href="shell-config.html#cb254-1" tabindex="-1"></a><span class="bu">set</span> <span class="at">-o</span> noclobber</span>
+<span id="cb254-2"><a href="shell-config.html#cb254-2" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;oops&quot;</span> <span class="op">&gt;</span> fruit.txt</span>
+<span id="cb254-3"><a href="shell-config.html#cb254-3" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;fruit.txt was not overwritten&quot;</span></span></code></pre></div>
+<pre><code>bash: line 1: fruit.txt: cannot overwrite existing file
+fruit.txt was not overwritten</code></pre>
+<p>When you really do mean to overwrite a file, use <code>&gt;|</code> instead of <code>&gt;</code>.
+<code>noclobber</code> works in both Bash and Zsh. Put it in your configuration file and
+it will save you from yourself at least once.</p>
+</div>
+<div id="customizing-your-prompt" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> Customizing your prompt<a href="shell-config.html#customizing-your-prompt" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The prompt can show useful information, such as your user name, the computer
+you’re on (handy when you have windows open on several computers), and the
+directory you’re in. Set it with <code>PROMPT</code> in Zsh or <code>PS1</code> in Bash. Each uses
+special codes:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Shows</th>
+<th>Zsh (<code>PROMPT</code>)</th>
+<th>Bash (<code>PS1</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>user name</td>
+<td><code>%n</code></td>
+<td><code>\u</code></td>
+</tr>
+<tr class="even">
+<td>computer name</td>
+<td><code>%m</code></td>
+<td><code>\h</code></td>
+</tr>
+<tr class="odd">
+<td>current directory (full)</td>
+<td><code>%~</code></td>
+<td><code>\w</code></td>
+</tr>
+<tr class="even">
+<td>current directory (last part)</td>
+<td><code>%1~</code></td>
+<td><code>\W</code></td>
+</tr>
+<tr class="odd">
+<td><code>%</code>/<code>#</code> or <code>$</code>/<code>#</code> (<code>#</code> for administrators)</td>
+<td><code>%#</code></td>
+<td><code>\$</code></td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb256"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb256-1"><a href="shell-config.html#cb256-1" tabindex="-1"></a><span class="va">PROMPT</span><span class="op">=</span><span class="st">&#39;%n@%m %1~ %# &#39;</span>      <span class="co"># Zsh: aja@hostname nt %</span></span>
+<span id="cb256-2"><a href="shell-config.html#cb256-2" tabindex="-1"></a><span class="va">PS1</span><span class="op">=</span><span class="st">&#39;\u@\h \W \$ &#39;</span>          <span class="co"># Bash: aja@hostname nt $</span></span></code></pre></div>
+</div>
+<div id="example-config" class="section level2 hasAnchor" number="2.8">
+<h2><span class="header-section-number">2.8</span> Putting it together<a href="shell-config.html#example-config" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here’s a complete starting configuration file for Zsh on a Mac:</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb257-1"><a href="shell-config.html#cb257-1" tabindex="-1"></a><span class="co"># ~/.zshrc</span></span>
+<span id="cb257-2"><a href="shell-config.html#cb257-2" tabindex="-1"></a></span>
+<span id="cb257-3"><a href="shell-config.html#cb257-3" tabindex="-1"></a><span class="co"># PATH: my own scripts and programs</span></span>
+<span id="cb257-4"><a href="shell-config.html#cb257-4" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$PATH</span><span class="st">:</span><span class="va">$HOME</span><span class="st">/local/scripts:</span><span class="va">$HOME</span><span class="st">/local/bin&quot;</span></span>
+<span id="cb257-5"><a href="shell-config.html#cb257-5" tabindex="-1"></a></span>
+<span id="cb257-6"><a href="shell-config.html#cb257-6" tabindex="-1"></a><span class="co"># colors for ls</span></span>
+<span id="cb257-7"><a href="shell-config.html#cb257-7" tabindex="-1"></a><span class="bu">export</span> <span class="va">CLICOLOR</span><span class="op">=</span>1</span>
+<span id="cb257-8"><a href="shell-config.html#cb257-8" tabindex="-1"></a><span class="bu">export</span> <span class="va">LSCOLORS</span><span class="op">=</span>cxfxcxdxDxegedabagacad</span>
+<span id="cb257-9"><a href="shell-config.html#cb257-9" tabindex="-1"></a></span>
+<span id="cb257-10"><a href="shell-config.html#cb257-10" tabindex="-1"></a><span class="co"># history: remember a lot, with dates</span></span>
+<span id="cb257-11"><a href="shell-config.html#cb257-11" tabindex="-1"></a><span class="va">HISTSIZE</span><span class="op">=</span>50000</span>
+<span id="cb257-12"><a href="shell-config.html#cb257-12" tabindex="-1"></a><span class="va">SAVEHIST</span><span class="op">=</span>50000</span>
+<span id="cb257-13"><a href="shell-config.html#cb257-13" tabindex="-1"></a><span class="ex">setopt</span> EXTENDED_HISTORY</span>
+<span id="cb257-14"><a href="shell-config.html#cb257-14" tabindex="-1"></a></span>
+<span id="cb257-15"><a href="shell-config.html#cb257-15" tabindex="-1"></a><span class="co"># don&#39;t let &gt; overwrite existing files (use &gt;| to force it)</span></span>
+<span id="cb257-16"><a href="shell-config.html#cb257-16" tabindex="-1"></a><span class="bu">set</span> <span class="at">-o</span> noclobber</span>
+<span id="cb257-17"><a href="shell-config.html#cb257-17" tabindex="-1"></a></span>
+<span id="cb257-18"><a href="shell-config.html#cb257-18" tabindex="-1"></a><span class="co"># aliases (keyboard shortcuts)</span></span>
+<span id="cb257-19"><a href="shell-config.html#cb257-19" tabindex="-1"></a><span class="bu">alias</span> cl=<span class="st">&#39;clear&#39;</span></span>
+<span id="cb257-20"><a href="shell-config.html#cb257-20" tabindex="-1"></a><span class="bu">alias</span> cx=<span class="st">&#39;chmod u+x&#39;</span></span>
+<span id="cb257-21"><a href="shell-config.html#cb257-21" tabindex="-1"></a><span class="bu">alias</span> ll=<span class="st">&#39;ls -lh&#39;</span></span>
+<span id="cb257-22"><a href="shell-config.html#cb257-22" tabindex="-1"></a><span class="bu">alias</span> pin=<span class="st">&#39;ssh username@hpc-portal2.hpc.uark.edu&#39;</span></span></code></pre></div>
+<p>And the equivalent for Bash on the cluster, in <code>~/.bashrc</code>:</p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb258-1"><a href="shell-config.html#cb258-1" tabindex="-1"></a><span class="co"># ~/.bashrc</span></span>
+<span id="cb258-2"><a href="shell-config.html#cb258-2" tabindex="-1"></a></span>
+<span id="cb258-3"><a href="shell-config.html#cb258-3" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$PATH</span><span class="st">:</span><span class="va">$HOME</span><span class="st">/local/scripts:</span><span class="va">$HOME</span><span class="st">/local/bin&quot;</span></span>
+<span id="cb258-4"><a href="shell-config.html#cb258-4" tabindex="-1"></a></span>
+<span id="cb258-5"><a href="shell-config.html#cb258-5" tabindex="-1"></a><span class="va">HISTSIZE</span><span class="op">=</span>50000</span>
+<span id="cb258-6"><a href="shell-config.html#cb258-6" tabindex="-1"></a><span class="va">HISTFILESIZE</span><span class="op">=</span>50000</span>
+<span id="cb258-7"><a href="shell-config.html#cb258-7" tabindex="-1"></a><span class="va">HISTTIMEFORMAT</span><span class="op">=</span><span class="st">&quot;%Y-%m-%d &quot;</span></span>
+<span id="cb258-8"><a href="shell-config.html#cb258-8" tabindex="-1"></a></span>
+<span id="cb258-9"><a href="shell-config.html#cb258-9" tabindex="-1"></a><span class="bu">set</span> <span class="at">-o</span> noclobber</span>
+<span id="cb258-10"><a href="shell-config.html#cb258-10" tabindex="-1"></a></span>
+<span id="cb258-11"><a href="shell-config.html#cb258-11" tabindex="-1"></a><span class="bu">alias</span> cl=<span class="st">&#39;clear&#39;</span></span>
+<span id="cb258-12"><a href="shell-config.html#cb258-12" tabindex="-1"></a><span class="bu">alias</span> cx=<span class="st">&#39;chmod u+x&#39;</span></span>
+<span id="cb258-13"><a href="shell-config.html#cb258-13" tabindex="-1"></a><span class="bu">alias</span> ll=<span class="st">&#39;ls -lh&#39;</span></span></code></pre></div>
+<p>The course files include a sample configuration file,
+<code>files/other_files/bash_profile.txt</code>.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-23" class="exercise"><strong>Exercise 2.2  </strong></span></p>
+<ol style="list-style-type: decimal">
+<li>Which shell are you using? Which configuration files already exist in your
+home directory? (Use <code>ls -a</code>.) Look inside them with <code>less</code>. Did an
+installer add anything?</li>
+<li>Back up your configuration file (if you have one), then add the aliases
+<code>cl</code>, <code>cx</code>, and <code>ll</code>. Open a new Terminal window and test them. Use <code>type</code>
+to check what <code>ll</code> stands for.</li>
+<li>Turn on colors for <code>ls</code>. Then change the code so that directories are bold
+blue.</li>
+<li>Turn on <code>noclobber</code>. Try to overwrite a test file in <code>/tmp</code> with <code>&gt;</code>. Then
+overwrite it on purpose with <code>&gt;|</code>.</li>
+<li>Increase the size of your history, and use <code>history</code> and <code>grep</code> to find
+every <code>cd</code> command you’ve run.</li>
+<li>Choose a Terminal theme and font that you like, and make it the default.</li>
+</ol>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-24" class="exercise"><strong>Exercise 2.3  </strong></span>Set up a home for your own scripts:</p>
+<ol style="list-style-type: decimal">
+<li>Create <code>~/local/scripts</code> and add it to your <code>PATH</code> in your configuration
+file. Open a new window and check your <code>PATH</code>.</li>
+<li>Write a short Bash script, <code>count_seqs.sh</code>, that counts the sequences in a
+FASTA file given as its first argument. (Inside a script, <code>$1</code> is the first
+thing typed after the script’s name: <code>grep -c '&gt;' "$1"</code>.)</li>
+<li>Put it in <code>~/local/scripts</code>, make it executable, and run it on
+<code>watermelon_genome/nt/cox1.fasta</code> from your Desktop, just by typing
+<code>count_seqs.sh</code>, with no <code>./</code> or path.</li>
+<li>Use <code>which count_seqs.sh</code> to confirm where the shell found it.</li>
+</ol>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-25" class="exercise"><strong>Exercise 2.4  </strong></span>On the cluster (Chapter <a href="remote.html#remote">4</a>):</p>
+<ol style="list-style-type: decimal">
+<li>Look at your <code>~/.bash_profile</code> and <code>~/.bashrc</code>. Does <code>.bash_profile</code> read
+<code>.bashrc</code>?</li>
+<li>Add the <code>ll</code> alias and the history settings to <code>~/.bashrc</code>. Log out, log
+back in, and test them.</li>
+<li>Add <code>~/local/scripts</code> to your <code>PATH</code> on the cluster, and copy
+<code>count_seqs.sh</code> there. Can you run it from any directory?</li>
+</ol>
+</div>
+</div>
+<div id="shell-summary" class="section level2 hasAnchor" number="2.9">
+<h2><span class="header-section-number">2.9</span> Command summary<a href="shell-config.html#shell-summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="40%" />
+<col width="59%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command or file</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>which name</code></td>
+<td>show where a program is installed</td>
+</tr>
+<tr class="even">
+<td><code>which -a name</code></td>
+<td>show every program with that name, in search order</td>
+</tr>
+<tr class="odd">
+<td><code>type name</code></td>
+<td>say whether a command is a builtin, program, or alias</td>
+</tr>
+<tr class="even">
+<td><code>echo $PATH</code></td>
+<td>show the directories the shell searches for programs</td>
+</tr>
+<tr class="odd">
+<td><code>export PATH="$PATH:dir"</code></td>
+<td>add a directory to the end of your <code>PATH</code></td>
+</tr>
+<tr class="even">
+<td><code>echo $SHELL</code></td>
+<td>show which shell you’re using</td>
+</tr>
+<tr class="odd">
+<td><code>~/.zshrc</code></td>
+<td>Zsh settings, read by every new window</td>
+</tr>
+<tr class="even">
+<td><code>~/.bashrc</code>, <code>~/.bash_profile</code></td>
+<td>Bash settings: non-login and login shells</td>
+</tr>
+<tr class="odd">
+<td><code>source file</code></td>
+<td>run a configuration file in the current shell</td>
+</tr>
+<tr class="even">
+<td><code>alias name='command'</code></td>
+<td>make a shortcut</td>
+</tr>
+<tr class="odd">
+<td><code>alias</code>, <code>unalias name</code></td>
+<td>list aliases; remove one</td>
+</tr>
+<tr class="even">
+<td><code>CLICOLOR</code>, <code>LSCOLORS</code></td>
+<td>turn on and choose colors for <code>ls</code> (Mac)</td>
+</tr>
+<tr class="odd">
+<td><code>HISTSIZE</code>, <code>SAVEHIST</code>/<code>HISTFILESIZE</code></td>
+<td>how much history to keep</td>
+</tr>
+<tr class="even">
+<td><code>set -o noclobber</code></td>
+<td>stop <code>&gt;</code> from overwriting files (<code>&gt;\|</code> to force)</td>
+</tr>
+<tr class="odd">
+<td><code>PROMPT</code>, <code>PS1</code></td>
+<td>customize the prompt (Zsh, Bash)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="unix.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="project.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": null,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

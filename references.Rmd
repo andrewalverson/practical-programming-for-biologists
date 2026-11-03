@@ -1,0 +1,28 @@
+# References {- #references}
+
+## Books {-}
+
+Buffalo, V. (2015). *Bioinformatics Data Skills: Reproducible and Robust
+Research with Open Source Tools*. O'Reilly Media, Sebastopol, CA. Example
+files: <https://github.com/vsbuffalo/bds-files>
+
+Chacon, S., and B. Straub (2014). *Pro Git*, 2nd edition. Apress, New York.
+Free online: <https://git-scm.com/book/en/v2>
+
+Haddock, S. H. D., and C. W. Dunn (2011). *Practical Computing for
+Biologists*. Sinauer Associates, Sunderland, MA.
+
+## Articles {-}
+
+Noble, W. S. (2009). A quick guide to organizing computational biology
+projects. *PLoS Computational Biology* 5: e1000424.
+<https://doi.org/10.1371/journal.pcbi.1000424>
+
+Shaver, G. R., E. B. Rastetter, V. Salmon, L. E. Street, M. J. van de Weg,
+A. Rocha, M. T. van Wijk, and M. Williams (2013). Pan-Arctic modelling of net
+ecosystem exchange of CO~2~. *Philosophical Transactions of the Royal Society
+B* 368: 20120485. <https://doi.org/10.1098/rstb.2012.0485>
+
+Wilson, G., J. Bryan, K. Cranston, J. Kitzes, L. Nederbragt, and T. K. Teal
+(2017). Good enough practices in scientific computing. *PLoS Computational
+Biology* 13: e1005510. <https://doi.org/10.1371/journal.pcbi.1005510>

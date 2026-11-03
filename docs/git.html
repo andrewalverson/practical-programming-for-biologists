@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Version control with Git and GitHub | Practical Programming for Biologists</title>
+  <meta name="description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Version control with Git and GitHub | Practical Programming for Biologists" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Version control with Git and GitHub | Practical Programming for Biologists" />
+  
+  <meta name="twitter:description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  
+
+<meta name="author" content="Andrew Alverson" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="remote.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Practical Programming for Biologists</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#before-the-first-class"><i class="fa fa-check"></i>Before the first class</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-read-this-book"><i class="fa fa-check"></i>How to read this book</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="unix.html"><a href="unix.html"><i class="fa fa-check"></i><b>1</b> Introduction to Unix</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="unix.html"><a href="unix.html#why-command-line"><i class="fa fa-check"></i><b>1.1</b> Why the command line?</a></li>
+<li class="chapter" data-level="1.2" data-path="unix.html"><a href="unix.html#choosing-os"><i class="fa fa-check"></i><b>1.2</b> Choosing an operating system</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="unix.html"><a href="unix.html#macos"><i class="fa fa-check"></i><b>1.2.1</b> macOS</a></li>
+<li class="chapter" data-level="1.2.2" data-path="unix.html"><a href="unix.html#linux"><i class="fa fa-check"></i><b>1.2.2</b> Linux</a></li>
+<li class="chapter" data-level="1.2.3" data-path="unix.html"><a href="unix.html#windows"><i class="fa fa-check"></i><b>1.2.3</b> Windows</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="unix.html"><a href="unix.html#shell"><i class="fa fa-check"></i><b>1.3</b> The shell</a></li>
+<li class="chapter" data-level="1.4" data-path="unix.html"><a href="unix.html#file-system"><i class="fa fa-check"></i><b>1.4</b> The file system</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="unix.html"><a href="unix.html#paths"><i class="fa fa-check"></i><b>1.4.1</b> Paths</a></li>
+<li class="chapter" data-level="1.4.2" data-path="unix.html"><a href="unix.html#course-files"><i class="fa fa-check"></i><b>1.4.2</b> The course files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="unix.html"><a href="unix.html#getting-around"><i class="fa fa-check"></i><b>1.5</b> Getting around</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="unix.html"><a href="unix.html#pwd-cd-and-echo"><i class="fa fa-check"></i><b>1.5.1</b> <code>pwd</code>, <code>cd</code>, and <code>echo</code></a></li>
+<li class="chapter" data-level="1.5.2" data-path="unix.html"><a href="unix.html#clear-and-exit"><i class="fa fa-check"></i><b>1.5.2</b> <code>clear</code> and <code>exit</code></a></li>
+<li class="chapter" data-level="1.5.3" data-path="unix.html"><a href="unix.html#ctrl-c"><i class="fa fa-check"></i><b>1.5.3</b> Stopping a command: <kbd>Ctrl</kbd>+<kbd>C</kbd></a></li>
+<li class="chapter" data-level="1.5.4" data-path="unix.html"><a href="unix.html#ls"><i class="fa fa-check"></i><b>1.5.4</b> <code>ls</code>: listing directory contents</a></li>
+<li class="chapter" data-level="1.5.5" data-path="unix.html"><a href="unix.html#reading-ls--l-output"><i class="fa fa-check"></i><b>1.5.5</b> Reading <code>ls -l</code> output</a></li>
+<li class="chapter" data-level="1.5.6" data-path="unix.html"><a href="unix.html#wildcards"><i class="fa fa-check"></i><b>1.5.6</b> Wildcards</a></li>
+<li class="chapter" data-level="1.5.7" data-path="unix.html"><a href="unix.html#find"><i class="fa fa-check"></i><b>1.5.7</b> Finding files: <code>find</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="unix.html"><a href="unix.html#viewing-files"><i class="fa fa-check"></i><b>1.6</b> Looking at files</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="unix.html"><a href="unix.html#cat"><i class="fa fa-check"></i><b>1.6.1</b> <code>cat</code></a></li>
+<li class="chapter" data-level="1.6.2" data-path="unix.html"><a href="unix.html#head-and-tail"><i class="fa fa-check"></i><b>1.6.2</b> <code>head</code> and <code>tail</code></a></li>
+<li class="chapter" data-level="1.6.3" data-path="unix.html"><a href="unix.html#less"><i class="fa fa-check"></i><b>1.6.3</b> <code>less</code></a></li>
+<li class="chapter" data-level="1.6.4" data-path="unix.html"><a href="unix.html#man"><i class="fa fa-check"></i><b>1.6.4</b> Getting help: <code>man</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="unix.html"><a href="unix.html#data-streams"><i class="fa fa-check"></i><b>1.7</b> Data streams and redirection</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="unix.html"><a href="unix.html#redirecting-stdout"><i class="fa fa-check"></i><b>1.7.1</b> Redirecting STDOUT</a></li>
+<li class="chapter" data-level="1.7.2" data-path="unix.html"><a href="unix.html#redirecting-stderr"><i class="fa fa-check"></i><b>1.7.2</b> Redirecting STDERR</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="unix.html"><a href="unix.html#text-files"><i class="fa fa-check"></i><b>1.8</b> Text files and text editors</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="unix.html"><a href="unix.html#plain-text"><i class="fa fa-check"></i><b>1.8.1</b> Plain text</a></li>
+<li class="chapter" data-level="1.8.2" data-path="unix.html"><a href="unix.html#line-breaks-matter"><i class="fa fa-check"></i><b>1.8.2</b> Line breaks matter</a></li>
+<li class="chapter" data-level="1.8.3" data-path="unix.html"><a href="unix.html#text-editors"><i class="fa fa-check"></i><b>1.8.3</b> Text editors</a></li>
+<li class="chapter" data-level="1.8.4" data-path="unix.html"><a href="unix.html#fonts"><i class="fa fa-check"></i><b>1.8.4</b> Fonts</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="unix.html"><a href="unix.html#managing-files"><i class="fa fa-check"></i><b>1.9</b> Managing files and directories</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="unix.html"><a href="unix.html#copying-and-moving-cp-and-mv"><i class="fa fa-check"></i><b>1.9.1</b> Copying and moving: <code>cp</code> and <code>mv</code></a></li>
+<li class="chapter" data-level="1.9.2" data-path="unix.html"><a href="unix.html#making-directories-mkdir"><i class="fa fa-check"></i><b>1.9.2</b> Making directories: <code>mkdir</code></a></li>
+<li class="chapter" data-level="1.9.3" data-path="unix.html"><a href="unix.html#deleting-rm-and-rmdir"><i class="fa fa-check"></i><b>1.9.3</b> Deleting: <code>rm</code> and <code>rmdir</code></a></li>
+<li class="chapter" data-level="1.9.4" data-path="unix.html"><a href="unix.html#ln"><i class="fa fa-check"></i><b>1.9.4</b> Links: <code>ln</code></a></li>
+<li class="chapter" data-level="1.9.5" data-path="unix.html"><a href="unix.html#how-much-space-du-and-df"><i class="fa fa-check"></i><b>1.9.5</b> How much space? <code>du</code> and <code>df</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="unix.html"><a href="unix.html#working-with-data"><i class="fa fa-check"></i><b>1.10</b> Working with data</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="unix.html"><a href="unix.html#wc"><i class="fa fa-check"></i><b>1.10.1</b> <code>wc</code>: counting</a></li>
+<li class="chapter" data-level="1.10.2" data-path="unix.html"><a href="unix.html#sort"><i class="fa fa-check"></i><b>1.10.2</b> <code>sort</code>: sorting</a></li>
+<li class="chapter" data-level="1.10.3" data-path="unix.html"><a href="unix.html#grep"><i class="fa fa-check"></i><b>1.10.3</b> <code>grep</code>: searching</a></li>
+<li class="chapter" data-level="1.10.4" data-path="unix.html"><a href="unix.html#cut-extracting-columns"><i class="fa fa-check"></i><b>1.10.4</b> <code>cut</code>: extracting columns</a></li>
+<li class="chapter" data-level="1.10.5" data-path="unix.html"><a href="unix.html#uniq-removing-duplicates"><i class="fa fa-check"></i><b>1.10.5</b> <code>uniq</code>: removing duplicates</a></li>
+<li class="chapter" data-level="1.10.6" data-path="unix.html"><a href="unix.html#column-viewing-tables"><i class="fa fa-check"></i><b>1.10.6</b> <code>column</code>: viewing tables</a></li>
+<li class="chapter" data-level="1.10.7" data-path="unix.html"><a href="unix.html#diff"><i class="fa fa-check"></i><b>1.10.7</b> <code>diff</code>: comparing files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="unix.html"><a href="unix.html#pipes"><i class="fa fa-check"></i><b>1.11</b> Pipes</a></li>
+<li class="chapter" data-level="1.12" data-path="unix.html"><a href="unix.html#quoting"><i class="fa fa-check"></i><b>1.12</b> Variables and quoting</a>
+<ul>
+<li class="chapter" data-level="1.12.1" data-path="unix.html"><a href="unix.html#variables"><i class="fa fa-check"></i><b>1.12.1</b> Variables</a></li>
+<li class="chapter" data-level="1.12.2" data-path="unix.html"><a href="unix.html#quotes-and-special-characters"><i class="fa fa-check"></i><b>1.12.2</b> Quotes and special characters</a></li>
+</ul></li>
+<li class="chapter" data-level="1.13" data-path="unix.html"><a href="unix.html#awk"><i class="fa fa-check"></i><b>1.13</b> <code>awk</code>: working with columns</a>
+<ul>
+<li class="chapter" data-level="1.13.1" data-path="unix.html"><a href="unix.html#how-awk-reads-a-file"><i class="fa fa-check"></i><b>1.13.1</b> How <code>awk</code> reads a file</a></li>
+<li class="chapter" data-level="1.13.2" data-path="unix.html"><a href="unix.html#printing-columns-the-action"><i class="fa fa-check"></i><b>1.13.2</b> Printing columns (the action)</a></li>
+<li class="chapter" data-level="1.13.3" data-path="unix.html"><a href="unix.html#filtering-rows-the-pattern"><i class="fa fa-check"></i><b>1.13.3</b> Filtering rows (the pattern)</a></li>
+<li class="chapter" data-level="1.13.4" data-path="unix.html"><a href="unix.html#both-together"><i class="fa fa-check"></i><b>1.13.4</b> Both together</a></li>
+<li class="chapter" data-level="1.13.5" data-path="unix.html"><a href="unix.html#awk-fs"><i class="fa fa-check"></i><b>1.13.5</b> Tabs and commas: setting the field separator</a></li>
+<li class="chapter" data-level="1.13.6" data-path="unix.html"><a href="unix.html#doing-math"><i class="fa fa-check"></i><b>1.13.6</b> Doing math</a></li>
+<li class="chapter" data-level="1.13.7" data-path="unix.html"><a href="unix.html#summarizing-end"><i class="fa fa-check"></i><b>1.13.7</b> Summarizing: <code>END</code></a></li>
+<li class="chapter" data-level="1.13.8" data-path="unix.html"><a href="unix.html#awk-cheat-sheet"><i class="fa fa-check"></i><b>1.13.8</b> <code>awk</code> cheat sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="1.14" data-path="unix.html"><a href="unix.html#sed"><i class="fa fa-check"></i><b>1.14</b> <code>sed</code>: find and replace</a>
+<ul>
+<li class="chapter" data-level="1.14.1" data-path="unix.html"><a href="unix.html#substitution-soldnew"><i class="fa fa-check"></i><b>1.14.1</b> Substitution: <code>s/old/new/</code></a></li>
+<li class="chapter" data-level="1.14.2" data-path="unix.html"><a href="unix.html#replacing-every-match-g"><i class="fa fa-check"></i><b>1.14.2</b> Replacing every match: <code>g</code></a></li>
+<li class="chapter" data-level="1.14.3" data-path="unix.html"><a href="unix.html#practical-examples"><i class="fa fa-check"></i><b>1.14.3</b> Practical examples</a></li>
+<li class="chapter" data-level="1.14.4" data-path="unix.html"><a href="unix.html#deleting-and-printing-lines"><i class="fa fa-check"></i><b>1.14.4</b> Deleting and printing lines</a></li>
+<li class="chapter" data-level="1.14.5" data-path="unix.html"><a href="unix.html#sed-i"><i class="fa fa-check"></i><b>1.14.5</b> Editing a file in place: <code>-i</code></a></li>
+<li class="chapter" data-level="1.14.6" data-path="unix.html"><a href="unix.html#sed-cheat-sheet"><i class="fa fa-check"></i><b>1.14.6</b> <code>sed</code> cheat sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="1.15" data-path="unix.html"><a href="unix.html#bash-scripts"><i class="fa fa-check"></i><b>1.15</b> Bash scripts</a>
+<ul>
+<li class="chapter" data-level="1.15.1" data-path="unix.html"><a href="unix.html#running-several-commands"><i class="fa fa-check"></i><b>1.15.1</b> Running several commands</a></li>
+<li class="chapter" data-level="1.15.2" data-path="unix.html"><a href="unix.html#writing-a-script"><i class="fa fa-check"></i><b>1.15.2</b> Writing a script</a></li>
+<li class="chapter" data-level="1.15.3" data-path="unix.html"><a href="unix.html#chmod"><i class="fa fa-check"></i><b>1.15.3</b> File permissions: <code>chmod</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.16" data-path="unix.html"><a href="unix.html#loops"><i class="fa fa-check"></i><b>1.16</b> Loops</a>
+<ul>
+<li class="chapter" data-level="1.16.1" data-path="unix.html"><a href="unix.html#for-loops"><i class="fa fa-check"></i><b>1.16.1</b> <code>for</code> loops</a></li>
+<li class="chapter" data-level="1.16.2" data-path="unix.html"><a href="unix.html#parameter-expansion"><i class="fa fa-check"></i><b>1.16.2</b> Changing file names in a loop</a></li>
+</ul></li>
+<li class="chapter" data-level="1.17" data-path="unix.html"><a href="unix.html#unix-summary"><i class="fa fa-check"></i><b>1.17</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="shell-config.html"><a href="shell-config.html"><i class="fa fa-check"></i><b>2</b> Tailoring your shell</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="shell-config.html"><a href="shell-config.html#path"><i class="fa fa-check"></i><b>2.1</b> Where are executable programs installed?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="shell-config.html"><a href="shell-config.html#which-and-type"><i class="fa fa-check"></i><b>2.1.1</b> <code>which</code> and <code>type</code></a></li>
+<li class="chapter" data-level="2.1.2" data-path="shell-config.html"><a href="shell-config.html#the-path-variable"><i class="fa fa-check"></i><b>2.1.2</b> The <code>$PATH</code> variable</a></li>
+<li class="chapter" data-level="2.1.3" data-path="shell-config.html"><a href="shell-config.html#order-matters"><i class="fa fa-check"></i><b>2.1.3</b> Order matters</a></li>
+<li class="chapter" data-level="2.1.4" data-path="shell-config.html"><a href="shell-config.html#why-.script.sh"><i class="fa fa-check"></i><b>2.1.4</b> Why <code>./script.sh</code>?</a></li>
+<li class="chapter" data-level="2.1.5" data-path="shell-config.html"><a href="shell-config.html#change-path"><i class="fa fa-check"></i><b>2.1.5</b> Changing the <code>PATH</code></a></li>
+<li class="chapter" data-level="2.1.6" data-path="shell-config.html"><a href="shell-config.html#local-scripts"><i class="fa fa-check"></i><b>2.1.6</b> A home for your own scripts</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="shell-config.html"><a href="shell-config.html#config-files"><i class="fa fa-check"></i><b>2.2</b> The shell’s configuration files</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="shell-config.html"><a href="shell-config.html#which-file-it-depends-on-your-shell"><i class="fa fa-check"></i><b>2.2.1</b> Which file? It depends on your shell</a></li>
+<li class="chapter" data-level="2.2.2" data-path="shell-config.html"><a href="shell-config.html#zsh-use-.zshrc"><i class="fa fa-check"></i><b>2.2.2</b> Zsh: use <code>~/.zshrc</code></a></li>
+<li class="chapter" data-level="2.2.3" data-path="shell-config.html"><a href="shell-config.html#bash-.bash_profile-vs.-.bashrc"><i class="fa fa-check"></i><b>2.2.3</b> Bash: <code>.bash_profile</code> vs. <code>.bashrc</code></a></li>
+<li class="chapter" data-level="2.2.4" data-path="shell-config.html"><a href="shell-config.html#in-short"><i class="fa fa-check"></i><b>2.2.4</b> In short</a></li>
+<li class="chapter" data-level="2.2.5" data-path="shell-config.html"><a href="shell-config.html#editing-your-configuration-file"><i class="fa fa-check"></i><b>2.2.5</b> Editing your configuration file</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="shell-config.html"><a href="shell-config.html#aliases"><i class="fa fa-check"></i><b>2.3</b> Aliases</a></li>
+<li class="chapter" data-level="2.4" data-path="shell-config.html"><a href="shell-config.html#colors"><i class="fa fa-check"></i><b>2.4</b> Colors</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="shell-config.html"><a href="shell-config.html#colors-in-ls-output"><i class="fa fa-check"></i><b>2.4.1</b> Colors in <code>ls</code> output</a></li>
+<li class="chapter" data-level="2.4.2" data-path="shell-config.html"><a href="shell-config.html#terminal-colors-fonts-and-themes"><i class="fa fa-check"></i><b>2.4.2</b> Terminal colors, fonts, and themes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="shell-config.html"><a href="shell-config.html#history"><i class="fa fa-check"></i><b>2.5</b> History</a></li>
+<li class="chapter" data-level="2.6" data-path="shell-config.html"><a href="shell-config.html#noclobber"><i class="fa fa-check"></i><b>2.6</b> A safety net: <code>noclobber</code></a></li>
+<li class="chapter" data-level="2.7" data-path="shell-config.html"><a href="shell-config.html#customizing-your-prompt"><i class="fa fa-check"></i><b>2.7</b> Customizing your prompt</a></li>
+<li class="chapter" data-level="2.8" data-path="shell-config.html"><a href="shell-config.html#example-config"><i class="fa fa-check"></i><b>2.8</b> Putting it together</a></li>
+<li class="chapter" data-level="2.9" data-path="shell-config.html"><a href="shell-config.html#shell-summary"><i class="fa fa-check"></i><b>2.9</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>3</b> Organizing your project</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="project.html"><a href="project.html#why-organize"><i class="fa fa-check"></i><b>3.1</b> Why organize?</a></li>
+<li class="chapter" data-level="3.2" data-path="project.html"><a href="project.html#project-layout"><i class="fa fa-check"></i><b>3.2</b> A directory for each project</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="project.html"><a href="project.html#mkdir-braces"><i class="fa fa-check"></i><b>3.2.1</b> Making the directories</a></li>
+<li class="chapter" data-level="3.2.2" data-path="project.html"><a href="project.html#project-rules"><i class="fa fa-check"></i><b>3.2.2</b> Rules of thumb</a></li>
+<li class="chapter" data-level="3.2.3" data-path="project.html"><a href="project.html#final-result"><i class="fa fa-check"></i><b>3.2.3</b> Marking the final result</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="project.html"><a href="project.html#data-readme"><i class="fa fa-check"></i><b>3.3</b> Documenting your data</a></li>
+<li class="chapter" data-level="3.4" data-path="project.html"><a href="project.html#rstudio-projects"><i class="fa fa-check"></i><b>3.4</b> RStudio projects</a></li>
+<li class="chapter" data-level="3.5" data-path="project.html"><a href="project.html#notebook"><i class="fa fa-check"></i><b>3.5</b> The project notebook</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="project.html"><a href="project.html#make-notebook"><i class="fa fa-check"></i><b>3.5.1</b> Making the notebook</a></li>
+<li class="chapter" data-level="3.5.2" data-path="project.html"><a href="project.html#notebook-contents"><i class="fa fa-check"></i><b>3.5.2</b> What goes in the notebook</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="project.html"><a href="project.html#markdown"><i class="fa fa-check"></i><b>3.6</b> Markdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#text"><i class="fa fa-check"></i>Text</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#headings"><i class="fa fa-check"></i>Headings</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#lists"><i class="fa fa-check"></i>Lists</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#code"><i class="fa fa-check"></i>Code</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#images-tables-and-quotes"><i class="fa fa-check"></i>Images, tables, and quotes</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#learning-more"><i class="fa fa-check"></i>Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="project.html"><a href="project.html#project-summary"><i class="fa fa-check"></i><b>3.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="remote.html"><a href="remote.html"><i class="fa fa-check"></i><b>4</b> Working remotely</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="remote.html"><a href="remote.html#ssh"><i class="fa fa-check"></i><b>4.1</b> Logging onto a remote system</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="remote.html"><a href="remote.html#ahpcc-files"><i class="fa fa-check"></i><b>4.1.1</b> The file system on AHPCC</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="remote.html"><a href="remote.html#copying-files"><i class="fa fa-check"></i><b>4.2</b> Copying files between computers</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="remote.html"><a href="remote.html#scp"><i class="fa fa-check"></i><b>4.2.1</b> <code>scp</code></a></li>
+<li class="chapter" data-level="4.2.2" data-path="remote.html"><a href="remote.html#rsync"><i class="fa fa-check"></i><b>4.2.2</b> <code>rsync</code>: bigger, smarter copies</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="remote.html"><a href="remote.html#download"><i class="fa fa-check"></i><b>4.3</b> Getting data from the web</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="remote.html"><a href="remote.html#curl"><i class="fa fa-check"></i><b>4.3.1</b> <code>curl</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="remote.html"><a href="remote.html#wget"><i class="fa fa-check"></i><b>4.3.2</b> <code>wget</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="remote.html"><a href="remote.html#compression"><i class="fa fa-check"></i><b>4.4</b> Compressing data</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="remote.html"><a href="remote.html#gzip-and-gunzip"><i class="fa fa-check"></i><b>4.4.1</b> <code>gzip</code> and <code>gunzip</code></a></li>
+<li class="chapter" data-level="4.4.2" data-path="remote.html"><a href="remote.html#working-with-compressed-files"><i class="fa fa-check"></i><b>4.4.2</b> Working with compressed files</a></li>
+<li class="chapter" data-level="4.4.3" data-path="remote.html"><a href="remote.html#tar"><i class="fa fa-check"></i><b>4.4.3</b> <code>tar</code>: archiving directories</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="remote.html"><a href="remote.html#checksums"><i class="fa fa-check"></i><b>4.5</b> Verifying data integrity</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="remote.html"><a href="remote.html#md5sum"><i class="fa fa-check"></i><b>4.5.1</b> <code>md5sum</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="remote.html"><a href="remote.html#slurm"><i class="fa fa-check"></i><b>4.6</b> Running jobs on the cluster</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="remote.html"><a href="remote.html#anatomy-of-a-slurm-script"><i class="fa fa-check"></i><b>4.6.1</b> Anatomy of a SLURM script</a></li>
+<li class="chapter" data-level="4.6.2" data-path="remote.html"><a href="remote.html#scratch"><i class="fa fa-check"></i><b>4.6.2</b> Using the scratch disk</a></li>
+<li class="chapter" data-level="4.6.3" data-path="remote.html"><a href="remote.html#submitting-and-checking-jobs"><i class="fa fa-check"></i><b>4.6.3</b> Submitting and checking jobs</a></li>
+<li class="chapter" data-level="4.6.4" data-path="remote.html"><a href="remote.html#software-modules"><i class="fa fa-check"></i><b>4.6.4</b> Software modules</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="remote.html"><a href="remote.html#ssh-keys"><i class="fa fa-check"></i><b>4.7</b> Authentication with SSH keys</a>
+<ul>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#check-for-existing-keys"><i class="fa fa-check"></i>1. Check for existing keys</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#create-a-key-pair"><i class="fa fa-check"></i>2. Create a key pair</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#copy-your-public-key-to-the-remote-computer"><i class="fa fa-check"></i>3. Copy your public key to the remote computer</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#check-permissions"><i class="fa fa-check"></i>4. Check permissions</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#log-on"><i class="fa fa-check"></i>5. Log on</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="remote.html"><a href="remote.html#remote-summary"><i class="fa fa-check"></i><b>4.8</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="git.html"><a href="git.html"><i class="fa fa-check"></i><b>5</b> Version control with Git and GitHub</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="git.html"><a href="git.html#why-git"><i class="fa fa-check"></i><b>5.1</b> Why version control?</a></li>
+<li class="chapter" data-level="5.2" data-path="git.html"><a href="git.html#git-setup"><i class="fa fa-check"></i><b>5.2</b> Installing and configuring Git</a></li>
+<li class="chapter" data-level="5.3" data-path="git.html"><a href="git.html#git-init"><i class="fa fa-check"></i><b>5.3</b> Creating a repository</a></li>
+<li class="chapter" data-level="5.4" data-path="git.html"><a href="git.html#git-workflow"><i class="fa fa-check"></i><b>5.4</b> Track, stage, commit</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="git.html"><a href="git.html#git-status"><i class="fa fa-check"></i><b>5.4.1</b> Checking the status of your files</a></li>
+<li class="chapter" data-level="5.4.2" data-path="git.html"><a href="git.html#git-add"><i class="fa fa-check"></i><b>5.4.2</b> Tracking files with <code>git add</code></a></li>
+<li class="chapter" data-level="5.4.3" data-path="git.html"><a href="git.html#git-stage"><i class="fa fa-check"></i><b>5.4.3</b> Staging changes with <code>git add</code></a></li>
+<li class="chapter" data-level="5.4.4" data-path="git.html"><a href="git.html#git-commit"><i class="fa fa-check"></i><b>5.4.4</b> Storing changes with <code>git commit</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="git.html"><a href="git.html#git-restore"><i class="fa fa-check"></i><b>5.5</b> Undoing changes</a></li>
+<li class="chapter" data-level="5.6" data-path="git.html"><a href="git.html#gitignore"><i class="fa fa-check"></i><b>5.6</b> Ignoring files with <code>.gitignore</code></a></li>
+<li class="chapter" data-level="5.7" data-path="git.html"><a href="git.html#git-log"><i class="fa fa-check"></i><b>5.7</b> Viewing history with <code>git log</code></a></li>
+<li class="chapter" data-level="5.8" data-path="git.html"><a href="git.html#git-diff"><i class="fa fa-check"></i><b>5.8</b> Seeing what changed with <code>git diff</code></a></li>
+<li class="chapter" data-level="5.9" data-path="git.html"><a href="git.html#git-mv"><i class="fa fa-check"></i><b>5.9</b> Renaming and deleting files</a></li>
+<li class="chapter" data-level="5.10" data-path="git.html"><a href="git.html#git-old-versions"><i class="fa fa-check"></i><b>5.10</b> Retrieving an old version</a></li>
+<li class="chapter" data-level="5.11" data-path="git.html"><a href="git.html#branches"><i class="fa fa-check"></i><b>5.11</b> Branches</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="git.html"><a href="git.html#git-switch"><i class="fa fa-check"></i><b>5.11.1</b> Creating, switching, and merging</a></li>
+<li class="chapter" data-level="5.11.2" data-path="git.html"><a href="git.html#merge-conflicts"><i class="fa fa-check"></i><b>5.11.2</b> Merge conflicts</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="git.html"><a href="git.html#github"><i class="fa fa-check"></i><b>5.12</b> Remote repositories and GitHub</a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="git.html"><a href="git.html#git-clone"><i class="fa fa-check"></i><b>5.12.1</b> Cloning a repository</a></li>
+<li class="chapter" data-level="5.12.2" data-path="git.html"><a href="git.html#github-setup"><i class="fa fa-check"></i><b>5.12.2</b> Setting up GitHub</a></li>
+<li class="chapter" data-level="5.12.3" data-path="git.html"><a href="git.html#git-push"><i class="fa fa-check"></i><b>5.12.3</b> Pushing a local repository to GitHub</a></li>
+<li class="chapter" data-level="5.12.4" data-path="git.html"><a href="git.html#git-everyday"><i class="fa fa-check"></i><b>5.12.4</b> The everyday workflow</a></li>
+<li class="chapter" data-level="5.12.5" data-path="git.html"><a href="git.html#github-readme"><i class="fa fa-check"></i><b>5.12.5</b> README files and Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="git.html"><a href="git.html#git-summary"><i class="fa fa-check"></i><b>5.13</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a>
+<ul>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html#books"><i class="fa fa-check"></i>Books</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html#articles"><i class="fa fa-check"></i>Articles</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/andrewalverson/BIOL51573-2026S" target="_blank">Course GitHub page</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Practical Programming for Biologists</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="git" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Version control with Git and GitHub<a href="git.html#git" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="goals">
+<p><strong>In this chapter</strong></p>
+<ul>
+<li>why scientists should use version control</li>
+<li>how to install and configure Git</li>
+<li>the Git workflow: track, stage, and commit</li>
+<li>how to undo changes, ignore files, and see what changed and when</li>
+<li>how to retrieve an old version of a file</li>
+<li>how to experiment safely with branches, and how to resolve a merge conflict</li>
+<li>how to back up and share your work on GitHub</li>
+</ul>
+</div>
+<div class="note">
+<p><strong>A note about GitHub.</strong> Git and GitHub aren’t the same thing. Git is free,
+open-source software that runs on your own computer. GitHub is a company that
+hosts Git repositories online, and Microsoft has owned it since 2018. Some
+people have started moving their projects off GitHub. Concerns include
+Microsoft’s ownership and the use of code hosted on GitHub to train
+Microsoft’s AI models, including the Copilot coding assistant, without the
+permission of the people who wrote the code. Some are moving to alternatives
+such as <a href="https://forgejo.org/">Forgejo</a>, a community-run platform that you can
+host yourself or use through services such as <a href="https://codeberg.org/">Codeberg</a>.
+Things are changing quickly, and it’s not yet clear where the field will
+settle. For now, though, GitHub is still the most established and widely used
+platform, and it’s the one this chapter uses. Everything you learn about Git
+itself works the same way on any of them.</p>
+</div>
+<div id="why-git" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Why version control?<a href="git.html#why-git" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Every project changes over time. At the bench, you keep a lab notebook so you
+always have a before-and-after record: the PCR stopped working, so you changed
+the annealing temperature; a cheaper kit came out, so you switched. Code needs
+the same kind of record:</p>
+<ul>
+<li>a file format changes, so you update your code to read it</li>
+<li>you find a bug, so you fix it</li>
+<li>you add a feature, and something that used to work stops working</li>
+</ul>
+<p>Without a system, most of us end up keeping versions by renaming files
+(Figure <a href="git.html#fig:versions-by-filename">5.1</a>). This works, sort of, until you can’t
+remember which file is the latest, what changed between <code>v2</code> and
+<code>v3_outline_of_reduced_discussion</code>, or whose edits are whose. Things get
+particularly messy when you collaborate.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:versions-by-filename"></span>
+<img src="images/04-git/versions-by-filename.png" alt="Version control by file name. One manuscript, many versions, two collaborators." width="85%" />
+<p class="caption">
+Figure 5.1: Version control by file name. One manuscript, many versions, two collaborators.
+</p>
+</div>
+<p>A <strong>version control system</strong> solves this problem properly. <strong>Git</strong>, written
+by Linus Torvalds (who also wrote Linux) to manage thousands of programmers
+working on Linux at the same time, is by far the most popular one. Git lets
+you:</p>
+<ul>
+<li>keep <strong>snapshots</strong> of your project, so you can trace the origin of a bug and
+roll back a bad change</li>
+<li>trace how your code evolved, and why, which helps make your work
+<strong>reproducible</strong></li>
+<li>keep your code organized and available after people leave the lab</li>
+<li><strong>share</strong> your code with others and work on it together</li>
+</ul>
+<p>Git is the standard tool for version control in data science and
+bioinformatics. Nearly every bioinformatics program you’ll download comes from
+a Git repository.</p>
+<div class="note">
+<p><strong>Further reading.</strong> This chapter follows the Git chapter of Vince Buffalo’s
+<a href="references.html#references"><em>Bioinformatics Data Skills</em></a> (O’Reilly, 2015). For a complete
+reference, see the free book <a href="https://git-scm.com/book/en/v2"><em>Pro Git</em></a>.
+Both are listed in the <a href="references.html#references">References</a>.</p>
+</div>
+</div>
+<div id="git-setup" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Installing and configuring Git<a href="git.html#git-setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Check whether Git is already installed:</p>
+<div class="sourceCode" id="cb327"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb327-1"><a href="git.html#cb327-1" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code></pre></div>
+<p>If it isn’t, here’s how to install it
+(<a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">more details</a>):</p>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="89%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>System</th>
+<th>How to install Git</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mac</td>
+<td>Run <code>xcode-select --install</code> (Apple’s command-line tools include Git), or <code>brew install git</code></td>
+</tr>
+<tr class="even">
+<td>Linux / WSL</td>
+<td><code>sudo apt install git</code> (Ubuntu and Debian)</td>
+</tr>
+</tbody>
+</table>
+<p>Git commands all take the form <code>git &lt;subcommand&gt;</code>. Before you use Git, tell it
+who you are. Git records your name and email address with every change you
+make. You only need to do this once per computer:</p>
+<div class="sourceCode" id="cb328"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb328-1"><a href="git.html#cb328-1" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">&quot;Your Name&quot;</span></span>
+<span id="cb328-2"><a href="git.html#cb328-2" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">&quot;you@uark.edu&quot;</span></span>
+<span id="cb328-3"><a href="git.html#cb328-3" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> init.defaultBranch main   <span class="co"># name the first branch &quot;main&quot;</span></span>
+<span id="cb328-4"><a href="git.html#cb328-4" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> core.editor nano          <span class="co"># the editor Git opens for messages</span></span>
+<span id="cb328-5"><a href="git.html#cb328-5" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> color.ui true             <span class="co"># color-coded output</span></span>
+<span id="cb328-6"><a href="git.html#cb328-6" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--list</span>                             <span class="co"># check your settings</span></span></code></pre></div>
+<p><code>--global</code> stores these settings in the file <code>~/.gitconfig</code>, so they apply to
+every project on that computer. Use the same email address you use (or will
+use) for GitHub.</p>
+<div class="note">
+<p><strong>Why <code>init.defaultBranch</code>?</strong> Every repository starts on a default branch
+(Section <a href="git.html#branches">5.11</a>). Git originally called it <code>master</code>; GitHub and most
+projects now call it <code>main</code>. Without this setting, Git still uses <code>master</code> and
+prints a hint every time you create a repository. You’ll see both names in
+tutorials. They mean the same thing.</p>
+</div>
+</div>
+<div id="git-init" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Creating a repository<a href="git.html#git-init" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <strong>repository</strong> (or <strong>repo</strong>) is a project directory whose history Git is
+keeping track of. Let’s make one called <code>bio_project</code>, then turn it into a Git
+repository with <code>git init</code>:</p>
+<div class="sourceCode" id="cb329"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb329-1"><a href="git.html#cb329-1" tabindex="-1"></a><span class="fu">mkdir</span> bio_project</span>
+<span id="cb329-2"><a href="git.html#cb329-2" tabindex="-1"></a><span class="bu">cd</span> bio_project</span>
+<span id="cb329-3"><a href="git.html#cb329-3" tabindex="-1"></a><span class="fu">git</span> init</span></code></pre></div>
+<pre><code>Initialized empty Git repository in /Users/you/bio_project/.git/</code></pre>
+<p><code>git init</code> creates a hidden directory, <code>.git</code>, where Git stores the entire
+history of your project:</p>
+<div class="sourceCode" id="cb331"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb331-1"><a href="git.html#cb331-1" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-a</span></span></code></pre></div>
+<pre><code>.
+..
+.git</code></pre>
+<p>You never need to touch anything inside <code>.git</code>. But don’t delete it: that
+would delete your project’s history.</p>
+<div class="warning">
+<p><strong>Don’t make a repository inside another repository.</strong> Run <code>git init</code> once,
+at the top level of a project. If <code>git status</code> (below) works in a directory
+where you haven’t run <code>git init</code>, you’re already inside a repository.</p>
+</div>
+</div>
+<div id="git-workflow" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Track, stage, commit<a href="git.html#git-workflow" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Figure <a href="git.html#fig:git-workflow">5.2</a> shows how Git works. Files in your project
+directory (the <strong>working directory</strong>) are either <strong>untracked</strong> (Git ignores
+them) or <strong>tracked</strong> (Git is watching them). When you’ve made changes worth
+keeping, you <code>git add</code> them to the <strong>staging area</strong>, and then <code>git commit</code>
+stores a permanent snapshot of everything that’s staged in your <strong>local
+repository</strong>. Later in the chapter, you’ll <code>git push</code> your commits to a
+<strong>remote repository</strong> on GitHub.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:git-workflow"></span>
+<img src="images/04-git/workflow.svg" alt="The Git workflow. `git add` starts tracking a file and stages its changes; `git commit` stores the staged changes in the repository; `git push` and `git pull` send and receive commits from a remote repository." width="100%" />
+<p class="caption">
+Figure 5.2: The Git workflow. <code>git add</code> starts tracking a file and stages its changes; <code>git commit</code> stores the staged changes in the repository; <code>git push</code> and <code>git pull</code> send and receive commits from a remote repository.
+</p>
+</div>
+<div id="git-status" class="section level3 hasAnchor" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> Checking the status of your files<a href="git.html#git-status" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s add some files to <code>bio_project</code>. The <code>touch</code> command creates empty files:</p>
+<div class="sourceCode" id="cb333"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb333-1"><a href="git.html#cb333-1" tabindex="-1"></a><span class="fu">mkdir</span> data</span>
+<span id="cb333-2"><a href="git.html#cb333-2" tabindex="-1"></a><span class="fu">touch</span> README data/README data/sample1.fasta data/sample2.fasta</span>
+<span id="cb333-3"><a href="git.html#cb333-3" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>On branch main
+
+No commits yet
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+    README
+    data/
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)</code></pre>
+<p><code>git status</code> is the command you’ll use most. It tells you which branch you’re
+on (<code>main</code>, the default), what’s happened since your last commit, and often
+what to do next. Right now Git sees some new files and a new directory, but
+it isn’t tracking any of them.</p>
+</div>
+<div id="git-add" class="section level3 hasAnchor" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> Tracking files with <code>git add</code><a href="git.html#git-add" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>git add</code> tells Git to start tracking files:</p>
+<div class="sourceCode" id="cb335"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb335-1"><a href="git.html#cb335-1" tabindex="-1"></a><span class="fu">git</span> add README data/README</span>
+<span id="cb335-2"><a href="git.html#cb335-2" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>On branch main
+
+No commits yet
+
+Changes to be committed:
+  (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)
+    new file:   README
+    new file:   data/README
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+    data/sample1.fasta
+    data/sample2.fasta</code></pre>
+<p>The two README files are now tracked, and their current versions are
+<strong>staged</strong>: they’ll be included in the next commit. The FASTA files are still
+untracked.</p>
+</div>
+<div id="git-stage" class="section level3 hasAnchor" number="5.4.3">
+<h3><span class="header-section-number">5.4.3</span> Staging changes with <code>git add</code><a href="git.html#git-stage" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now let’s change <code>README</code>:</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb337-1"><a href="git.html#cb337-1" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;The README file for my project&quot;</span> <span class="op">&gt;&gt;</span> README</span>
+<span id="cb337-2"><a href="git.html#cb337-2" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>On branch main
+
+No commits yet
+
+Changes to be committed:
+  (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)
+    new file:   README
+    new file:   data/README
+
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+    modified:   README
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+    data/sample1.fasta
+    data/sample2.fasta</code></pre>
+<p><code>README</code> now appears twice: once under <em>Changes to be committed</em> and once
+under <em>Changes not staged for commit</em>. That’s because Git staged a snapshot
+of <code>README</code> when we ran <code>git add</code>, <em>before</em> we added that line. If we commit
+now, the commit will hold the empty <code>README</code>, not the new version.</p>
+<p>To include the new line, stage <code>README</code> again:</p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb339-1"><a href="git.html#cb339-1" tabindex="-1"></a><span class="fu">git</span> add README</span>
+<span id="cb339-2"><a href="git.html#cb339-2" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>On branch main
+
+No commits yet
+
+Changes to be committed:
+  (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)
+    new file:   README
+    new file:   data/README
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+    data/sample1.fasta
+    data/sample2.fasta</code></pre>
+<p>So <code>git add</code> does two things:</p>
+<ol style="list-style-type: decimal">
+<li>starts tracking a file that Git isn’t tracking yet</li>
+<li>stages the current changes to a file that Git is already tracking</li>
+</ol>
+<div class="warning">
+<p><strong>Changes are staged as they were when you ran <code>git add</code>.</strong> Anything you
+change after <code>git add</code> isn’t included in the next commit unless you
+<code>git add</code> the file again. <code>git status</code> tells you when that’s the case.</p>
+</div>
+</div>
+<div id="git-commit" class="section level3 hasAnchor" number="5.4.4">
+<h3><span class="header-section-number">5.4.4</span> Storing changes with <code>git commit</code><a href="git.html#git-commit" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>git commit</code> stores a snapshot of everything that’s staged, along with a
+message that describes the change:</p>
+<div class="sourceCode" id="cb341"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb341-1"><a href="git.html#cb341-1" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Initial import&quot;</span></span>
+<span id="cb341-2"><a href="git.html#cb341-2" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>[main (root-commit) 841eb91] Initial import
+ 2 files changed, 1 insertion(+)
+ create mode 100644 README
+ create mode 100644 data/README
+On branch main
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+    data/sample1.fasta
+    data/sample2.fasta
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)</code></pre>
+<p>That’s it: the two README files are safely stored in the repository. The
+seven characters after <code>main</code> (and <code>root-commit</code>, meaning this is the first
+commit) are the start of the commit’s ID. Git computes a unique ID for every
+commit from its contents (a SHA-1 checksum, like the ones in Section
+<a href="remote.html#checksums">4.5</a>). Your IDs will differ from the ones in this book.</p>
+<p>If you leave off <code>-m "message"</code>, Git opens your editor so you can write the
+message there. Save and exit, and Git makes the commit.</p>
+<div class="note">
+<p><strong>Why have a staging area at all?</strong> You’ll often be working on several files
+at once. Some changes will be finished, others not. Staging lets you choose
+exactly which changes go into each commit, so each commit is a meaningful step
+in your project (“Fix the GC-content calculation”) rather than a random
+snapshot of everything you happened to be working on.</p>
+</div>
+<div id="writing-good-commit-messages" class="section level4 unnumbered hasAnchor">
+<h4>Writing good commit messages<a href="git.html#writing-good-commit-messages" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Your commit messages are the history of your project. Six months from now,
+“Fix off-by-one error in exon coordinates” will mean something; “stuff” will
+not (Figure <a href="git.html#fig:xkcd-commit">5.3</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:xkcd-commit"></span>
+<img src="images/04-git/xkcd-git-commit.png" alt="Commit messages over the life of a project. [xkcd.com/1296](https://xkcd.com/1296/), CC BY-NC 2.5." width="70%" />
+<p class="caption">
+Figure 5.3: Commit messages over the life of a project. <a href="https://xkcd.com/1296/">xkcd.com/1296</a>, CC BY-NC 2.5.
+</p>
+</div>
+<ul>
+<li>Write a short summary, about 50 characters or less, that says what the
+commit does: “Add GC-content function”, “Fix crash on empty FASTA files”.</li>
+<li>Commit often, in small, related chunks. One commit, one idea.</li>
+<li>Don’t commit broken code to <code>main</code> if you can help it. That’s what branches
+are for (Section <a href="git.html#branches">5.11</a>).</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="git-restore" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Undoing changes<a href="git.html#git-restore" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s add a line to <code>README</code> and stage it:</p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb343-1"><a href="git.html#cb343-1" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Wrote the best script of my life&quot;</span> <span class="op">&gt;&gt;</span> README</span>
+<span id="cb343-2"><a href="git.html#cb343-2" tabindex="-1"></a><span class="fu">git</span> add README</span>
+<span id="cb343-3"><a href="git.html#cb343-3" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>On branch main
+Changes to be committed:
+  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)
+    modified:   README
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+    data/sample1.fasta
+    data/sample2.fasta</code></pre>
+<p>Changed your mind? Git tells you how to <strong>unstage</strong> the file with
+<code>git restore --staged</code>:</p>
+<div class="sourceCode" id="cb345"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb345-1"><a href="git.html#cb345-1" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--staged</span> README</span>
+<span id="cb345-2"><a href="git.html#cb345-2" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>On branch main
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+    modified:   README
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+    data/sample1.fasta
+    data/sample2.fasta
+
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</code></pre>
+<p>The change is no longer staged, but it’s still in the file. To throw the
+change away entirely and put the file back the way it was at the last commit,
+use <code>git restore</code> without <code>--staged</code>:</p>
+<div class="sourceCode" id="cb347"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb347-1"><a href="git.html#cb347-1" tabindex="-1"></a><span class="fu">git</span> restore README</span>
+<span id="cb347-2"><a href="git.html#cb347-2" tabindex="-1"></a><span class="fu">cat</span> README</span>
+<span id="cb347-3"><a href="git.html#cb347-3" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>The README file for my project
+On branch main
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+    data/sample1.fasta
+    data/sample2.fasta
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)</code></pre>
+<div class="warning">
+<p><strong><code>git restore file</code> can’t be undone.</strong> It overwrites your file with the
+version from the last commit. Any changes you hadn’t committed are gone for
+good, just as with <code>rm</code>.</p>
+</div>
+<div class="note">
+<p><strong><code>git checkout</code> and <code>git reset</code>.</strong> <code>git restore</code> (and <code>git switch</code>, below)
+arrived in 2019. Older tutorials, and Stack Overflow, do the same things with
+<code>git checkout -- file</code> (discard changes) and <code>git reset HEAD file</code> (unstage).
+Both still work.</p>
+</div>
+</div>
+<div id="gitignore" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Ignoring files with <code>.gitignore</code><a href="git.html#gitignore" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>git status</code> keeps reminding us that the FASTA files aren’t being tracked.
+Suppose we don’t want them in the repository: they’re large and can be
+downloaded again. List the files Git should ignore, one pattern per line, in
+a file called <code>.gitignore</code> at the top of the repository:</p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb349-1"><a href="git.html#cb349-1" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&#39;data/*.fasta&#39;</span> <span class="op">&gt;</span> .gitignore</span>
+<span id="cb349-2"><a href="git.html#cb349-2" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>On branch main
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+    .gitignore
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)</code></pre>
+<p>The FASTA files have disappeared from the list. <code>.gitignore</code> itself is a file
+worth keeping, so commit it:</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb351-1"><a href="git.html#cb351-1" tabindex="-1"></a><span class="fu">git</span> add .gitignore</span>
+<span id="cb351-2"><a href="git.html#cb351-2" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Ignore FASTA files in data/&quot;</span></span>
+<span id="cb351-3"><a href="git.html#cb351-3" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>[main 639eaca] Ignore FASTA files in data/
+ 1 file changed, 1 insertion(+)
+ create mode 100644 .gitignore
+On branch main
+nothing to commit, working tree clean</code></pre>
+<p><em>Working tree clean</em> means everything in the directory is either committed or
+ignored. Here’s a typical <code>.gitignore</code> for a bioinformatics project:</p>
+<pre class="text"><code># large data and results: keep these out of the repository
+data/
+results/
+*.fastq.gz
+*.bam
+
+# junk your computer makes
+.DS_Store
+__pycache__/
+.Rproj.user/
+.Rhistory</code></pre>
+<div class="warning">
+<p><strong>Keep big data files out of Git.</strong> Git is built for text files such as code,
+notes, and small tables. It keeps every version of every file forever, so
+large data files bloat your repository. GitHub won’t accept files larger than
+100 MB. Back up data separately, and keep the commands that download or
+generate it (Section <a href="remote.html#download">4.3</a>) in the repository instead.</p>
+</div>
+</div>
+<div id="git-log" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> Viewing history with <code>git log</code><a href="git.html#git-log" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s make one more commit:</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb354-1"><a href="git.html#cb354-1" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Project started 2026-01-14&quot;</span> <span class="op">&gt;&gt;</span> README</span>
+<span id="cb354-2"><a href="git.html#cb354-2" tabindex="-1"></a><span class="fu">git</span> add README</span>
+<span id="cb354-3"><a href="git.html#cb354-3" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Add project start date&quot;</span></span></code></pre></div>
+<pre><code>[main 59f25f4] Add project start date
+ 1 file changed, 1 insertion(+)</code></pre>
+<p><code>git log</code> lists the commits, newest first:</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb356-1"><a href="git.html#cb356-1" tabindex="-1"></a><span class="fu">git</span> log</span></code></pre></div>
+<pre><code>commit 59f25f4401638e70db13d633da614750c113100b
+Author: Andrew Alverson &lt;aja@uark.edu&gt;
+Date:   Mon Nov 2 18:15:57 2026 -0600
+
+    Add project start date
+
+commit 639eacabb54074f95667f9dc24e6b69eb4abfafc
+Author: Andrew Alverson &lt;aja@uark.edu&gt;
+Date:   Mon Nov 2 18:15:57 2026 -0600
+
+    Ignore FASTA files in data/
+
+commit 841eb91706d6013c29a3a54cf1d5dc906edaa7c6
+Author: Andrew Alverson &lt;aja@uark.edu&gt;
+Date:   Mon Nov 2 18:15:56 2026 -0600
+
+    Initial import</code></pre>
+<p>Each commit has a full 40-character ID, an author, a date, and the commit
+message. A few useful options:</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb358-1"><a href="git.html#cb358-1" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span></span></code></pre></div>
+<pre><code>59f25f4 Add project start date
+639eaca Ignore FASTA files in data/
+841eb91 Initial import</code></pre>
+<div class="sourceCode" id="cb360"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb360-1"><a href="git.html#cb360-1" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--name-status</span> <span class="at">-n</span> 2</span></code></pre></div>
+<pre><code>commit 59f25f4401638e70db13d633da614750c113100b
+Author: Andrew Alverson &lt;aja@uark.edu&gt;
+Date:   Mon Nov 2 18:15:57 2026 -0600
+
+    Add project start date
+
+M   README
+
+commit 639eacabb54074f95667f9dc24e6b69eb4abfafc
+Author: Andrew Alverson &lt;aja@uark.edu&gt;
+Date:   Mon Nov 2 18:15:57 2026 -0600
+
+    Ignore FASTA files in data/
+
+A   .gitignore</code></pre>
+<p><code>--oneline</code> gives one short line per commit, <code>--name-status</code> lists the files
+each commit changed (<code>A</code> added, <code>M</code> modified, <code>D</code> deleted, <code>R</code> renamed), and
+<code>-n 2</code> shows only the two most recent commits.</p>
+</div>
+<div id="git-diff" class="section level2 hasAnchor" number="5.8">
+<h2><span class="header-section-number">5.8</span> Seeing what changed with <code>git diff</code><a href="git.html#git-diff" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>git diff</code> shows exactly what you’ve changed. Add a line to <code>README</code>:</p>
+<div class="sourceCode" id="cb362"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb362-1"><a href="git.html#cb362-1" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Samples collected from Lake Fayetteville&quot;</span> <span class="op">&gt;&gt;</span> README</span>
+<span id="cb362-2"><a href="git.html#cb362-2" tabindex="-1"></a><span class="fu">git</span> diff</span></code></pre></div>
+<pre><code>diff --git a/README b/README
+index 62debb3..078409c 100644
+--- a/README
++++ b/README
+@@ -1,2 +1,3 @@
+ The README file for my project
+ Project started 2026-01-14
++Samples collected from Lake Fayetteville</code></pre>
+<p>The format is similar to <code>diff -u</code> (Section <a href="unix.html#diff">1.10.7</a>):</p>
+<ul>
+<li><code>--- a/README</code> is the old version and <code>+++ b/README</code> is the new one.</li>
+<li><code>@@ -1,2 +1,3 @@</code> says which lines are shown: lines 1–2 of the old version
+and lines 1–3 of the new one.</li>
+<li>Lines that start with <code>+</code> were added, lines that start with <code>-</code> were
+deleted, and lines that start with a space are unchanged context. A line
+that you edited shows up as a deleted line followed by an added line.</li>
+</ul>
+<p>By default, <code>git diff</code> compares your working directory to the staging area,
+which shows changes you <strong>haven’t staged yet</strong>. What happens after
+<code>git add</code>?</p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb364-1"><a href="git.html#cb364-1" tabindex="-1"></a><span class="fu">git</span> add README</span>
+<span id="cb364-2"><a href="git.html#cb364-2" tabindex="-1"></a><span class="fu">git</span> diff</span></code></pre></div>
+<p>Nothing, because there are no unstaged changes left. To see what’s staged and
+about to be committed, use <code>git diff --staged</code>:</p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb365-1"><a href="git.html#cb365-1" tabindex="-1"></a><span class="fu">git</span> diff <span class="at">--staged</span></span>
+<span id="cb365-2"><a href="git.html#cb365-2" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Add sampling location&quot;</span></span></code></pre></div>
+<pre><code>diff --git a/README b/README
+index 62debb3..078409c 100644
+--- a/README
++++ b/README
+@@ -1,2 +1,3 @@
+ The README file for my project
+ Project started 2026-01-14
++Samples collected from Lake Fayetteville
+[main 4bfddbd] Add sampling location
+ 1 file changed, 1 insertion(+)</code></pre>
+</div>
+<div id="git-mv" class="section level2 hasAnchor" number="5.9">
+<h2><span class="header-section-number">5.9</span> Renaming and deleting files<a href="git.html#git-mv" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If you rename or delete a tracked file with <code>mv</code> or <code>rm</code>, Git sees the old file
+as deleted and the new file as untracked. Do it Git’s way instead, with
+<code>git mv</code> and <code>git rm</code>, which make the change and stage it in one step. Let’s
+give the README files a <code>.md</code> extension, which tells GitHub that they’re
+written in Markdown (Section <a href="git.html#github-readme">5.12.5</a>):</p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb367-1"><a href="git.html#cb367-1" tabindex="-1"></a><span class="fu">git</span> mv README README.md</span>
+<span id="cb367-2"><a href="git.html#cb367-2" tabindex="-1"></a><span class="fu">git</span> mv data/README data/README.md</span>
+<span id="cb367-3"><a href="git.html#cb367-3" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>On branch main
+Changes to be committed:
+  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)
+    renamed:    README -&gt; README.md
+    renamed:    data/README -&gt; data/README.md</code></pre>
+<div class="sourceCode" id="cb369"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb369-1"><a href="git.html#cb369-1" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Add Markdown extension to README files&quot;</span></span></code></pre></div>
+<pre><code>[main f5022f4] Add Markdown extension to README files
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ rename README =&gt; README.md (100%)
+ rename data/{README =&gt; README.md} (100%)</code></pre>
+<p><code>git rm file</code> deletes a file and stages the deletion. <code>git rm --cached file</code>
+stops tracking a file but leaves it on your computer, which is handy when you
+committed a file by mistake and want to add it to <code>.gitignore</code>.</p>
+</div>
+<div id="git-old-versions" class="section level2 hasAnchor" number="5.10">
+<h2><span class="header-section-number">5.10</span> Retrieving an old version<a href="git.html#git-old-versions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This is where version control earns its keep. Let’s make a change we’ll come
+to regret:</p>
+<div class="sourceCode" id="cb371"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb371-1"><a href="git.html#cb371-1" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;TODO: delete all the raw data&quot;</span> <span class="op">&gt;&gt;</span> README.md</span>
+<span id="cb371-2"><a href="git.html#cb371-2" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">&quot;Update README&quot;</span></span>
+<span id="cb371-3"><a href="git.html#cb371-3" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span></span></code></pre></div>
+<pre><code>[main 22ff2f2] Update README
+ 1 file changed, 1 insertion(+)
+22ff2f2 Update README
+f5022f4 Add Markdown extension to README files
+4bfddbd Add sampling location
+59f25f4 Add project start date
+639eaca Ignore FASTA files in data/
+841eb91 Initial import</code></pre>
+<p><code>git commit -a</code> stages every change to tracked files before committing, so
+you can skip <code>git add</code>. It never adds untracked files. Use it only when you
+know what you’ve changed.</p>
+<p>To view an old version of a file without changing anything, use
+<code>git show commit:file</code>. Instead of a commit ID, you can count back from the
+most recent commit, which Git calls <code>HEAD</code>: <code>HEAD~1</code> is one commit before,
+<code>HEAD~2</code> is two before, and so on.</p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb373-1"><a href="git.html#cb373-1" tabindex="-1"></a><span class="fu">git</span> show HEAD~1:README.md</span></code></pre></div>
+<pre><code>The README file for my project
+Project started 2026-01-14
+Samples collected from Lake Fayetteville</code></pre>
+<p>To get that version back, restore the file from that commit:</p>
+<div class="sourceCode" id="cb375"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb375-1"><a href="git.html#cb375-1" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--source</span><span class="op">=</span>HEAD~1 README.md</span>
+<span id="cb375-2"><a href="git.html#cb375-2" tabindex="-1"></a><span class="fu">cat</span> README.md</span>
+<span id="cb375-3"><a href="git.html#cb375-3" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>The README file for my project
+Project started 2026-01-14
+Samples collected from Lake Fayetteville
+On branch main
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+    modified:   README.md
+
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</code></pre>
+<p>The old version is now in your working directory, as a change you can commit:</p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb377-1"><a href="git.html#cb377-1" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">&quot;Remove bad advice from README&quot;</span></span></code></pre></div>
+<pre><code>[main aed7a27] Remove bad advice from README
+ 1 file changed, 1 deletion(-)</code></pre>
+<p>The bad version is still in the history, in case you ever want it back. That’s
+the point: once you’ve committed something, it’s very hard to lose. You can
+use a commit ID in place of <code>HEAD~1</code>, for example
+<code>git restore --source=4f2a9c1 README.md</code>. The first seven characters are
+plenty.</p>
+<div class="exercise">
+<p><span id="exr:ex-git-local" class="exercise"><strong>Exercise 5.1  </strong></span>Turn the project you organized in Exercise <a href="project.html#exr:ex-project">3.1</a> into a Git
+repository (or make a new one; just not inside <code>bio_project</code>).</p>
+<ol style="list-style-type: decimal">
+<li>Commit your <code>README.md</code>, <code>notebook.Rmd</code>, and scripts. (If you made a new
+project, add a <code>README.md</code> with a sentence about it and a script or two
+from Chapter <a href="unix.html#unix">1</a> or <a href="shell-config.html#shell-config">2</a> first.)</li>
+<li>Edit one of the files. Use <code>git diff</code> to see what you changed. Stage the
+change and run <code>git diff</code> again, then <code>git diff --staged</code>. Commit.</li>
+<li>Make a change to a file, stage it, and then unstage it. Then discard the
+change entirely. Check with <code>git status</code> after each step.</li>
+<li>Create a <code>.gitignore</code> that ignores a <code>data/</code> directory. Make the directory,
+put a file in it, and check that <code>git status</code> doesn’t list it.</li>
+<li>Run <code>git log --oneline</code>. Use <code>git show</code> to view the first version of your
+<code>README.md</code>.</li>
+</ol>
+</div>
+</div>
+<div id="branches" class="section level2 hasAnchor" number="5.11">
+<h2><span class="header-section-number">5.11</span> Branches<a href="git.html#branches" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <strong>branch</strong> is an independent line of development. Branches let you try
+something new (a major new feature, a different way of doing an analysis)
+without any risk of breaking the version on <code>main</code> that works. If the
+experiment works out, you <strong>merge</strong> it back into <code>main</code>. If it doesn’t, you
+abandon the branch and <code>main</code> is unscathed. Collaborators can each work on
+their own branch and merge their work in when it’s ready.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:branches"></span>
+<img src="images/04-git/branches.svg" alt="Working on a branch. You create a branch from main and make commits on it, while main carries on. When the work is done, you merge it back into main." width="100%" />
+<p class="caption">
+Figure 5.4: Working on a branch. You create a branch from main and make commits on it, while main carries on. When the work is done, you merge it back into main.
+</p>
+</div>
+<p>Branches are cheap: Git doesn’t copy your files to make one, so creating and
+switching branches is instant.</p>
+<div id="git-switch" class="section level3 hasAnchor" number="5.11.1">
+<h3><span class="header-section-number">5.11.1</span> Creating, switching, and merging<a href="git.html#git-switch" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>git branch</code> lists the branches, with a <code>*</code> next to the one you’re on. Let’s
+make a new branch called <code>readme-changes</code> and switch to it:</p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb379-1"><a href="git.html#cb379-1" tabindex="-1"></a><span class="fu">git</span> branch readme-changes</span>
+<span id="cb379-2"><a href="git.html#cb379-2" tabindex="-1"></a><span class="fu">git</span> branch</span>
+<span id="cb379-3"><a href="git.html#cb379-3" tabindex="-1"></a><span class="fu">git</span> switch readme-changes</span>
+<span id="cb379-4"><a href="git.html#cb379-4" tabindex="-1"></a><span class="fu">git</span> branch</span></code></pre></div>
+<pre><code>* main
+  readme-changes
+Switched to branch &#39;readme-changes&#39;
+  main
+* readme-changes</code></pre>
+<p>Now make a change and commit it on <code>readme-changes</code>:</p>
+<div class="sourceCode" id="cb381"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb381-1"><a href="git.html#cb381-1" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Data are in data/, one FASTA file per sample.&quot;</span> <span class="op">&gt;&gt;</span> README.md</span>
+<span id="cb381-2"><a href="git.html#cb381-2" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">&quot;Describe the data directory&quot;</span></span>
+<span id="cb381-3"><a href="git.html#cb381-3" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">-n</span> 3</span></code></pre></div>
+<pre><code>[readme-changes f0cb5a8] Describe the data directory
+ 1 file changed, 1 insertion(+)
+f0cb5a8 Describe the data directory
+aed7a27 Remove bad advice from README
+22ff2f2 Update README</code></pre>
+<p>The new commit exists only on <code>readme-changes</code>. If you switch back to <code>main</code>,
+the new line disappears from <code>README.md</code>:</p>
+<div class="sourceCode" id="cb383"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb383-1"><a href="git.html#cb383-1" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb383-2"><a href="git.html#cb383-2" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 2 README.md</span></code></pre></div>
+<pre><code>Switched to branch &#39;main&#39;
+Project started 2026-01-14
+Samples collected from Lake Fayetteville</code></pre>
+<p>It’s not gone. It’s on the other branch. To bring it into <code>main</code>, switch to
+the branch you want to merge <em>into</em> (<code>main</code>, which we just did) and then merge
+the other branch:</p>
+<div class="sourceCode" id="cb385"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb385-1"><a href="git.html#cb385-1" tabindex="-1"></a><span class="fu">git</span> merge readme-changes</span>
+<span id="cb385-2"><a href="git.html#cb385-2" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 2 README.md</span></code></pre></div>
+<pre><code>Updating aed7a27..f0cb5a8
+Fast-forward
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+Samples collected from Lake Fayetteville
+Data are in data/, one FASTA file per sample.</code></pre>
+<p>Because <code>main</code> hadn’t changed since we created the branch, Git simply moved
+<code>main</code> forward to include the new commit, a <strong>fast-forward</strong> merge. If both
+branches have new commits, Git combines them in a new <strong>merge commit</strong>, as in
+Figure <a href="git.html#fig:branches">5.4</a>.</p>
+<p>Once a branch is merged, you can delete it:</p>
+<div class="sourceCode" id="cb387"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb387-1"><a href="git.html#cb387-1" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-d</span> readme-changes</span></code></pre></div>
+<pre><code>Deleted branch readme-changes (was f0cb5a8).</code></pre>
+<div class="tip">
+<p><strong>Create and switch in one step.</strong> <code>git switch -c new-branch</code> creates a branch
+and switches to it. (In older tutorials: <code>git checkout -b new-branch</code>.)</p>
+</div>
+</div>
+<div id="merge-conflicts" class="section level3 hasAnchor" number="5.11.2">
+<h3><span class="header-section-number">5.11.2</span> Merge conflicts<a href="git.html#merge-conflicts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Git can merge changes to different files, or to different parts of the same
+file, on its own. But if two branches change <em>the same lines</em> of a file, Git
+can’t know which version you want. That’s a <strong>merge conflict</strong>, and you have
+to resolve it yourself. Conflicts sound scary, but they’re routine.</p>
+<p>Let’s make one. On a new branch, change the first line of <code>README.md</code> and
+commit:</p>
+<div class="sourceCode" id="cb389"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb389-1"><a href="git.html#cb389-1" tabindex="-1"></a><span class="fu">git</span> switch <span class="at">-c</span> new-title</span>
+<span id="cb389-2"><a href="git.html#cb389-2" tabindex="-1"></a><span class="fu">nano</span> README.md            <span class="co"># change the first line</span></span></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb390-1"><a href="git.html#cb390-1" tabindex="-1"></a><span class="fu">git</span> diff</span>
+<span id="cb390-2"><a href="git.html#cb390-2" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">&quot;Shorter title&quot;</span></span></code></pre></div>
+<pre><code>diff --git a/README.md b/README.md
+index 3bad163..d478709 100644
+--- a/README.md
++++ b/README.md
+@@ -1,4 +1,4 @@
+-The README file for my project
++# bio_project
+ Project started 2026-01-14
+ Samples collected from Lake Fayetteville
+ Data are in data/, one FASTA file per sample.
+[new-title e7f0149] Shorter title
+ 1 file changed, 1 insertion(+), 1 deletion(-)</code></pre>
+<p>Meanwhile, back on <code>main</code>, we change the same line differently:</p>
+<div class="sourceCode" id="cb392"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb392-1"><a href="git.html#cb392-1" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb392-2"><a href="git.html#cb392-2" tabindex="-1"></a><span class="fu">nano</span> README.md            <span class="co"># change the first line</span></span></code></pre></div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb393-1"><a href="git.html#cb393-1" tabindex="-1"></a><span class="fu">git</span> diff</span>
+<span id="cb393-2"><a href="git.html#cb393-2" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">&quot;Better title&quot;</span></span></code></pre></div>
+<pre><code>diff --git a/README.md b/README.md
+index 3bad163..28da5e8 100644
+--- a/README.md
++++ b/README.md
+@@ -1,4 +1,4 @@
+-The README file for my project
++# Diatom genomics project
+ Project started 2026-01-14
+ Samples collected from Lake Fayetteville
+ Data are in data/, one FASTA file per sample.
+[main ebfcd40] Better title
+ 1 file changed, 1 insertion(+), 1 deletion(-)</code></pre>
+<p>Now merge <code>new-title</code> into <code>main</code>:</p>
+<div class="sourceCode" id="cb395"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb395-1"><a href="git.html#cb395-1" tabindex="-1"></a><span class="fu">git</span> merge new-title</span></code></pre></div>
+<pre><code>Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.</code></pre>
+<p>Git merged what it could and stopped at the conflict. <code>git status</code> lists the
+files that need attention:</p>
+<div class="sourceCode" id="cb397"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb397-1"><a href="git.html#cb397-1" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
+<pre><code>On branch main
+You have unmerged paths.
+  (fix conflicts and run &quot;git commit&quot;)
+  (use &quot;git merge --abort&quot; to abort the merge)
+
+Unmerged paths:
+  (use &quot;git add &lt;file&gt;...&quot; to mark resolution)
+    both modified:   README.md
+
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</code></pre>
+<p>Git marked the conflict inside the file:</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb399-1"><a href="git.html#cb399-1" tabindex="-1"></a><span class="fu">cat</span> README.md</span></code></pre></div>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+# Diatom genomics project
+=======
+# bio_project
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; new-title
+Project started 2026-01-14
+Samples collected from Lake Fayetteville
+Data are in data/, one FASTA file per sample.</code></pre>
+<p>The lines between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code> are the version on the branch
+you’re on (<code>main</code>). The lines between <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; new-title</code> are
+the version from the other branch. To resolve the conflict:</p>
+<ol style="list-style-type: decimal">
+<li>Open the file in your editor.</li>
+<li>Edit it so it says what you want. That might be one version, the other, or
+a combination.</li>
+<li>Delete the three marker lines (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>).</li>
+<li>Stage the file with <code>git add</code> and commit.</li>
+</ol>
+<div class="sourceCode" id="cb401"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb401-1"><a href="git.html#cb401-1" tabindex="-1"></a><span class="fu">nano</span> README.md            <span class="co"># fix the conflict and delete the markers</span></span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb402-1"><a href="git.html#cb402-1" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 1 README.md</span>
+<span id="cb402-2"><a href="git.html#cb402-2" tabindex="-1"></a><span class="fu">git</span> add README.md</span>
+<span id="cb402-3"><a href="git.html#cb402-3" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Merge new-title, keeping the longer title&quot;</span></span>
+<span id="cb402-4"><a href="git.html#cb402-4" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--graph</span></span></code></pre></div>
+<pre><code># Diatom genomics project
+[main 5865bc0] Merge new-title, keeping the longer title
+*   5865bc0 Merge new-title, keeping the longer title
+|\  
+| * e7f0149 Shorter title
+* | ebfcd40 Better title
+|/  
+* f0cb5a8 Describe the data directory
+* aed7a27 Remove bad advice from README
+* 22ff2f2 Update README
+* f5022f4 Add Markdown extension to README files
+* 4bfddbd Add sampling location
+* 59f25f4 Add project start date
+* 639eaca Ignore FASTA files in data/
+* 841eb91 Initial import</code></pre>
+<p><code>git log --graph</code> draws the history of the branches and the merge commit that
+joins them, just like Figure <a href="git.html#fig:branches">5.4</a>.</p>
+<div class="tip">
+<p><strong>Changed your mind?</strong> In the middle of a conflicted merge, <code>git merge --abort</code>
+puts everything back the way it was before you ran <code>git merge</code>.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-34" class="exercise"><strong>Exercise 5.2  </strong></span>In your own repository:</p>
+<ol style="list-style-type: decimal">
+<li>Create a branch, switch to it, and commit a change to a file. Switch back
+to <code>main</code> and confirm that the change isn’t there. Merge the branch into
+<code>main</code>, and delete the branch.</li>
+<li>Create a merge conflict on purpose: make two branches that change the same
+line of the same file differently, and merge one into the other. Resolve the
+conflict, and look at the result with <code>git log --oneline --graph</code>.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="github" class="section level2 hasAnchor" number="5.12">
+<h2><span class="header-section-number">5.12</span> Remote repositories and GitHub<a href="git.html#github" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>So far, everything has lived in a single repository on your own computer. A
+<strong>remote repository</strong> is a copy of your repository hosted somewhere else,
+usually on a service such as <a href="https://github.com">GitHub</a> (others include
+GitLab and Bitbucket). A remote repository:</p>
+<ul>
+<li><strong>backs up</strong> your work: if your laptop dies, your code and its entire
+history are safe</li>
+<li><strong>shares</strong> your work: anyone can see your public repositories (this course’s
+materials are on GitHub)</li>
+<li>lets you <strong>collaborate</strong>: everyone works in their own local repository and
+exchanges commits through the shared remote</li>
+</ul>
+<p>Git is a <strong>distributed</strong> version control system: every copy of a repository
+contains the full history of the project, and every collaborator can work,
+commit, and look through the history without a network connection. You only
+need the network to exchange commits:</p>
+<ul>
+<li><code>git push</code> sends your new commits to the remote.</li>
+<li><code>git pull</code> fetches new commits from the remote and merges them into your
+local repository.</li>
+<li><code>git clone</code> copies a remote repository, and its entire history, to your
+computer.</li>
+</ul>
+<p>Figure <a href="git.html#fig:collaboration">5.5</a> shows how this works for
+<a href="https://github.com/lh3/seqtk"><code>seqtk</code></a>, a popular toolkit for working with
+FASTA and FASTQ files. Its author, Heng Li, pushes his changes to GitHub,
+where a collaborator clones the repository (A). When the collaborator pushes a
+change, Heng Li can pull it into his own copy (B). The history on GitHub is a
+mix of commits from Heng Li and everyone else who contributes.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:collaboration"></span>
+<img src="images/04-git/collaboration.jpg" alt="Collaborating through a shared repository on GitHub." width="100%" />
+<p class="caption">
+Figure 5.5: Collaborating through a shared repository on GitHub.
+</p>
+</div>
+<div id="git-clone" class="section level3 hasAnchor" number="5.12.1">
+<h3><span class="header-section-number">5.12.1</span> Cloning a repository<a href="git.html#git-clone" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To get a copy of any public repository, find the green <strong>Code</strong> button on its
+GitHub page, copy the URL, and use <code>git clone</code>:</p>
+<div class="sourceCode" id="cb404"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb404-1"><a href="git.html#cb404-1" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/lh3/seqtk.git</span></code></pre></div>
+<pre><code>Cloning into &#39;seqtk&#39;...
+remote: Enumerating objects: 409, done.
+remote: Counting objects: 100% (33/33), done.
+remote: Compressing objects: 100% (18/18), done.
+remote: Total 409 (delta 18), reused 16 (delta 15), pack-reused 376 (from 3)
+Receiving objects: 100% (409/409), 202.57 KiB | 901.00 KiB/s, done.
+Resolving deltas: 100% (232/232), done.</code></pre>
+<p>This creates a directory called <code>seqtk</code> that’s a complete Git repository,
+<code>.git</code> directory and all. You can run <code>git log</code> to see its whole history. Many
+bioinformatics programs are installed this way: clone the repository, then
+build the program by following its README. To get the author’s latest changes
+later, run <code>git pull</code> inside the directory.</p>
+</div>
+<div id="github-setup" class="section level3 hasAnchor" number="5.12.2">
+<h3><span class="header-section-number">5.12.2</span> Setting up GitHub<a href="git.html#github-setup" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><strong>Create an account</strong> at <a href="https://github.com">github.com</a>. Pick a
+professional username: it will appear in the URL of everything you share.
+Students can also apply for the free
+<a href="https://education.github.com/">GitHub Education</a> benefits.</li>
+<li><strong>Set up authentication.</strong> GitHub doesn’t accept your account password
+when you push from the command line. Use one of these instead.</li>
+</ol>
+<p><strong>Option 1: SSH keys (recommended).</strong> If you made an SSH key in Section
+<a href="remote.html#ssh-keys">4.7</a>, you can use the same key for GitHub. Print your <em>public</em> key
+and copy it:</p>
+<div class="sourceCode" id="cb406"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb406-1"><a href="git.html#cb406-1" tabindex="-1"></a><span class="fu">cat</span> ~/.ssh/id_ed25519.pub</span></code></pre></div>
+<p>On GitHub, go to <em>Settings &gt; SSH and GPG keys &gt; New SSH key</em>, paste it in,
+and save. Then test the connection:</p>
+<div class="sourceCode" id="cb407"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb407-1"><a href="git.html#cb407-1" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> git@github.com</span></code></pre></div>
+<pre><code>Hi yourname! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code></pre>
+<p>With SSH, use the repository’s SSH URL, which looks like
+<code>git@github.com:yourname/bio_project.git</code>.</p>
+<p><strong>Option 2: HTTPS with a personal access token.</strong> A token is a long, random
+password that you create on GitHub, at <em>Settings &gt; Developer settings &gt;
+Personal access tokens</em>
+(<a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">instructions</a>).
+Give it an expiration date and only the access it needs (for a fine-grained
+token, <em>Contents: Read and write</em> on your repositories). Copy the token right
+away: GitHub shows it only once. When Git asks for your password, paste the
+token. On a Mac, Git saves it in your Keychain so you don’t have to paste it
+every time. With HTTPS, use URLs like
+<code>https://github.com/yourname/bio_project.git</code>.</p>
+<div class="warning">
+<p><strong>Treat a token like a password.</strong> Anyone with your token can do whatever the
+token allows to your GitHub account. Don’t put it in a script, email it, or
+commit it to a repository. If one leaks, delete it on GitHub and make a new
+one.</p>
+</div>
+<div class="tip">
+<p><strong>Working on the cluster?</strong> Git works the same way on the cluster. To push from
+there, make an SSH key <em>on the cluster</em> with <code>ssh-keygen</code> and add that public
+key to GitHub too. You can add as many keys as you like, one per computer.</p>
+</div>
+</div>
+<div id="git-push" class="section level3 hasAnchor" number="5.12.3">
+<h3><span class="header-section-number">5.12.3</span> Pushing a local repository to GitHub<a href="git.html#git-push" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To put <code>bio_project</code> on GitHub:</p>
+<ol style="list-style-type: decimal">
+<li>On GitHub, click <strong>+</strong> (top right) &gt; <strong>New repository</strong>.</li>
+<li>Name it <code>bio_project</code>. Choose public or private.</li>
+<li><strong>Don’t</strong> add a README, <code>.gitignore</code>, or license. We already have a
+repository with its own history, so the one on GitHub should start out
+empty.</li>
+<li>Click <strong>Create repository</strong>. GitHub shows the commands you need, with your
+repository’s URL filled in.</li>
+</ol>
+<p>Back in the Terminal, inside <code>bio_project</code>, tell your local repository about
+the remote. By convention, the main remote is named <code>origin</code>:</p>
+<div class="sourceCode" id="cb409"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb409-1"><a href="git.html#cb409-1" tabindex="-1"></a><span class="fu">git</span> remote add origin git@github.com:yourname/bio_project.git</span>
+<span id="cb409-2"><a href="git.html#cb409-2" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span>             <span class="co"># check it</span></span></code></pre></div>
+<pre><code>origin  git@github.com:yourname/bio_project.git (fetch)
+origin  git@github.com:yourname/bio_project.git (push)</code></pre>
+<p>Then push. The first time, <code>-u origin main</code> links your local <code>main</code> branch to
+<code>main</code> on GitHub, so later you can simply type <code>git push</code> and <code>git pull</code>:</p>
+<div class="sourceCode" id="cb411"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb411-1"><a href="git.html#cb411-1" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div>
+<pre><code>Enumerating objects: 26, done.
+Counting objects: 100% (26/26), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (16/16), done.
+Writing objects: 100% (26/26), 2.31 KiB | 2.31 MiB/s, done.
+Total 26 (delta 5), reused 0 (delta 0), pack-reused 0 (from 0)
+To github.com:yourname/bio_project.git
+ * [new branch]      main -&gt; main
+branch &#39;main&#39; set up to track &#39;origin/main&#39;.</code></pre>
+<p>Refresh the repository’s page on GitHub: your files, commit messages, and
+history are all there.</p>
+</div>
+<div id="git-everyday" class="section level3 hasAnchor" number="5.12.4">
+<h3><span class="header-section-number">5.12.4</span> The everyday workflow<a href="git.html#git-everyday" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Once a project is on GitHub, a typical working session looks like this:</p>
+<div class="sourceCode" id="cb413"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb413-1"><a href="git.html#cb413-1" tabindex="-1"></a><span class="fu">git</span> pull                          <span class="co"># get any changes made elsewhere</span></span>
+<span id="cb413-2"><a href="git.html#cb413-2" tabindex="-1"></a><span class="co"># ... work on your files ...</span></span>
+<span id="cb413-3"><a href="git.html#cb413-3" tabindex="-1"></a><span class="fu">git</span> status                        <span class="co"># what did I change?</span></span>
+<span id="cb413-4"><a href="git.html#cb413-4" tabindex="-1"></a><span class="fu">git</span> add script.py notes.md        <span class="co"># stage the changes you want to keep</span></span>
+<span id="cb413-5"><a href="git.html#cb413-5" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Add GC-content function&quot;</span></span>
+<span id="cb413-6"><a href="git.html#cb413-6" tabindex="-1"></a><span class="fu">git</span> push                          <span class="co"># back up and share</span></span></code></pre></div>
+<p>If you work on more than one computer (say, your laptop and the cluster),
+always <code>git pull</code> before you start and <code>git push</code> when you’re done. If a
+collaborator pushed changes to the same lines you changed, <code>git pull</code> reports
+a merge conflict, which you resolve exactly as in Section
+<a href="git.html#merge-conflicts">5.11.2</a>, and then push.</p>
+<div class="note">
+<p><strong><code>git push</code> is rejected?</strong> If GitHub has commits that you don’t have yet,
+<code>git push</code> refuses with a message about the remote containing work that you
+don’t have locally. Run <code>git pull</code> first, resolve any conflicts, and push
+again.</p>
+</div>
+</div>
+<div id="github-readme" class="section level3 hasAnchor" number="5.12.5">
+<h3><span class="header-section-number">5.12.5</span> README files and Markdown<a href="git.html#github-readme" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>GitHub displays a repository’s <code>README.md</code> on its front page, so it’s the
+first thing visitors read. Use it to explain what the project is, how to run
+the code, and where the data come from. README files are written in Markdown
+(Section <a href="project.html#markdown">3.6</a>). GitHub formats Markdown files wherever they appear in a
+repository, so your <code>data/README.md</code> (Section <a href="project.html#data-readme">3.3</a>) is nicely
+formatted, too.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-35" class="exercise"><strong>Exercise 5.3  </strong></span></p>
+<ol style="list-style-type: decimal">
+<li>Create a GitHub account if you don’t have one, and set up SSH keys or a
+personal access token.</li>
+<li>Create an empty repository on GitHub and push the repository you made in
+Exercise <a href="git.html#exr:ex-git-local">5.1</a> to it. Look at it on GitHub.</li>
+<li>Edit <code>README.md</code> with some Markdown: a heading, a bulleted list, some
+<code>code</code>, and a link. Commit, push, and see how GitHub displays it.</li>
+<li>On GitHub, edit <code>README.md</code> in your browser (the pencil icon) and commit
+the change there. Then run <code>git pull</code> on your computer and check that the
+change arrived.</li>
+<li>Clone the <code>seqtk</code> repository. How many commits does it have?
+(Hint: <code>git log --oneline | wc -l</code>.)</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="git-summary" class="section level2 hasAnchor" number="5.13">
+<h2><span class="header-section-number">5.13</span> Command summary<a href="git.html#git-summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="41%" />
+<col width="58%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git config --global ...</code></td>
+<td>set your name, email, and other preferences</td>
+</tr>
+<tr class="even">
+<td><code>git init</code></td>
+<td>turn the current directory into a repository</td>
+</tr>
+<tr class="odd">
+<td><code>git status</code></td>
+<td>show what’s changed, staged, and untracked</td>
+</tr>
+<tr class="even">
+<td><code>git add file</code></td>
+<td>track a file, or stage its changes</td>
+</tr>
+<tr class="odd">
+<td><code>git commit -m "message"</code></td>
+<td>store the staged changes (<code>-a</code> to stage changed tracked files first)</td>
+</tr>
+<tr class="even">
+<td><code>git restore --staged file</code></td>
+<td>unstage a file</td>
+</tr>
+<tr class="odd">
+<td><code>git restore file</code></td>
+<td>discard changes to a file since the last commit</td>
+</tr>
+<tr class="even">
+<td><code>git restore --source=HEAD~1 file</code></td>
+<td>get a file back from an earlier commit</td>
+</tr>
+<tr class="odd">
+<td><code>git log</code></td>
+<td>list commits (<code>--oneline</code>, <code>--name-status</code>, <code>--graph</code>, <code>-n 3</code>)</td>
+</tr>
+<tr class="even">
+<td><code>git diff</code></td>
+<td>show unstaged changes (<code>--staged</code> for staged changes)</td>
+</tr>
+<tr class="odd">
+<td><code>git show HEAD~1:file</code></td>
+<td>print a file as it was in an earlier commit</td>
+</tr>
+<tr class="even">
+<td><code>git mv</code>, <code>git rm</code></td>
+<td>rename or delete a tracked file</td>
+</tr>
+<tr class="odd">
+<td><code>git branch</code></td>
+<td>list branches (<code>git branch name</code> to create one, <code>-d</code> to delete)</td>
+</tr>
+<tr class="even">
+<td><code>git switch branch</code></td>
+<td>switch branches (<code>-c</code> to create and switch)</td>
+</tr>
+<tr class="odd">
+<td><code>git merge branch</code></td>
+<td>merge another branch into the current one</td>
+</tr>
+<tr class="even">
+<td><code>git clone url</code></td>
+<td>copy a remote repository to your computer</td>
+</tr>
+<tr class="odd">
+<td><code>git remote add origin url</code></td>
+<td>connect a local repository to a remote one</td>
+</tr>
+<tr class="even">
+<td><code>git push</code>, <code>git pull</code></td>
+<td>send commits to, or get commits from, the remote</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="remote.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": null,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

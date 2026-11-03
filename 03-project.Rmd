@@ -1,0 +1,587 @@
+# Organizing your project {#project}
+
+::: {.goals}
+**In this chapter**
+
+- how to lay out a project directory with `data`, `scripts`, `results`,
+  `figs`, and `manuscript` folders
+- how to document where your data came from in a `data/README.md`
+- how to make an RStudio project
+- how to keep a project notebook in R Markdown that records everything you
+  did: the commands, the software versions, and the results
+- how to write Markdown
+:::
+
+## Why organize? {#why-organize}
+
+The most important collaborator on any project is you, six months from now.
+By then you'll have forgotten which file is the raw data, which script made
+Figure 3, and what options you gave the aligner. A reviewer will ask, or a
+labmate will want to build on your work, or you'll find a bug and need to
+redo everything downstream of it.
+
+Organizing a project well isn't hard, and you only have to decide how once. The
+layout in this chapter follows two widely read papers that are worth a few
+minutes of your time:
+
+- Noble (2009). [A quick guide to organizing computational biology
+  projects](https://doi.org/10.1371/journal.pcbi.1000424). *PLoS
+  Computational Biology* 5: e1000424.
+- Wilson et al. (2017). [Good enough practices in scientific
+  computing](https://doi.org/10.1371/journal.pcbi.1005510). *PLoS
+  Computational Biology* 13: e1005510.
+
+The guiding principle, from Noble: someone unfamiliar with your project
+should be able to look at your files and understand exactly what you did and
+why.
+
+## A directory for each project {#project-layout}
+
+Put each project in its own directory, with the same set of folders every
+time:
+
+| Folder        | What goes in it                                                     |
+|---------------|---------------------------------------------------------------------|
+| `data/`       | raw data, exactly as you received or downloaded it, plus a `README.md` saying where it came from |
+| `scripts/`    | your code: shell scripts, Python, R                                 |
+| `results/`    | intermediate files made by your scripts: filtered and processed data, tables, alignments, trees, program output |
+| `figs/`       | figures, made by your scripts                                       |
+| `manuscript/` | the paper, poster, or thesis chapter                                |
+
+Data flow in one direction: scripts read raw data from `data/` and write what
+they make to `results/`; later scripts read from `results/` and write more
+results, or figures in `figs/`. Nothing a script makes ever goes in `data/`.
+
+At the top level go a `README.md` describing the project and the project
+**notebook** (Section \@ref(notebook)).
+
+Inside these folders, add subdirectories wherever they help you, or someone
+else, find things. Organize each folder by what's in it. Our example project,
+on the genome of the diatom *Phaeodactylum tricornutum*, uses two kinds of
+data: the published genome sequence and our own RNA-seq reads:
+
+```text
+phaeodactylum_project/
+├── README.md
+├── notebook.Rmd
+├── phaeodactylum_project.Rproj
+├── data/
+│   ├── README.md
+│   ├── genome/
+│   └── rnaseq/
+├── scripts/
+│   └── seq_lengths.sh
+├── results/
+│   ├── 2026-01-16_seq_lengths/
+│   ├── 2026-02-02_assembly_k21/
+│   ├── 2026-02-03_assembly_k33/
+│   └── 2026-02-05_assembly_k55/
+├── figs/
+└── manuscript/
+```
+
+- **`data/`** is divided by source: one subdirectory for each data set, each
+  described in `data/README.md` (Section \@ref(data-readme)).
+- **`results/`** is divided by analysis: each time you run an analysis, its
+  output goes in a new subdirectory named with the date and what it is
+  (Section \@ref(project-rules)).
+- **`scripts/`** and **`figs/`** stay flat, with descriptive file names,
+  until there are enough files that subdirectories would help.
+
+::: {.note}
+**Why not a `genome/` and `rnaseq/` folder everywhere?** You'll sometimes see
+projects that repeat the same subdirectories inside `data`, `scripts`,
+`results`, and `figs`. That can work, but it's rarely as clean as it looks: a
+script often uses data from more than one part of the project, a figure
+combines several results, and the parts of a project change as it goes.
+Start simple, and add subdirectories when a folder gets crowded.
+:::
+
+### Making the directories {#mkdir-braces}
+
+You could make these one at a time with `mkdir`, but the shell has a shortcut.
+**Brace expansion** turns a comma-separated list in braces into several
+words. See what it does with `echo`:
+
+```{bash}
+echo {data,scripts,results,figs,manuscript}
+echo sample_{A,B,C}_{R1,R2}.fastq.gz
+```
+
+Two sets of braces give every combination. Braces can also go inside other
+braces, so one `mkdir` makes the whole tree. `-p` makes the parent directory,
+`phaeodactylum_project`, along the way (Section \@ref(managing-files)):
+
+```{bash, sandbox = TRUE}
+mkdir -p phaeodactylum_project/{data/{genome,rnaseq},scripts,results,figs,manuscript}
+find phaeodactylum_project -type d | sort
+```
+
+::: {.warning}
+**No spaces inside the braces.** `{data, scripts}` doesn't expand, because
+the space splits it into two separate words. The same goes for spaces in file
+and directory names generally (Section \@ref(file-system)).
+:::
+
+::: {.tip}
+**Prefer pictures?** The `tree` command draws a directory tree like the one
+above. It isn't installed by default: `brew install tree` on a Mac,
+`sudo apt install tree` on Linux.
+:::
+
+### Rules of thumb {#project-rules}
+
+- **One project, one directory.** Everything a project needs lives inside it,
+  so you can move it, copy it to the cluster, or put it on GitHub as one unit.
+- **Raw data are read-only.** Never edit raw data by hand. Scripts read the
+  raw data and write their output to `results/`. To protect raw data from
+  accidents, remove write permission (Section \@ref(chmod)):
+  `chmod -R a-w data/genome`.
+- **Everything in `results/` and `figs/` can be remade** by running your
+  scripts. If you deleted either folder, you should be able to get it back.
+  That's why the notebook records every command (Section \@ref(notebook)).
+  Results can be big, so they're often left out of Git (Section
+  \@ref(gitignore)) and backed up separately if they took a long time to make.
+- **Organize results by analysis.** When you run the same analysis
+  several ways, give each run its own subdirectory, such as
+  `results/2026-02-03_assembly_k33/`, so new output never overwrites old
+  output and the date links it to its notebook entry.
+- **Use relative paths** inside the project, such as
+  `results/2026-01-16_seq_lengths/seq_lengths.tsv`, not
+  `/Users/aja/Desktop/phaeodactylum_project/results/2026-01-16_seq_lengths/seq_lengths.tsv`.
+  Then the project works on any computer, in any location.
+- **Name files so they sort.** Use dates in the form `2026-01-14` (year
+  first), and number scripts that run in order: `01_download.sh`,
+  `02_seq_lengths.sh`, `03_plot.R`. Use leading zeros (`01`, not `1`) so `10`
+  sorts after `09`.
+- **No spaces in names** (Section \@ref(file-system)).
+
+### Marking the final result {#final-result}
+
+Most analyses are run more than once: with a range of parameter settings,
+on different subsets of the data, or again after you fix a bug. That's as it
+should be, but months later, when a reviewer asks about Figure 2, which of
+the dozen runs did you actually publish?
+
+Don't copy the chosen output somewhere else, and don't rename it. Leave every
+run where it is, and make a **symbolic link** (Section \@ref(ln)) called
+`FINAL_PUBLISHED_RESULT` that points to the exact file you used. Suppose we
+assembled a genome with three different *k*-mer sizes, and the paper uses the
+assembly made with *k* = 33:
+
+```{bash, sandbox = TRUE, dir = "phaeodactylum_project/results", echo = FALSE, results = "hide"}
+for k in 21 33 55; do
+  mkdir -p 2026-02-0${k:0:1}_assembly_k$k
+  echo ">contig_1 k=$k" > 2026-02-0${k:0:1}_assembly_k$k/contigs.fasta
+done
+```
+
+```{bash, sandbox = TRUE, dir = "phaeodactylum_project/results"}
+ls
+```
+
+Go to the directory where the link should live, and make the link:
+
+```{bash, sandbox = TRUE, dir = "phaeodactylum_project/results"}
+ln -s 2026-02-03_assembly_k33/contigs.fasta FINAL_PUBLISHED_RESULT
+ls -l
+```
+
+`ls -l` shows where the link points (`->`), and the `l` at the start of the
+line marks it as a link. Anything that reads the link reads the real file:
+
+```{bash, sandbox = TRUE, dir = "phaeodactylum_project/results"}
+head -n 1 FINAL_PUBLISHED_RESULT
+```
+
+Now the answer is obvious to you, your coauthors, and anyone who reuses your
+project, and the runs you didn't use are still there for comparison. A few
+tips:
+
+- **Its name is in capitals** so it stands out in a directory listing.
+- **Make one link per published result.** If a paper uses several, give each
+  link a descriptive suffix, such as `FINAL_PUBLISHED_RESULT_fig2` and
+  `FINAL_PUBLISHED_RESULT_table1`. The same works for figures: put a
+  `FINAL_PUBLISHED_FIG2` link in `figs/`.
+- **Changed your mind?** `ln -sf` replaces an existing link:
+  `ln -sf 2026-02-05_assembly_k55/contigs.fasta FINAL_PUBLISHED_RESULT`.
+- **Record the choice in your notebook**, with the reason: "Used the *k* = 33
+  assembly: highest N50 and BUSCO completeness of the three."
+
+::: {.warning}
+**A link's target is relative to the link, not to you.** `ln -s` stores the
+path to the target exactly as you typed it, and the system follows it from
+the directory where the link lives. If you're at the top of the project and
+type `ln -s results/2026-02-03_assembly_k33/contigs.fasta
+results/FINAL_PUBLISHED_RESULT`, the link looks for
+`results/2026-02-03_assembly_k33/...` *inside* `results/`, and finds
+nothing: a
+**broken link**. That's why it's easiest to `cd` to the directory where the
+link should live first. Check a new link with `head` or `ls -L`, which show
+an error if the link is broken.
+:::
+
+::: {.tip}
+**Keep links relative.** A link to a relative path, like the one above, keeps
+working when you move or copy the whole project, because the files it points
+to move with it. A link to an absolute path
+(`/Users/aja/Desktop/phaeodactylum_project/...`) breaks as soon as the project
+moves. `rsync -a` (Section \@ref(rsync)) copies links as links, and Git stores
+them as links, too.
+:::
+
+## Documenting your data {#data-readme}
+
+Every `data` directory gets its own `README.md` that says, for each data set:
+what it is, where it came from (a URL or accession number), when and how you
+got it, and its checksums (a kind of digital fingerprint for a file, covered
+in Section \@ref(checksums)). This is the first thing
+you'll need when you write the methods section, and the first thing anyone
+reusing your data will look for.
+
+Here's how the genome data in our example project were downloaded. NCBI
+provides checksums for every file, so we check that the download is intact.
+Don't worry about the details yet: downloading with `curl` and checking files
+with `md5sum` are covered in Chapter \@ref(remote) (Sections \@ref(download)
+and \@ref(checksums)). For now, notice what gets recorded:
+
+```{bash, eval = FALSE}
+cd data/genome
+curl -O https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/150/955/GCF_000150955.2_ASM15095v2/GCF_000150955.2_ASM15095v2_genomic.fna.gz
+curl -O https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/150/955/GCF_000150955.2_ASM15095v2/md5checksums.txt
+md5sum GCF_000150955.2_ASM15095v2_genomic.fna.gz
+grep ASM15095v2_genomic.fna.gz md5checksums.txt
+```
+
+```
+9f3ceb6ed3a6c00bd1019a44fdcf4256  GCF_000150955.2_ASM15095v2_genomic.fna.gz
+9f3ceb6ed3a6c00bd1019a44fdcf4256  ./GCF_000150955.2_ASM15095v2_genomic.fna.gz
+```
+
+Our checksum (first line) matches NCBI's (second line). And here's the `data/README.md`
+that records it all. It's written in Markdown (Section \@ref(markdown)):
+
+```markdown
+# Data for the Phaeodactylum genome project
+
+## genome/
+
+Reference genome of *Phaeodactylum tricornutum* CCAP 1055/1, RefSeq assembly
+GCF_000150955.2 (ASM15095v2), from NCBI:
+<https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000150955.2/>
+
+Downloaded 2026-01-14 by Your Name. Commands are in `notebook.Rmd`.
+
+| File                                        | Contents                 | MD5                              |
+|---------------------------------------------|--------------------------|----------------------------------|
+| GCF_000150955.2_ASM15095v2_genomic.fna.gz   | genome sequence (FASTA)  | 9f3ceb6ed3a6c00bd1019a44fdcf4256 |
+| md5checksums.txt                            | NCBI's checksums         |                                  |
+
+## rnaseq/
+
+RNA-seq reads, 6 samples, sequenced by the UAMS Genomics Core, received
+2026-02-03 on a hard drive. Sample information is in `rnaseq/samples.csv`.
+```
+
+If one part of the project has a lot of data, it can have its own README, for
+example `data/rnaseq/README.md`, with `data/README.md` pointing to it.
+
+## RStudio projects {#rstudio-projects}
+
+[RStudio](https://posit.co/download/rstudio-desktop/) is the most popular
+program for working in R, and it's a good home base for a project even when
+most of the work happens in the shell. An **RStudio project** is a project
+directory with a small settings file, `phaeodactylum_project.Rproj`, at the
+top level. Opening a project (double-click the `.Rproj` file, or use
+*File > Open Project* in RStudio):
+
+- sets R's working directory to the top of the project, so relative paths
+  such as `results/2026-01-16_seq_lengths/seq_lengths.tsv` just work
+- opens a *Terminal* tab (next to the *Console*) that also starts at the top
+  of the project
+- reopens the files you were working on, and keeps a separate history for
+  each project
+
+To turn the directory we made into an RStudio project:
+
+1. In RStudio, choose *File > New Project...*
+2. Choose **Existing Directory**, browse to `phaeodactylum_project`, and click
+   **Create Project**.
+
+RStudio restarts inside the project and creates `phaeodactylum_project.Rproj`
+and a hidden `.Rproj.user/` directory of settings. (To start a project from
+scratch instead, choose **New Directory** > **New Project**, then make the
+folders from the Terminal tab.) The `.Rproj` file is short plain text:
+
+```text
+Version: 1.0
+
+RestoreWorkspace: No
+SaveWorkspace: No
+AlwaysSaveHistory: Default
+
+EnableCodeIndexing: Yes
+Encoding: UTF-8
+```
+
+::: {.tip}
+**Start each R session fresh.** In *Tools > Global Options > General*, uncheck
+*Restore .RData into workspace at startup* and set *Save workspace to .RData
+on exit* to **Never**. Otherwise R quietly carries old objects from one session
+to the next, and code that works for you may fail for everyone else. If
+everything important is made by scripts, you never need a saved workspace.
+:::
+
+## The project notebook {#notebook}
+
+At the bench, you keep a lab notebook. A computational project needs one too.
+The **project notebook** is where you document *everything* you do, as you do
+it:
+
+- what you did and why, dated
+- the exact commands you ran, copied from the Terminal
+- the **versions** of the software you used (results can change between
+  versions, and the methods section needs them)
+- the results, including the dead ends ("tried X; it didn't work because Y")
+- what to do next
+
+We'll keep the notebook in **R Markdown**, a plain-text format that mixes
+Markdown text (Section \@ref(markdown)) with chunks of code. Knitting the file
+turns it into a nicely formatted web page, with the code in shaded boxes.
+(This book was written in R Markdown, too.)
+
+### Making the notebook {#make-notebook}
+
+In RStudio, with the project open:
+
+1. Choose *File > New File > R Markdown...*
+2. Give it a title, such as "Phaeodactylum genome project: notebook", and
+   your name. Leave the output format as **HTML**. Click **OK**.
+3. RStudio opens an example document. Delete everything below the header
+   (the part between the two `---` lines), and save the file as
+   `notebook.Rmd` at the top of the project.
+
+Click **Knit** (or press <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>K</kbd>) to turn
+`notebook.Rmd` into `notebook.html`, and open it in a browser.
+
+::: {.note}
+**R Markdown or Quarto?** RStudio's *File > New File* menu also offers
+**Quarto** documents (`.qmd`), the newer successor to R Markdown from the same
+developers. They work almost the same way. This course uses R Markdown, which
+is still fully supported.
+:::
+
+### What goes in the notebook {#notebook-contents}
+
+Here's a notebook for our example project, a couple of days in. Entries are
+in date order, each under a dated heading, with the commands in code chunks
+and the results written out below them:
+
+```{r notebook-template, echo = FALSE, results = "asis"}
+cat("````markdown", readLines("templates/notebook.Rmd"), "````", sep = "\n")
+```
+
+A few things to notice:
+
+- **The header** (between the `---` lines) is written in YAML. It sets the
+  title, author, and date, and `toc: true` adds a table of contents that
+  floats beside the text (`toc_float`), so you can jump to any day.
+- **Code chunks** start with ```` ```{bash} ```` or ```` ```{r} ```` and end
+  with ```` ``` ````. RStudio shows them shaded, and the *Insert* menu (the
+  green **+C** button above the editor) adds a new one.
+- **`eval = FALSE`** in the setup chunk means knitting doesn't run the code.
+  The notebook is a *record*: you ran the commands in the Terminal as you
+  worked, and you don't want every knit to download the genome again. Turn a
+  chunk back on with `eval = TRUE` in its header, as in the last chunk.
+- **Software versions** are in a table, copied from each program's version
+  command (`curl --version`, `samtools --version`, `blastn -version`). The
+  last chunk runs `sessionInfo()`, which lists the versions of R and of every
+  R package that was loaded.
+- **Longer code goes in `scripts/`.** The notebook just records running it.
+  Here's `scripts/seq_lengths.sh`, which uses `awk` (Section
+  \@ref(awk)) to print the name and length of each sequence in a FASTA
+  file:
+
+```{bash, eval = FALSE}
+#!/bin/bash
+# Print the name and length of every sequence in the genome, tab-separated.
+gzcat data/genome/GCF_000150955.2_ASM15095v2_genomic.fna.gz |
+  awk '/^>/ {if (name) print name "\t" len; name = substr($1, 2); len = 0; next}
+       {len += length($0)}
+       END {print name "\t" len}'
+```
+
+::: {.tip}
+**Write it down now.** The commands you think you'll remember are the ones
+you'll forget. Paste each command into the notebook right after it works (or
+right after it fails, with a note about why). `history` (Section
+\@ref(history)) can help you recover what you typed.
+:::
+
+## Markdown {#markdown}
+
+**Markdown** is a simple way to format plain text. You write `**bold**`, and
+it becomes **bold**. It's everywhere in scientific computing: R Markdown and
+Quarto documents, Jupyter notebooks, `README.md` files, and GitHub, which
+displays Markdown files formatted. Because it's plain text, Markdown is easy to
+read even before it's formatted, works with any text editor, and works well
+with Git (Chapter \@ref(git)), which we'll use to keep track of every version
+of your project.
+
+### Text {-}
+
+| You type                     | You get                     |
+|------------------------------|-----------------------------|
+| `*italic*` or `_italic_`     | *italic*                    |
+| `**bold**`                   | **bold**                    |
+| `` `code` ``                 | `code`                      |
+| `~~strikethrough~~`          | ~~strikethrough~~           |
+| `H~2~O`, `x^2^` (R Markdown) | H~2~O, x^2^                 |
+| `[a link](https://www.uark.edu)` | [a link](https://www.uark.edu) |
+| `<https://www.uark.edu>`     | <https://www.uark.edu>      |
+
+Use italics for species names: `*Phaeodactylum tricornutum*`.
+
+**Paragraphs** are separated by a blank line. A single line break inside a
+paragraph is ignored, so you can break long lines wherever you like. To start
+a new paragraph, leave a blank line.
+
+### Headings {-}
+
+Start a line with one to six `#` characters, followed by a space:
+
+```markdown
+# Heading 1
+## Heading 2
+### Heading 3
+```
+
+### Lists {-}
+
+Start each item with `-` (or `*`) for a bulleted list, or a number and a
+period for a numbered list. Indent by four spaces to nest a list inside
+another. Leave a blank line before a list.
+
+```markdown
+Things to buy:
+
+- agarose
+- primers
+    - ITS1
+    - ITS4
+
+Steps:
+
+1. Extract DNA.
+2. Amplify.
+3. Sequence.
+```
+
+### Code {-}
+
+Inline code goes between single backticks, `` `like this` ``. For a block of
+code, put three backticks on the lines before and after. Add the language
+after the opening backticks to color-code it:
+
+````markdown
+```bash
+grep -c '>' sequences.fasta
+```
+````
+
+In R Markdown, a language in *braces*, such as ```` ```{bash} ```` or
+```` ```{r} ````, makes a code chunk that can be run, not just displayed.
+
+### Images, tables, and quotes {-}
+
+```markdown
+![A caption for the figure](figs/seq_lengths.png)
+
+| Sample | Reads     |
+|--------|-----------|
+| A1     | 1,204,551 |
+| A2     |   998,013 |
+
+> A block quote starts with a greater-than sign.
+```
+
+An image is a link with a `!` in front; the text in brackets becomes the
+caption. In a table, the `|` characters don't need to line up, but it's easier
+to read when they do. RStudio's **Visual** editor (the button at the top left
+of the editor) lets you edit Markdown as formatted text and insert tables,
+images, and links from menus, and switch back to **Source** to see the
+Markdown.
+
+::: {.tip}
+**Literal characters.** To show a character that Markdown would otherwise
+interpret, like `*` or `#`, put a backslash in front: `\*not italic\*`.
+:::
+
+### Learning more {-}
+
+- [CommonMark's 10-minute tutorial](https://commonmark.org/help/tutorial/):
+  short interactive lessons, typed in your browser. Start here.
+- [Markdown Tutorial](https://www.markdowntutorial.com/): more interactive
+  lessons.
+- [The Markdown Guide](https://www.markdownguide.org/): clear reference, with
+  a [one-page cheat sheet](https://www.markdownguide.org/cheat-sheet/).
+- [GitHub's guide to writing
+  Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax),
+  for README files on GitHub.
+- For R Markdown: RStudio's [introductory
+  tutorial](https://rmarkdown.rstudio.com/lesson-1.html), the [R Markdown
+  cheat sheet](https://rstudio.github.io/cheatsheets/rmarkdown.pdf), and the
+  free books [*R Markdown: The Definitive
+  Guide*](https://bookdown.org/yihui/rmarkdown/) and [*R Markdown
+  Cookbook*](https://bookdown.org/yihui/rmarkdown-cookbook/).
+- RStudio's [Visual
+  editor](https://rstudio.github.io/visual-markdown-editing/) documentation.
+
+::: {.exercise #ex-project}
+Set up a project of your own: your thesis project, a side project, or this
+class.
+
+1. Make the project directory with `data`, `scripts`, `results`, `figs`,
+   and `manuscript` folders, and a subdirectory in `data/` for each of your
+   data sets, using a single `mkdir` command with brace expansion. Check the
+   result with `find . -type d`.
+2. Make it an RStudio project.
+3. Download some data into `data/`. If you don't have any yet, download the
+   *P. tricornutum* annotation (the `_genomic.gff.gz` file in the same NCBI
+   directory as the genome; Section \@ref(download) shows how). Verify it
+   with `md5sum` (Section \@ref(checksums)), and write a
+   `data/README.md` that describes it.
+4. Create `notebook.Rmd`. Make a dated entry recording the commands you used
+   in step 3, and a software table with the version of `curl` you used. End the
+   notebook with a `sessionInfo()` chunk. Knit it.
+5. Write a top-level `README.md` that describes the project in a few
+   sentences, with a heading, a bulleted list of the folders, a link, and a
+   species name in italics.
+6. In `results/`, make three run directories with different parameter
+   settings in their names, each holding a small output file (`echo` some text
+   into it). Make a `FINAL_PUBLISHED_RESULT` link to one of the files, and
+   check it with `ls -l` and `head`. Then make a broken link on purpose, from
+   the top of the project, and see what `ls -l` and `head` do with it.
+:::
+
+::: {.exercise}
+Work through CommonMark's [10-minute Markdown
+tutorial](https://commonmark.org/help/tutorial/). Then add a table and an
+image to your notebook, and knit it again.
+:::
+
+## Summary {#project-summary}
+
+| Item                  | What it's for                                               |
+|-----------------------|-------------------------------------------------------------|
+| `data/`               | raw data, read-only, with a `README.md` describing sources  |
+| `scripts/`            | code                                                        |
+| `results/`            | intermediate files made by scripts                          |
+| `figs/`               | figures made by scripts                                     |
+| `manuscript/`         | writing                                                     |
+| subdirectories        | where they help: `data/` by source, `results/` by dated analysis run |
+| `README.md`           | what the project is                                         |
+| `notebook.Rmd`        | dated record of everything you did, with commands, versions, and results |
+| `project.Rproj`       | makes the directory an RStudio project                      |
+| `mkdir -p dir/{a,b}/{c,d}` | make a whole tree of directories at once               |
+| `ln -s run/file FINAL_PUBLISHED_RESULT` | mark the exact output used in a publication |

@@ -1,0 +1,77 @@
+---
+title: "Phaeodactylum genome project: notebook"
+author: "Your Name"
+date: "Started 2026-01-14. Last knitted `r Sys.Date()`."
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include = FALSE}
+# This notebook is a record of what I did. Knitting it shouldn't rerun
+# downloads or long analyses, so chunks don't run unless I say eval = TRUE.
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+# About this project
+
+**Question:** How are genes distributed across the chromosomes of the diatom
+*Phaeodactylum tricornutum*?
+
+**Layout:** raw data in `data/` (sources in `data/README.md`), code in
+`scripts/`, intermediate files in `results/` (one dated subdirectory per
+analysis), figures in `figs/`, writing in `manuscript/`.
+
+# Software
+
+| Program | Version | Installed with      |
+|---------|---------|---------------------|
+| curl    | 8.7.1   | comes with macOS    |
+| R       | 4.5.2   | cran.r-project.org  |
+
+# 2026-01-14: Download the reference genome
+
+Downloaded the genome sequence (RefSeq assembly GCF_000150955.2) from NCBI
+and checked it against NCBI's checksums. Details in `data/README.md`.
+
+```{bash}
+cd data/genome
+curl -O https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/150/955/GCF_000150955.2_ASM15095v2/GCF_000150955.2_ASM15095v2_genomic.fna.gz
+curl -O https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/150/955/GCF_000150955.2_ASM15095v2/md5checksums.txt
+md5sum GCF_000150955.2_ASM15095v2_genomic.fna.gz
+grep ASM15095v2_genomic.fna.gz md5checksums.txt
+```
+
+**Result:** checksums match (`9f3ceb6ed3a6c00bd1019a44fdcf4256`).
+
+# 2026-01-16: Sequence lengths
+
+How many sequences are in the assembly, and how long are they?
+
+```{bash}
+gzcat data/genome/GCF_000150955.2_ASM15095v2_genomic.fna.gz | grep -c '>'
+gzcat data/genome/GCF_000150955.2_ASM15095v2_genomic.fna.gz | grep -c chromosome
+mkdir results/2026-01-16_seq_lengths
+bash scripts/seq_lengths.sh > results/2026-01-16_seq_lengths/seq_lengths.tsv
+```
+
+**Result:** 88 sequences, 33 of them chromosomes. The longest is chromosome 1
+(NC_011669.1, 2,535,400 bp).
+
+```{r}
+lengths <- read.table("results/2026-01-16_seq_lengths/seq_lengths.tsv", col.names = c("id", "bp"))
+png("figs/seq_lengths.png")
+hist(log10(lengths$bp), main = "", xlab = "Sequence length (log10 bp)")
+dev.off()
+```
+
+![Lengths of the 88 sequences in the assembly.](figs/seq_lengths.png)
+
+**Next:** download the annotation (GFF) and count genes per chromosome.
+
+# R session
+
+```{r session-info, eval = TRUE}
+sessionInfo()
+```

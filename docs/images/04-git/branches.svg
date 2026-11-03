@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 200" font-family="'Source Sans 3', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <!-- branch lines -->
+  <line x1="60" y1="60" x2="690" y2="60" stroke="#9d2235" stroke-width="4"/>
+  <path d="M190,60 C230,60 230,145 270,145 L470,145 C510,145 510,60 550,60" fill="none" stroke="#2f5d8c" stroke-width="4"/>
+
+  <!-- labels -->
+  <text x="20" y="66" font-size="15" font-weight="700" fill="#9d2235">main</text>
+  <text x="270" y="185" font-size="15" font-weight="700" fill="#2f5d8c">new-feature</text>
+
+  <!-- commits on main -->
+  <g fill="#fff" stroke="#9d2235" stroke-width="3">
+    <circle cx="90" cy="60" r="11"/>
+    <circle cx="190" cy="60" r="11"/>
+    <circle cx="370" cy="60" r="11"/>
+    <circle cx="660" cy="60" r="11"/>
+  </g>
+  <!-- merge commit -->
+  <circle cx="550" cy="60" r="13" fill="#9d2235" stroke="#9d2235" stroke-width="3"/>
+
+  <!-- commits on the branch -->
+  <g fill="#fff" stroke="#2f5d8c" stroke-width="3">
+    <circle cx="290" cy="145" r="11"/>
+    <circle cx="370" cy="145" r="11"/>
+    <circle cx="450" cy="145" r="11"/>
+  </g>
+
+  <!-- annotations -->
+  <g font-size="12" font-family="JetBrains Mono, Menlo, monospace" fill="#333">
+    <text x="215" y="112" text-anchor="end">git switch -c</text>
+    <text x="525" y="112">git merge</text>
+  </g>
+  <text x="550" y="35" text-anchor="middle" font-size="12" fill="#555">merge commit</text>
+  <text x="370" y="35" text-anchor="middle" font-size="12" fill="#555">main keeps working</text>
+  <text x="370" y="125" text-anchor="middle" font-size="12" fill="#555">experiment safely</text>
+</svg>

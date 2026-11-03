@@ -1,0 +1,17 @@
+bookdown::gitbook:
+  css: style.css
+  split_by: chapter
+  config:
+    toc:
+      collapse: section
+      before: |
+        <li><a href="./">Practical Programming for Biologists</a></li>
+      after: |
+        <li><a href="https://github.com/andrewalverson/BIOL51573-2026S" target="_blank">Course GitHub page</a></li>
+    edit: null
+    download: null
+    sharing: null
+    fontsettings:
+      theme: white
+      family: sans
+      size: 2

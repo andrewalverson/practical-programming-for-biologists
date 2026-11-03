@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Organizing your project | Practical Programming for Biologists</title>
+  <meta name="description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Organizing your project | Practical Programming for Biologists" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Organizing your project | Practical Programming for Biologists" />
+  
+  <meta name="twitter:description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  
+
+<meta name="author" content="Andrew Alverson" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="shell-config.html"/>
+<link rel="next" href="remote.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Practical Programming for Biologists</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#before-the-first-class"><i class="fa fa-check"></i>Before the first class</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-read-this-book"><i class="fa fa-check"></i>How to read this book</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="unix.html"><a href="unix.html"><i class="fa fa-check"></i><b>1</b> Introduction to Unix</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="unix.html"><a href="unix.html#why-command-line"><i class="fa fa-check"></i><b>1.1</b> Why the command line?</a></li>
+<li class="chapter" data-level="1.2" data-path="unix.html"><a href="unix.html#choosing-os"><i class="fa fa-check"></i><b>1.2</b> Choosing an operating system</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="unix.html"><a href="unix.html#macos"><i class="fa fa-check"></i><b>1.2.1</b> macOS</a></li>
+<li class="chapter" data-level="1.2.2" data-path="unix.html"><a href="unix.html#linux"><i class="fa fa-check"></i><b>1.2.2</b> Linux</a></li>
+<li class="chapter" data-level="1.2.3" data-path="unix.html"><a href="unix.html#windows"><i class="fa fa-check"></i><b>1.2.3</b> Windows</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="unix.html"><a href="unix.html#shell"><i class="fa fa-check"></i><b>1.3</b> The shell</a></li>
+<li class="chapter" data-level="1.4" data-path="unix.html"><a href="unix.html#file-system"><i class="fa fa-check"></i><b>1.4</b> The file system</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="unix.html"><a href="unix.html#paths"><i class="fa fa-check"></i><b>1.4.1</b> Paths</a></li>
+<li class="chapter" data-level="1.4.2" data-path="unix.html"><a href="unix.html#course-files"><i class="fa fa-check"></i><b>1.4.2</b> The course files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="unix.html"><a href="unix.html#getting-around"><i class="fa fa-check"></i><b>1.5</b> Getting around</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="unix.html"><a href="unix.html#pwd-cd-and-echo"><i class="fa fa-check"></i><b>1.5.1</b> <code>pwd</code>, <code>cd</code>, and <code>echo</code></a></li>
+<li class="chapter" data-level="1.5.2" data-path="unix.html"><a href="unix.html#clear-and-exit"><i class="fa fa-check"></i><b>1.5.2</b> <code>clear</code> and <code>exit</code></a></li>
+<li class="chapter" data-level="1.5.3" data-path="unix.html"><a href="unix.html#ctrl-c"><i class="fa fa-check"></i><b>1.5.3</b> Stopping a command: <kbd>Ctrl</kbd>+<kbd>C</kbd></a></li>
+<li class="chapter" data-level="1.5.4" data-path="unix.html"><a href="unix.html#ls"><i class="fa fa-check"></i><b>1.5.4</b> <code>ls</code>: listing directory contents</a></li>
+<li class="chapter" data-level="1.5.5" data-path="unix.html"><a href="unix.html#reading-ls--l-output"><i class="fa fa-check"></i><b>1.5.5</b> Reading <code>ls -l</code> output</a></li>
+<li class="chapter" data-level="1.5.6" data-path="unix.html"><a href="unix.html#wildcards"><i class="fa fa-check"></i><b>1.5.6</b> Wildcards</a></li>
+<li class="chapter" data-level="1.5.7" data-path="unix.html"><a href="unix.html#find"><i class="fa fa-check"></i><b>1.5.7</b> Finding files: <code>find</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="unix.html"><a href="unix.html#viewing-files"><i class="fa fa-check"></i><b>1.6</b> Looking at files</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="unix.html"><a href="unix.html#cat"><i class="fa fa-check"></i><b>1.6.1</b> <code>cat</code></a></li>
+<li class="chapter" data-level="1.6.2" data-path="unix.html"><a href="unix.html#head-and-tail"><i class="fa fa-check"></i><b>1.6.2</b> <code>head</code> and <code>tail</code></a></li>
+<li class="chapter" data-level="1.6.3" data-path="unix.html"><a href="unix.html#less"><i class="fa fa-check"></i><b>1.6.3</b> <code>less</code></a></li>
+<li class="chapter" data-level="1.6.4" data-path="unix.html"><a href="unix.html#man"><i class="fa fa-check"></i><b>1.6.4</b> Getting help: <code>man</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="unix.html"><a href="unix.html#data-streams"><i class="fa fa-check"></i><b>1.7</b> Data streams and redirection</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="unix.html"><a href="unix.html#redirecting-stdout"><i class="fa fa-check"></i><b>1.7.1</b> Redirecting STDOUT</a></li>
+<li class="chapter" data-level="1.7.2" data-path="unix.html"><a href="unix.html#redirecting-stderr"><i class="fa fa-check"></i><b>1.7.2</b> Redirecting STDERR</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="unix.html"><a href="unix.html#text-files"><i class="fa fa-check"></i><b>1.8</b> Text files and text editors</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="unix.html"><a href="unix.html#plain-text"><i class="fa fa-check"></i><b>1.8.1</b> Plain text</a></li>
+<li class="chapter" data-level="1.8.2" data-path="unix.html"><a href="unix.html#line-breaks-matter"><i class="fa fa-check"></i><b>1.8.2</b> Line breaks matter</a></li>
+<li class="chapter" data-level="1.8.3" data-path="unix.html"><a href="unix.html#text-editors"><i class="fa fa-check"></i><b>1.8.3</b> Text editors</a></li>
+<li class="chapter" data-level="1.8.4" data-path="unix.html"><a href="unix.html#fonts"><i class="fa fa-check"></i><b>1.8.4</b> Fonts</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="unix.html"><a href="unix.html#managing-files"><i class="fa fa-check"></i><b>1.9</b> Managing files and directories</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="unix.html"><a href="unix.html#copying-and-moving-cp-and-mv"><i class="fa fa-check"></i><b>1.9.1</b> Copying and moving: <code>cp</code> and <code>mv</code></a></li>
+<li class="chapter" data-level="1.9.2" data-path="unix.html"><a href="unix.html#making-directories-mkdir"><i class="fa fa-check"></i><b>1.9.2</b> Making directories: <code>mkdir</code></a></li>
+<li class="chapter" data-level="1.9.3" data-path="unix.html"><a href="unix.html#deleting-rm-and-rmdir"><i class="fa fa-check"></i><b>1.9.3</b> Deleting: <code>rm</code> and <code>rmdir</code></a></li>
+<li class="chapter" data-level="1.9.4" data-path="unix.html"><a href="unix.html#ln"><i class="fa fa-check"></i><b>1.9.4</b> Links: <code>ln</code></a></li>
+<li class="chapter" data-level="1.9.5" data-path="unix.html"><a href="unix.html#how-much-space-du-and-df"><i class="fa fa-check"></i><b>1.9.5</b> How much space? <code>du</code> and <code>df</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="unix.html"><a href="unix.html#working-with-data"><i class="fa fa-check"></i><b>1.10</b> Working with data</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="unix.html"><a href="unix.html#wc"><i class="fa fa-check"></i><b>1.10.1</b> <code>wc</code>: counting</a></li>
+<li class="chapter" data-level="1.10.2" data-path="unix.html"><a href="unix.html#sort"><i class="fa fa-check"></i><b>1.10.2</b> <code>sort</code>: sorting</a></li>
+<li class="chapter" data-level="1.10.3" data-path="unix.html"><a href="unix.html#grep"><i class="fa fa-check"></i><b>1.10.3</b> <code>grep</code>: searching</a></li>
+<li class="chapter" data-level="1.10.4" data-path="unix.html"><a href="unix.html#cut-extracting-columns"><i class="fa fa-check"></i><b>1.10.4</b> <code>cut</code>: extracting columns</a></li>
+<li class="chapter" data-level="1.10.5" data-path="unix.html"><a href="unix.html#uniq-removing-duplicates"><i class="fa fa-check"></i><b>1.10.5</b> <code>uniq</code>: removing duplicates</a></li>
+<li class="chapter" data-level="1.10.6" data-path="unix.html"><a href="unix.html#column-viewing-tables"><i class="fa fa-check"></i><b>1.10.6</b> <code>column</code>: viewing tables</a></li>
+<li class="chapter" data-level="1.10.7" data-path="unix.html"><a href="unix.html#diff"><i class="fa fa-check"></i><b>1.10.7</b> <code>diff</code>: comparing files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="unix.html"><a href="unix.html#pipes"><i class="fa fa-check"></i><b>1.11</b> Pipes</a></li>
+<li class="chapter" data-level="1.12" data-path="unix.html"><a href="unix.html#quoting"><i class="fa fa-check"></i><b>1.12</b> Variables and quoting</a>
+<ul>
+<li class="chapter" data-level="1.12.1" data-path="unix.html"><a href="unix.html#variables"><i class="fa fa-check"></i><b>1.12.1</b> Variables</a></li>
+<li class="chapter" data-level="1.12.2" data-path="unix.html"><a href="unix.html#quotes-and-special-characters"><i class="fa fa-check"></i><b>1.12.2</b> Quotes and special characters</a></li>
+</ul></li>
+<li class="chapter" data-level="1.13" data-path="unix.html"><a href="unix.html#awk"><i class="fa fa-check"></i><b>1.13</b> <code>awk</code>: working with columns</a>
+<ul>
+<li class="chapter" data-level="1.13.1" data-path="unix.html"><a href="unix.html#how-awk-reads-a-file"><i class="fa fa-check"></i><b>1.13.1</b> How <code>awk</code> reads a file</a></li>
+<li class="chapter" data-level="1.13.2" data-path="unix.html"><a href="unix.html#printing-columns-the-action"><i class="fa fa-check"></i><b>1.13.2</b> Printing columns (the action)</a></li>
+<li class="chapter" data-level="1.13.3" data-path="unix.html"><a href="unix.html#filtering-rows-the-pattern"><i class="fa fa-check"></i><b>1.13.3</b> Filtering rows (the pattern)</a></li>
+<li class="chapter" data-level="1.13.4" data-path="unix.html"><a href="unix.html#both-together"><i class="fa fa-check"></i><b>1.13.4</b> Both together</a></li>
+<li class="chapter" data-level="1.13.5" data-path="unix.html"><a href="unix.html#awk-fs"><i class="fa fa-check"></i><b>1.13.5</b> Tabs and commas: setting the field separator</a></li>
+<li class="chapter" data-level="1.13.6" data-path="unix.html"><a href="unix.html#doing-math"><i class="fa fa-check"></i><b>1.13.6</b> Doing math</a></li>
+<li class="chapter" data-level="1.13.7" data-path="unix.html"><a href="unix.html#summarizing-end"><i class="fa fa-check"></i><b>1.13.7</b> Summarizing: <code>END</code></a></li>
+<li class="chapter" data-level="1.13.8" data-path="unix.html"><a href="unix.html#awk-cheat-sheet"><i class="fa fa-check"></i><b>1.13.8</b> <code>awk</code> cheat sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="1.14" data-path="unix.html"><a href="unix.html#sed"><i class="fa fa-check"></i><b>1.14</b> <code>sed</code>: find and replace</a>
+<ul>
+<li class="chapter" data-level="1.14.1" data-path="unix.html"><a href="unix.html#substitution-soldnew"><i class="fa fa-check"></i><b>1.14.1</b> Substitution: <code>s/old/new/</code></a></li>
+<li class="chapter" data-level="1.14.2" data-path="unix.html"><a href="unix.html#replacing-every-match-g"><i class="fa fa-check"></i><b>1.14.2</b> Replacing every match: <code>g</code></a></li>
+<li class="chapter" data-level="1.14.3" data-path="unix.html"><a href="unix.html#practical-examples"><i class="fa fa-check"></i><b>1.14.3</b> Practical examples</a></li>
+<li class="chapter" data-level="1.14.4" data-path="unix.html"><a href="unix.html#deleting-and-printing-lines"><i class="fa fa-check"></i><b>1.14.4</b> Deleting and printing lines</a></li>
+<li class="chapter" data-level="1.14.5" data-path="unix.html"><a href="unix.html#sed-i"><i class="fa fa-check"></i><b>1.14.5</b> Editing a file in place: <code>-i</code></a></li>
+<li class="chapter" data-level="1.14.6" data-path="unix.html"><a href="unix.html#sed-cheat-sheet"><i class="fa fa-check"></i><b>1.14.6</b> <code>sed</code> cheat sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="1.15" data-path="unix.html"><a href="unix.html#bash-scripts"><i class="fa fa-check"></i><b>1.15</b> Bash scripts</a>
+<ul>
+<li class="chapter" data-level="1.15.1" data-path="unix.html"><a href="unix.html#running-several-commands"><i class="fa fa-check"></i><b>1.15.1</b> Running several commands</a></li>
+<li class="chapter" data-level="1.15.2" data-path="unix.html"><a href="unix.html#writing-a-script"><i class="fa fa-check"></i><b>1.15.2</b> Writing a script</a></li>
+<li class="chapter" data-level="1.15.3" data-path="unix.html"><a href="unix.html#chmod"><i class="fa fa-check"></i><b>1.15.3</b> File permissions: <code>chmod</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.16" data-path="unix.html"><a href="unix.html#loops"><i class="fa fa-check"></i><b>1.16</b> Loops</a>
+<ul>
+<li class="chapter" data-level="1.16.1" data-path="unix.html"><a href="unix.html#for-loops"><i class="fa fa-check"></i><b>1.16.1</b> <code>for</code> loops</a></li>
+<li class="chapter" data-level="1.16.2" data-path="unix.html"><a href="unix.html#parameter-expansion"><i class="fa fa-check"></i><b>1.16.2</b> Changing file names in a loop</a></li>
+</ul></li>
+<li class="chapter" data-level="1.17" data-path="unix.html"><a href="unix.html#unix-summary"><i class="fa fa-check"></i><b>1.17</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="shell-config.html"><a href="shell-config.html"><i class="fa fa-check"></i><b>2</b> Tailoring your shell</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="shell-config.html"><a href="shell-config.html#path"><i class="fa fa-check"></i><b>2.1</b> Where are executable programs installed?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="shell-config.html"><a href="shell-config.html#which-and-type"><i class="fa fa-check"></i><b>2.1.1</b> <code>which</code> and <code>type</code></a></li>
+<li class="chapter" data-level="2.1.2" data-path="shell-config.html"><a href="shell-config.html#the-path-variable"><i class="fa fa-check"></i><b>2.1.2</b> The <code>$PATH</code> variable</a></li>
+<li class="chapter" data-level="2.1.3" data-path="shell-config.html"><a href="shell-config.html#order-matters"><i class="fa fa-check"></i><b>2.1.3</b> Order matters</a></li>
+<li class="chapter" data-level="2.1.4" data-path="shell-config.html"><a href="shell-config.html#why-.script.sh"><i class="fa fa-check"></i><b>2.1.4</b> Why <code>./script.sh</code>?</a></li>
+<li class="chapter" data-level="2.1.5" data-path="shell-config.html"><a href="shell-config.html#change-path"><i class="fa fa-check"></i><b>2.1.5</b> Changing the <code>PATH</code></a></li>
+<li class="chapter" data-level="2.1.6" data-path="shell-config.html"><a href="shell-config.html#local-scripts"><i class="fa fa-check"></i><b>2.1.6</b> A home for your own scripts</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="shell-config.html"><a href="shell-config.html#config-files"><i class="fa fa-check"></i><b>2.2</b> The shell’s configuration files</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="shell-config.html"><a href="shell-config.html#which-file-it-depends-on-your-shell"><i class="fa fa-check"></i><b>2.2.1</b> Which file? It depends on your shell</a></li>
+<li class="chapter" data-level="2.2.2" data-path="shell-config.html"><a href="shell-config.html#zsh-use-.zshrc"><i class="fa fa-check"></i><b>2.2.2</b> Zsh: use <code>~/.zshrc</code></a></li>
+<li class="chapter" data-level="2.2.3" data-path="shell-config.html"><a href="shell-config.html#bash-.bash_profile-vs.-.bashrc"><i class="fa fa-check"></i><b>2.2.3</b> Bash: <code>.bash_profile</code> vs. <code>.bashrc</code></a></li>
+<li class="chapter" data-level="2.2.4" data-path="shell-config.html"><a href="shell-config.html#in-short"><i class="fa fa-check"></i><b>2.2.4</b> In short</a></li>
+<li class="chapter" data-level="2.2.5" data-path="shell-config.html"><a href="shell-config.html#editing-your-configuration-file"><i class="fa fa-check"></i><b>2.2.5</b> Editing your configuration file</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="shell-config.html"><a href="shell-config.html#aliases"><i class="fa fa-check"></i><b>2.3</b> Aliases</a></li>
+<li class="chapter" data-level="2.4" data-path="shell-config.html"><a href="shell-config.html#colors"><i class="fa fa-check"></i><b>2.4</b> Colors</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="shell-config.html"><a href="shell-config.html#colors-in-ls-output"><i class="fa fa-check"></i><b>2.4.1</b> Colors in <code>ls</code> output</a></li>
+<li class="chapter" data-level="2.4.2" data-path="shell-config.html"><a href="shell-config.html#terminal-colors-fonts-and-themes"><i class="fa fa-check"></i><b>2.4.2</b> Terminal colors, fonts, and themes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="shell-config.html"><a href="shell-config.html#history"><i class="fa fa-check"></i><b>2.5</b> History</a></li>
+<li class="chapter" data-level="2.6" data-path="shell-config.html"><a href="shell-config.html#noclobber"><i class="fa fa-check"></i><b>2.6</b> A safety net: <code>noclobber</code></a></li>
+<li class="chapter" data-level="2.7" data-path="shell-config.html"><a href="shell-config.html#customizing-your-prompt"><i class="fa fa-check"></i><b>2.7</b> Customizing your prompt</a></li>
+<li class="chapter" data-level="2.8" data-path="shell-config.html"><a href="shell-config.html#example-config"><i class="fa fa-check"></i><b>2.8</b> Putting it together</a></li>
+<li class="chapter" data-level="2.9" data-path="shell-config.html"><a href="shell-config.html#shell-summary"><i class="fa fa-check"></i><b>2.9</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>3</b> Organizing your project</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="project.html"><a href="project.html#why-organize"><i class="fa fa-check"></i><b>3.1</b> Why organize?</a></li>
+<li class="chapter" data-level="3.2" data-path="project.html"><a href="project.html#project-layout"><i class="fa fa-check"></i><b>3.2</b> A directory for each project</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="project.html"><a href="project.html#mkdir-braces"><i class="fa fa-check"></i><b>3.2.1</b> Making the directories</a></li>
+<li class="chapter" data-level="3.2.2" data-path="project.html"><a href="project.html#project-rules"><i class="fa fa-check"></i><b>3.2.2</b> Rules of thumb</a></li>
+<li class="chapter" data-level="3.2.3" data-path="project.html"><a href="project.html#final-result"><i class="fa fa-check"></i><b>3.2.3</b> Marking the final result</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="project.html"><a href="project.html#data-readme"><i class="fa fa-check"></i><b>3.3</b> Documenting your data</a></li>
+<li class="chapter" data-level="3.4" data-path="project.html"><a href="project.html#rstudio-projects"><i class="fa fa-check"></i><b>3.4</b> RStudio projects</a></li>
+<li class="chapter" data-level="3.5" data-path="project.html"><a href="project.html#notebook"><i class="fa fa-check"></i><b>3.5</b> The project notebook</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="project.html"><a href="project.html#make-notebook"><i class="fa fa-check"></i><b>3.5.1</b> Making the notebook</a></li>
+<li class="chapter" data-level="3.5.2" data-path="project.html"><a href="project.html#notebook-contents"><i class="fa fa-check"></i><b>3.5.2</b> What goes in the notebook</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="project.html"><a href="project.html#markdown"><i class="fa fa-check"></i><b>3.6</b> Markdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#text"><i class="fa fa-check"></i>Text</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#headings"><i class="fa fa-check"></i>Headings</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#lists"><i class="fa fa-check"></i>Lists</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#code"><i class="fa fa-check"></i>Code</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#images-tables-and-quotes"><i class="fa fa-check"></i>Images, tables, and quotes</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#learning-more"><i class="fa fa-check"></i>Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="project.html"><a href="project.html#project-summary"><i class="fa fa-check"></i><b>3.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="remote.html"><a href="remote.html"><i class="fa fa-check"></i><b>4</b> Working remotely</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="remote.html"><a href="remote.html#ssh"><i class="fa fa-check"></i><b>4.1</b> Logging onto a remote system</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="remote.html"><a href="remote.html#ahpcc-files"><i class="fa fa-check"></i><b>4.1.1</b> The file system on AHPCC</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="remote.html"><a href="remote.html#copying-files"><i class="fa fa-check"></i><b>4.2</b> Copying files between computers</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="remote.html"><a href="remote.html#scp"><i class="fa fa-check"></i><b>4.2.1</b> <code>scp</code></a></li>
+<li class="chapter" data-level="4.2.2" data-path="remote.html"><a href="remote.html#rsync"><i class="fa fa-check"></i><b>4.2.2</b> <code>rsync</code>: bigger, smarter copies</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="remote.html"><a href="remote.html#download"><i class="fa fa-check"></i><b>4.3</b> Getting data from the web</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="remote.html"><a href="remote.html#curl"><i class="fa fa-check"></i><b>4.3.1</b> <code>curl</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="remote.html"><a href="remote.html#wget"><i class="fa fa-check"></i><b>4.3.2</b> <code>wget</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="remote.html"><a href="remote.html#compression"><i class="fa fa-check"></i><b>4.4</b> Compressing data</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="remote.html"><a href="remote.html#gzip-and-gunzip"><i class="fa fa-check"></i><b>4.4.1</b> <code>gzip</code> and <code>gunzip</code></a></li>
+<li class="chapter" data-level="4.4.2" data-path="remote.html"><a href="remote.html#working-with-compressed-files"><i class="fa fa-check"></i><b>4.4.2</b> Working with compressed files</a></li>
+<li class="chapter" data-level="4.4.3" data-path="remote.html"><a href="remote.html#tar"><i class="fa fa-check"></i><b>4.4.3</b> <code>tar</code>: archiving directories</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="remote.html"><a href="remote.html#checksums"><i class="fa fa-check"></i><b>4.5</b> Verifying data integrity</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="remote.html"><a href="remote.html#md5sum"><i class="fa fa-check"></i><b>4.5.1</b> <code>md5sum</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="remote.html"><a href="remote.html#slurm"><i class="fa fa-check"></i><b>4.6</b> Running jobs on the cluster</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="remote.html"><a href="remote.html#anatomy-of-a-slurm-script"><i class="fa fa-check"></i><b>4.6.1</b> Anatomy of a SLURM script</a></li>
+<li class="chapter" data-level="4.6.2" data-path="remote.html"><a href="remote.html#scratch"><i class="fa fa-check"></i><b>4.6.2</b> Using the scratch disk</a></li>
+<li class="chapter" data-level="4.6.3" data-path="remote.html"><a href="remote.html#submitting-and-checking-jobs"><i class="fa fa-check"></i><b>4.6.3</b> Submitting and checking jobs</a></li>
+<li class="chapter" data-level="4.6.4" data-path="remote.html"><a href="remote.html#software-modules"><i class="fa fa-check"></i><b>4.6.4</b> Software modules</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="remote.html"><a href="remote.html#ssh-keys"><i class="fa fa-check"></i><b>4.7</b> Authentication with SSH keys</a>
+<ul>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#check-for-existing-keys"><i class="fa fa-check"></i>1. Check for existing keys</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#create-a-key-pair"><i class="fa fa-check"></i>2. Create a key pair</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#copy-your-public-key-to-the-remote-computer"><i class="fa fa-check"></i>3. Copy your public key to the remote computer</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#check-permissions"><i class="fa fa-check"></i>4. Check permissions</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#log-on"><i class="fa fa-check"></i>5. Log on</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="remote.html"><a href="remote.html#remote-summary"><i class="fa fa-check"></i><b>4.8</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="git.html"><a href="git.html"><i class="fa fa-check"></i><b>5</b> Version control with Git and GitHub</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="git.html"><a href="git.html#why-git"><i class="fa fa-check"></i><b>5.1</b> Why version control?</a></li>
+<li class="chapter" data-level="5.2" data-path="git.html"><a href="git.html#git-setup"><i class="fa fa-check"></i><b>5.2</b> Installing and configuring Git</a></li>
+<li class="chapter" data-level="5.3" data-path="git.html"><a href="git.html#git-init"><i class="fa fa-check"></i><b>5.3</b> Creating a repository</a></li>
+<li class="chapter" data-level="5.4" data-path="git.html"><a href="git.html#git-workflow"><i class="fa fa-check"></i><b>5.4</b> Track, stage, commit</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="git.html"><a href="git.html#git-status"><i class="fa fa-check"></i><b>5.4.1</b> Checking the status of your files</a></li>
+<li class="chapter" data-level="5.4.2" data-path="git.html"><a href="git.html#git-add"><i class="fa fa-check"></i><b>5.4.2</b> Tracking files with <code>git add</code></a></li>
+<li class="chapter" data-level="5.4.3" data-path="git.html"><a href="git.html#git-stage"><i class="fa fa-check"></i><b>5.4.3</b> Staging changes with <code>git add</code></a></li>
+<li class="chapter" data-level="5.4.4" data-path="git.html"><a href="git.html#git-commit"><i class="fa fa-check"></i><b>5.4.4</b> Storing changes with <code>git commit</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="git.html"><a href="git.html#git-restore"><i class="fa fa-check"></i><b>5.5</b> Undoing changes</a></li>
+<li class="chapter" data-level="5.6" data-path="git.html"><a href="git.html#gitignore"><i class="fa fa-check"></i><b>5.6</b> Ignoring files with <code>.gitignore</code></a></li>
+<li class="chapter" data-level="5.7" data-path="git.html"><a href="git.html#git-log"><i class="fa fa-check"></i><b>5.7</b> Viewing history with <code>git log</code></a></li>
+<li class="chapter" data-level="5.8" data-path="git.html"><a href="git.html#git-diff"><i class="fa fa-check"></i><b>5.8</b> Seeing what changed with <code>git diff</code></a></li>
+<li class="chapter" data-level="5.9" data-path="git.html"><a href="git.html#git-mv"><i class="fa fa-check"></i><b>5.9</b> Renaming and deleting files</a></li>
+<li class="chapter" data-level="5.10" data-path="git.html"><a href="git.html#git-old-versions"><i class="fa fa-check"></i><b>5.10</b> Retrieving an old version</a></li>
+<li class="chapter" data-level="5.11" data-path="git.html"><a href="git.html#branches"><i class="fa fa-check"></i><b>5.11</b> Branches</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="git.html"><a href="git.html#git-switch"><i class="fa fa-check"></i><b>5.11.1</b> Creating, switching, and merging</a></li>
+<li class="chapter" data-level="5.11.2" data-path="git.html"><a href="git.html#merge-conflicts"><i class="fa fa-check"></i><b>5.11.2</b> Merge conflicts</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="git.html"><a href="git.html#github"><i class="fa fa-check"></i><b>5.12</b> Remote repositories and GitHub</a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="git.html"><a href="git.html#git-clone"><i class="fa fa-check"></i><b>5.12.1</b> Cloning a repository</a></li>
+<li class="chapter" data-level="5.12.2" data-path="git.html"><a href="git.html#github-setup"><i class="fa fa-check"></i><b>5.12.2</b> Setting up GitHub</a></li>
+<li class="chapter" data-level="5.12.3" data-path="git.html"><a href="git.html#git-push"><i class="fa fa-check"></i><b>5.12.3</b> Pushing a local repository to GitHub</a></li>
+<li class="chapter" data-level="5.12.4" data-path="git.html"><a href="git.html#git-everyday"><i class="fa fa-check"></i><b>5.12.4</b> The everyday workflow</a></li>
+<li class="chapter" data-level="5.12.5" data-path="git.html"><a href="git.html#github-readme"><i class="fa fa-check"></i><b>5.12.5</b> README files and Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="git.html"><a href="git.html#git-summary"><i class="fa fa-check"></i><b>5.13</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a>
+<ul>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html#books"><i class="fa fa-check"></i>Books</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html#articles"><i class="fa fa-check"></i>Articles</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/andrewalverson/BIOL51573-2026S" target="_blank">Course GitHub page</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Practical Programming for Biologists</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="project" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Organizing your project<a href="project.html#project" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="goals">
+<p><strong>In this chapter</strong></p>
+<ul>
+<li>how to lay out a project directory with <code>data</code>, <code>scripts</code>, <code>results</code>,
+<code>figs</code>, and <code>manuscript</code> folders</li>
+<li>how to document where your data came from in a <code>data/README.md</code></li>
+<li>how to make an RStudio project</li>
+<li>how to keep a project notebook in R Markdown that records everything you
+did: the commands, the software versions, and the results</li>
+<li>how to write Markdown</li>
+</ul>
+</div>
+<div id="why-organize" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Why organize?<a href="project.html#why-organize" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The most important collaborator on any project is you, six months from now.
+By then you’ll have forgotten which file is the raw data, which script made
+Figure 3, and what options you gave the aligner. A reviewer will ask, or a
+labmate will want to build on your work, or you’ll find a bug and need to
+redo everything downstream of it.</p>
+<p>Organizing a project well isn’t hard, and you only have to decide how once. The
+layout in this chapter follows two widely read papers that are worth a few
+minutes of your time:</p>
+<ul>
+<li>Noble (2009). <a href="https://doi.org/10.1371/journal.pcbi.1000424">A quick guide to organizing computational biology
+projects</a>. <em>PLoS
+Computational Biology</em> 5: e1000424.</li>
+<li>Wilson et al. (2017). <a href="https://doi.org/10.1371/journal.pcbi.1005510">Good enough practices in scientific
+computing</a>. <em>PLoS
+Computational Biology</em> 13: e1005510.</li>
+</ul>
+<p>The guiding principle, from Noble: someone unfamiliar with your project
+should be able to look at your files and understand exactly what you did and
+why.</p>
+</div>
+<div id="project-layout" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> A directory for each project<a href="project.html#project-layout" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Put each project in its own directory, with the same set of folders every
+time:</p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Folder</th>
+<th>What goes in it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>data/</code></td>
+<td>raw data, exactly as you received or downloaded it, plus a <code>README.md</code> saying where it came from</td>
+</tr>
+<tr class="even">
+<td><code>scripts/</code></td>
+<td>your code: shell scripts, Python, R</td>
+</tr>
+<tr class="odd">
+<td><code>results/</code></td>
+<td>intermediate files made by your scripts: filtered and processed data, tables, alignments, trees, program output</td>
+</tr>
+<tr class="even">
+<td><code>figs/</code></td>
+<td>figures, made by your scripts</td>
+</tr>
+<tr class="odd">
+<td><code>manuscript/</code></td>
+<td>the paper, poster, or thesis chapter</td>
+</tr>
+</tbody>
+</table>
+<p>Data flow in one direction: scripts read raw data from <code>data/</code> and write what
+they make to <code>results/</code>; later scripts read from <code>results/</code> and write more
+results, or figures in <code>figs/</code>. Nothing a script makes ever goes in <code>data/</code>.</p>
+<p>At the top level go a <code>README.md</code> describing the project and the project
+<strong>notebook</strong> (Section <a href="project.html#notebook">3.5</a>).</p>
+<p>Inside these folders, add subdirectories wherever they help you, or someone
+else, find things. Organize each folder by what’s in it. Our example project,
+on the genome of the diatom <em>Phaeodactylum tricornutum</em>, uses two kinds of
+data: the published genome sequence and our own RNA-seq reads:</p>
+<pre class="text"><code>phaeodactylum_project/
+├── README.md
+├── notebook.Rmd
+├── phaeodactylum_project.Rproj
+├── data/
+│   ├── README.md
+│   ├── genome/
+│   └── rnaseq/
+├── scripts/
+│   └── seq_lengths.sh
+├── results/
+│   ├── 2026-01-16_seq_lengths/
+│   ├── 2026-02-02_assembly_k21/
+│   ├── 2026-02-03_assembly_k33/
+│   └── 2026-02-05_assembly_k55/
+├── figs/
+└── manuscript/</code></pre>
+<ul>
+<li><strong><code>data/</code></strong> is divided by source: one subdirectory for each data set, each
+described in <code>data/README.md</code> (Section <a href="project.html#data-readme">3.3</a>).</li>
+<li><strong><code>results/</code></strong> is divided by analysis: each time you run an analysis, its
+output goes in a new subdirectory named with the date and what it is
+(Section <a href="project.html#project-rules">3.2.2</a>).</li>
+<li><strong><code>scripts/</code></strong> and <strong><code>figs/</code></strong> stay flat, with descriptive file names,
+until there are enough files that subdirectories would help.</li>
+</ul>
+<div class="note">
+<p><strong>Why not a <code>genome/</code> and <code>rnaseq/</code> folder everywhere?</strong> You’ll sometimes see
+projects that repeat the same subdirectories inside <code>data</code>, <code>scripts</code>,
+<code>results</code>, and <code>figs</code>. That can work, but it’s rarely as clean as it looks: a
+script often uses data from more than one part of the project, a figure
+combines several results, and the parts of a project change as it goes.
+Start simple, and add subdirectories when a folder gets crowded.</p>
+</div>
+<div id="mkdir-braces" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Making the directories<a href="project.html#mkdir-braces" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You could make these one at a time with <code>mkdir</code>, but the shell has a shortcut.
+<strong>Brace expansion</strong> turns a comma-separated list in braces into several
+words. See what it does with <code>echo</code>:</p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb260-1"><a href="project.html#cb260-1" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{data</span><span class="op">,</span><span class="dt">scripts</span><span class="op">,</span><span class="dt">results</span><span class="op">,</span><span class="dt">figs</span><span class="op">,</span><span class="dt">manuscript}</span></span>
+<span id="cb260-2"><a href="project.html#cb260-2" tabindex="-1"></a><span class="bu">echo</span> sample_<span class="dt">{A</span><span class="op">,</span><span class="dt">B</span><span class="op">,</span><span class="dt">C}</span>_<span class="dt">{R1</span><span class="op">,</span><span class="dt">R2}</span>.fastq.gz</span></code></pre></div>
+<pre><code>data scripts results figs manuscript
+sample_A_R1.fastq.gz sample_A_R2.fastq.gz sample_B_R1.fastq.gz sample_B_R2.fastq.gz sample_C_R1.fastq.gz sample_C_R2.fastq.gz</code></pre>
+<p>Two sets of braces give every combination. Braces can also go inside other
+braces, so one <code>mkdir</code> makes the whole tree. <code>-p</code> makes the parent directory,
+<code>phaeodactylum_project</code>, along the way (Section <a href="unix.html#managing-files">1.9</a>):</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb262-1"><a href="project.html#cb262-1" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> phaeodactylum_project/<span class="dt">{data/{genome</span><span class="op">,</span><span class="dt">rnaseq}</span><span class="op">,</span><span class="dt">scripts</span><span class="op">,</span><span class="dt">results</span><span class="op">,</span><span class="dt">figs</span><span class="op">,</span><span class="dt">manuscript}</span></span>
+<span id="cb262-2"><a href="project.html#cb262-2" tabindex="-1"></a><span class="fu">find</span> phaeodactylum_project <span class="at">-type</span> d <span class="kw">|</span> <span class="fu">sort</span></span></code></pre></div>
+<pre><code>phaeodactylum_project
+phaeodactylum_project/data
+phaeodactylum_project/data/genome
+phaeodactylum_project/data/rnaseq
+phaeodactylum_project/figs
+phaeodactylum_project/manuscript
+phaeodactylum_project/results
+phaeodactylum_project/scripts</code></pre>
+<div class="warning">
+<p><strong>No spaces inside the braces.</strong> <code>{data, scripts}</code> doesn’t expand, because
+the space splits it into two separate words. The same goes for spaces in file
+and directory names generally (Section <a href="unix.html#file-system">1.4</a>).</p>
+</div>
+<div class="tip">
+<p><strong>Prefer pictures?</strong> The <code>tree</code> command draws a directory tree like the one
+above. It isn’t installed by default: <code>brew install tree</code> on a Mac,
+<code>sudo apt install tree</code> on Linux.</p>
+</div>
+</div>
+<div id="project-rules" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Rules of thumb<a href="project.html#project-rules" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>One project, one directory.</strong> Everything a project needs lives inside it,
+so you can move it, copy it to the cluster, or put it on GitHub as one unit.</li>
+<li><strong>Raw data are read-only.</strong> Never edit raw data by hand. Scripts read the
+raw data and write their output to <code>results/</code>. To protect raw data from
+accidents, remove write permission (Section <a href="unix.html#chmod">1.15.3</a>):
+<code>chmod -R a-w data/genome</code>.</li>
+<li><strong>Everything in <code>results/</code> and <code>figs/</code> can be remade</strong> by running your
+scripts. If you deleted either folder, you should be able to get it back.
+That’s why the notebook records every command (Section <a href="project.html#notebook">3.5</a>).
+Results can be big, so they’re often left out of Git (Section
+<a href="git.html#gitignore">5.6</a>) and backed up separately if they took a long time to make.</li>
+<li><strong>Organize results by analysis.</strong> When you run the same analysis
+several ways, give each run its own subdirectory, such as
+<code>results/2026-02-03_assembly_k33/</code>, so new output never overwrites old
+output and the date links it to its notebook entry.</li>
+<li><strong>Use relative paths</strong> inside the project, such as
+<code>results/2026-01-16_seq_lengths/seq_lengths.tsv</code>, not
+<code>/Users/aja/Desktop/phaeodactylum_project/results/2026-01-16_seq_lengths/seq_lengths.tsv</code>.
+Then the project works on any computer, in any location.</li>
+<li><strong>Name files so they sort.</strong> Use dates in the form <code>2026-01-14</code> (year
+first), and number scripts that run in order: <code>01_download.sh</code>,
+<code>02_seq_lengths.sh</code>, <code>03_plot.R</code>. Use leading zeros (<code>01</code>, not <code>1</code>) so <code>10</code>
+sorts after <code>09</code>.</li>
+<li><strong>No spaces in names</strong> (Section <a href="unix.html#file-system">1.4</a>).</li>
+</ul>
+</div>
+<div id="final-result" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Marking the final result<a href="project.html#final-result" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Most analyses are run more than once: with a range of parameter settings,
+on different subsets of the data, or again after you fix a bug. That’s as it
+should be, but months later, when a reviewer asks about Figure 2, which of
+the dozen runs did you actually publish?</p>
+<p>Don’t copy the chosen output somewhere else, and don’t rename it. Leave every
+run where it is, and make a <strong>symbolic link</strong> (Section <a href="unix.html#ln">1.9.4</a>) called
+<code>FINAL_PUBLISHED_RESULT</code> that points to the exact file you used. Suppose we
+assembled a genome with three different <em>k</em>-mer sizes, and the paper uses the
+assembly made with <em>k</em> = 33:</p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb264-1"><a href="project.html#cb264-1" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div>
+<pre><code>2026-02-02_assembly_k21
+2026-02-03_assembly_k33
+2026-02-05_assembly_k55</code></pre>
+<p>Go to the directory where the link should live, and make the link:</p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb266-1"><a href="project.html#cb266-1" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> 2026-02-03_assembly_k33/contigs.fasta FINAL_PUBLISHED_RESULT</span>
+<span id="cb266-2"><a href="project.html#cb266-2" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code></pre></div>
+<pre><code>total 0
+drwxr-xr-x  3 aja  staff  96 Nov  2 18:15 2026-02-02_assembly_k21
+drwxr-xr-x  3 aja  staff  96 Nov  2 18:15 2026-02-03_assembly_k33
+drwxr-xr-x  3 aja  staff  96 Nov  2 18:15 2026-02-05_assembly_k55
+lrwxr-xr-x  1 aja  staff  37 Nov  2 18:15 FINAL_PUBLISHED_RESULT -&gt; 2026-02-03_assembly_k33/contigs.fasta</code></pre>
+<p><code>ls -l</code> shows where the link points (<code>-&gt;</code>), and the <code>l</code> at the start of the
+line marks it as a link. Anything that reads the link reads the real file:</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb268-1"><a href="project.html#cb268-1" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 1 FINAL_PUBLISHED_RESULT</span></code></pre></div>
+<pre><code>&gt;contig_1 k=33</code></pre>
+<p>Now the answer is obvious to you, your coauthors, and anyone who reuses your
+project, and the runs you didn’t use are still there for comparison. A few
+tips:</p>
+<ul>
+<li><strong>Its name is in capitals</strong> so it stands out in a directory listing.</li>
+<li><strong>Make one link per published result.</strong> If a paper uses several, give each
+link a descriptive suffix, such as <code>FINAL_PUBLISHED_RESULT_fig2</code> and
+<code>FINAL_PUBLISHED_RESULT_table1</code>. The same works for figures: put a
+<code>FINAL_PUBLISHED_FIG2</code> link in <code>figs/</code>.</li>
+<li><strong>Changed your mind?</strong> <code>ln -sf</code> replaces an existing link:
+<code>ln -sf 2026-02-05_assembly_k55/contigs.fasta FINAL_PUBLISHED_RESULT</code>.</li>
+<li><strong>Record the choice in your notebook</strong>, with the reason: “Used the <em>k</em> = 33
+assembly: highest N50 and BUSCO completeness of the three.”</li>
+</ul>
+<div class="warning">
+<p><strong>A link’s target is relative to the link, not to you.</strong> <code>ln -s</code> stores the
+path to the target exactly as you typed it, and the system follows it from
+the directory where the link lives. If you’re at the top of the project and
+type <code>ln -s results/2026-02-03_assembly_k33/contigs.fasta results/FINAL_PUBLISHED_RESULT</code>, the link looks for
+<code>results/2026-02-03_assembly_k33/...</code> <em>inside</em> <code>results/</code>, and finds
+nothing: a
+<strong>broken link</strong>. That’s why it’s easiest to <code>cd</code> to the directory where the
+link should live first. Check a new link with <code>head</code> or <code>ls -L</code>, which show
+an error if the link is broken.</p>
+</div>
+<div class="tip">
+<p><strong>Keep links relative.</strong> A link to a relative path, like the one above, keeps
+working when you move or copy the whole project, because the files it points
+to move with it. A link to an absolute path
+(<code>/Users/aja/Desktop/phaeodactylum_project/...</code>) breaks as soon as the project
+moves. <code>rsync -a</code> (Section <a href="remote.html#rsync">4.2.2</a>) copies links as links, and Git stores
+them as links, too.</p>
+</div>
+</div>
+</div>
+<div id="data-readme" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Documenting your data<a href="project.html#data-readme" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Every <code>data</code> directory gets its own <code>README.md</code> that says, for each data set:
+what it is, where it came from (a URL or accession number), when and how you
+got it, and its checksums (a kind of digital fingerprint for a file, covered
+in Section <a href="remote.html#checksums">4.5</a>). This is the first thing
+you’ll need when you write the methods section, and the first thing anyone
+reusing your data will look for.</p>
+<p>Here’s how the genome data in our example project were downloaded. NCBI
+provides checksums for every file, so we check that the download is intact.
+Don’t worry about the details yet: downloading with <code>curl</code> and checking files
+with <code>md5sum</code> are covered in Chapter <a href="remote.html#remote">4</a> (Sections <a href="remote.html#download">4.3</a>
+and <a href="remote.html#checksums">4.5</a>). For now, notice what gets recorded:</p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb270-1"><a href="project.html#cb270-1" tabindex="-1"></a><span class="bu">cd</span> data/genome</span>
+<span id="cb270-2"><a href="project.html#cb270-2" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-O</span> https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/150/955/GCF_000150955.2_ASM15095v2/GCF_000150955.2_ASM15095v2_genomic.fna.gz</span>
+<span id="cb270-3"><a href="project.html#cb270-3" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-O</span> https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/150/955/GCF_000150955.2_ASM15095v2/md5checksums.txt</span>
+<span id="cb270-4"><a href="project.html#cb270-4" tabindex="-1"></a><span class="fu">md5sum</span> GCF_000150955.2_ASM15095v2_genomic.fna.gz</span>
+<span id="cb270-5"><a href="project.html#cb270-5" tabindex="-1"></a><span class="fu">grep</span> ASM15095v2_genomic.fna.gz md5checksums.txt</span></code></pre></div>
+<pre><code>9f3ceb6ed3a6c00bd1019a44fdcf4256  GCF_000150955.2_ASM15095v2_genomic.fna.gz
+9f3ceb6ed3a6c00bd1019a44fdcf4256  ./GCF_000150955.2_ASM15095v2_genomic.fna.gz</code></pre>
+<p>Our checksum (first line) matches NCBI’s (second line). And here’s the <code>data/README.md</code>
+that records it all. It’s written in Markdown (Section <a href="project.html#markdown">3.6</a>):</p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb272-1"><a href="project.html#cb272-1" tabindex="-1"></a><span class="fu"># Data for the Phaeodactylum genome project</span></span>
+<span id="cb272-2"><a href="project.html#cb272-2" tabindex="-1"></a></span>
+<span id="cb272-3"><a href="project.html#cb272-3" tabindex="-1"></a><span class="fu">## genome/</span></span>
+<span id="cb272-4"><a href="project.html#cb272-4" tabindex="-1"></a></span>
+<span id="cb272-5"><a href="project.html#cb272-5" tabindex="-1"></a>Reference genome of *Phaeodactylum tricornutum* CCAP 1055/1, RefSeq assembly</span>
+<span id="cb272-6"><a href="project.html#cb272-6" tabindex="-1"></a>GCF_000150955.2 (ASM15095v2), from NCBI:</span>
+<span id="cb272-7"><a href="project.html#cb272-7" tabindex="-1"></a><span class="ot">&lt;https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000150955.2/&gt;</span></span>
+<span id="cb272-8"><a href="project.html#cb272-8" tabindex="-1"></a></span>
+<span id="cb272-9"><a href="project.html#cb272-9" tabindex="-1"></a>Downloaded 2026-01-14 by Your Name. Commands are in <span class="in">`notebook.Rmd`</span>.</span>
+<span id="cb272-10"><a href="project.html#cb272-10" tabindex="-1"></a></span>
+<span id="cb272-11"><a href="project.html#cb272-11" tabindex="-1"></a><span class="pp">|</span> File                                        <span class="pp">|</span> Contents                 <span class="pp">|</span> MD5                              <span class="pp">|</span></span>
+<span id="cb272-12"><a href="project.html#cb272-12" tabindex="-1"></a><span class="pp">|---------------------------------------------|--------------------------|----------------------------------|</span></span>
+<span id="cb272-13"><a href="project.html#cb272-13" tabindex="-1"></a><span class="pp">|</span> GCF_000150955.2_ASM15095v2_genomic.fna.gz   <span class="pp">|</span> genome sequence (FASTA)  <span class="pp">|</span> 9f3ceb6ed3a6c00bd1019a44fdcf4256 <span class="pp">|</span></span>
+<span id="cb272-14"><a href="project.html#cb272-14" tabindex="-1"></a><span class="pp">|</span> md5checksums.txt                            <span class="pp">|</span> NCBI&#39;s checksums         <span class="pp">|</span>                                  <span class="pp">|</span></span>
+<span id="cb272-15"><a href="project.html#cb272-15" tabindex="-1"></a></span>
+<span id="cb272-16"><a href="project.html#cb272-16" tabindex="-1"></a><span class="fu">## rnaseq/</span></span>
+<span id="cb272-17"><a href="project.html#cb272-17" tabindex="-1"></a></span>
+<span id="cb272-18"><a href="project.html#cb272-18" tabindex="-1"></a>RNA-seq reads, 6 samples, sequenced by the UAMS Genomics Core, received</span>
+<span id="cb272-19"><a href="project.html#cb272-19" tabindex="-1"></a>2026-02-03 on a hard drive. Sample information is in <span class="in">`rnaseq/samples.csv`</span>.</span></code></pre></div>
+<p>If one part of the project has a lot of data, it can have its own README, for
+example <code>data/rnaseq/README.md</code>, with <code>data/README.md</code> pointing to it.</p>
+</div>
+<div id="rstudio-projects" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> RStudio projects<a href="project.html#rstudio-projects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><a href="https://posit.co/download/rstudio-desktop/">RStudio</a> is the most popular
+program for working in R, and it’s a good home base for a project even when
+most of the work happens in the shell. An <strong>RStudio project</strong> is a project
+directory with a small settings file, <code>phaeodactylum_project.Rproj</code>, at the
+top level. Opening a project (double-click the <code>.Rproj</code> file, or use
+<em>File &gt; Open Project</em> in RStudio):</p>
+<ul>
+<li>sets R’s working directory to the top of the project, so relative paths
+such as <code>results/2026-01-16_seq_lengths/seq_lengths.tsv</code> just work</li>
+<li>opens a <em>Terminal</em> tab (next to the <em>Console</em>) that also starts at the top
+of the project</li>
+<li>reopens the files you were working on, and keeps a separate history for
+each project</li>
+</ul>
+<p>To turn the directory we made into an RStudio project:</p>
+<ol style="list-style-type: decimal">
+<li>In RStudio, choose <em>File &gt; New Project…</em></li>
+<li>Choose <strong>Existing Directory</strong>, browse to <code>phaeodactylum_project</code>, and click
+<strong>Create Project</strong>.</li>
+</ol>
+<p>RStudio restarts inside the project and creates <code>phaeodactylum_project.Rproj</code>
+and a hidden <code>.Rproj.user/</code> directory of settings. (To start a project from
+scratch instead, choose <strong>New Directory</strong> &gt; <strong>New Project</strong>, then make the
+folders from the Terminal tab.) The <code>.Rproj</code> file is short plain text:</p>
+<pre class="text"><code>Version: 1.0
+
+RestoreWorkspace: No
+SaveWorkspace: No
+AlwaysSaveHistory: Default
+
+EnableCodeIndexing: Yes
+Encoding: UTF-8</code></pre>
+<div class="tip">
+<p><strong>Start each R session fresh.</strong> In <em>Tools &gt; Global Options &gt; General</em>, uncheck
+<em>Restore .RData into workspace at startup</em> and set <em>Save workspace to .RData
+on exit</em> to <strong>Never</strong>. Otherwise R quietly carries old objects from one session
+to the next, and code that works for you may fail for everyone else. If
+everything important is made by scripts, you never need a saved workspace.</p>
+</div>
+</div>
+<div id="notebook" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> The project notebook<a href="project.html#notebook" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>At the bench, you keep a lab notebook. A computational project needs one too.
+The <strong>project notebook</strong> is where you document <em>everything</em> you do, as you do
+it:</p>
+<ul>
+<li>what you did and why, dated</li>
+<li>the exact commands you ran, copied from the Terminal</li>
+<li>the <strong>versions</strong> of the software you used (results can change between
+versions, and the methods section needs them)</li>
+<li>the results, including the dead ends (“tried X; it didn’t work because Y”)</li>
+<li>what to do next</li>
+</ul>
+<p>We’ll keep the notebook in <strong>R Markdown</strong>, a plain-text format that mixes
+Markdown text (Section <a href="project.html#markdown">3.6</a>) with chunks of code. Knitting the file
+turns it into a nicely formatted web page, with the code in shaded boxes.
+(This book was written in R Markdown, too.)</p>
+<div id="make-notebook" class="section level3 hasAnchor" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> Making the notebook<a href="project.html#make-notebook" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In RStudio, with the project open:</p>
+<ol style="list-style-type: decimal">
+<li>Choose <em>File &gt; New File &gt; R Markdown…</em></li>
+<li>Give it a title, such as “Phaeodactylum genome project: notebook”, and
+your name. Leave the output format as <strong>HTML</strong>. Click <strong>OK</strong>.</li>
+<li>RStudio opens an example document. Delete everything below the header
+(the part between the two <code>---</code> lines), and save the file as
+<code>notebook.Rmd</code> at the top of the project.</li>
+</ol>
+<p>Click <strong>Knit</strong> (or press <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>K</kbd>) to turn
+<code>notebook.Rmd</code> into <code>notebook.html</code>, and open it in a browser.</p>
+<div class="note">
+<p><strong>R Markdown or Quarto?</strong> RStudio’s <em>File &gt; New File</em> menu also offers
+<strong>Quarto</strong> documents (<code>.qmd</code>), the newer successor to R Markdown from the same
+developers. They work almost the same way. This course uses R Markdown, which
+is still fully supported.</p>
+</div>
+</div>
+<div id="notebook-contents" class="section level3 hasAnchor" number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> What goes in the notebook<a href="project.html#notebook-contents" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Here’s a notebook for our example project, a couple of days in. Entries are
+in date order, each under a dated heading, with the commands in code chunks
+and the results written out below them:</p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb274-1"><a href="project.html#cb274-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb274-2"><a href="project.html#cb274-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Phaeodactylum genome project: notebook&quot;</span></span>
+<span id="cb274-3"><a href="project.html#cb274-3" tabindex="-1"></a><span class="an">author:</span><span class="co"> &quot;Your Name&quot;</span></span>
+<span id="cb274-4"><a href="project.html#cb274-4" tabindex="-1"></a><span class="an">date:</span><span class="co"> &quot;Started 2026-01-14. Last knitted `r Sys.Date()`.&quot;</span></span>
+<span id="cb274-5"><a href="project.html#cb274-5" tabindex="-1"></a><span class="an">output:</span></span>
+<span id="cb274-6"><a href="project.html#cb274-6" tabindex="-1"></a><span class="co">  html_document:</span></span>
+<span id="cb274-7"><a href="project.html#cb274-7" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb274-8"><a href="project.html#cb274-8" tabindex="-1"></a><span class="co">    toc_float: true</span></span>
+<span id="cb274-9"><a href="project.html#cb274-9" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb274-10"><a href="project.html#cb274-10" tabindex="-1"></a></span>
+<span id="cb274-11"><a href="project.html#cb274-11" tabindex="-1"></a><span class="in">```{r setup, include = FALSE}</span></span>
+<span id="cb274-12"><a href="project.html#cb274-12" tabindex="-1"></a><span class="in"># This notebook is a record of what I did. Knitting it shouldn&#39;t rerun</span></span>
+<span id="cb274-13"><a href="project.html#cb274-13" tabindex="-1"></a><span class="in"># downloads or long analyses, so chunks don&#39;t run unless I say eval = TRUE.</span></span>
+<span id="cb274-14"><a href="project.html#cb274-14" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(eval = FALSE)</span></span>
+<span id="cb274-15"><a href="project.html#cb274-15" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb274-16"><a href="project.html#cb274-16" tabindex="-1"></a></span>
+<span id="cb274-17"><a href="project.html#cb274-17" tabindex="-1"></a><span class="fu"># About this project</span></span>
+<span id="cb274-18"><a href="project.html#cb274-18" tabindex="-1"></a></span>
+<span id="cb274-19"><a href="project.html#cb274-19" tabindex="-1"></a>**Question:** How are genes distributed across the chromosomes of the diatom</span>
+<span id="cb274-20"><a href="project.html#cb274-20" tabindex="-1"></a>*Phaeodactylum tricornutum*?</span>
+<span id="cb274-21"><a href="project.html#cb274-21" tabindex="-1"></a></span>
+<span id="cb274-22"><a href="project.html#cb274-22" tabindex="-1"></a>**Layout:** raw data in <span class="in">`data/`</span> (sources in <span class="in">`data/README.md`</span>), code in</span>
+<span id="cb274-23"><a href="project.html#cb274-23" tabindex="-1"></a><span class="in">`scripts/`</span>, intermediate files in <span class="in">`results/`</span> (one dated subdirectory per</span>
+<span id="cb274-24"><a href="project.html#cb274-24" tabindex="-1"></a>analysis), figures in <span class="in">`figs/`</span>, writing in <span class="in">`manuscript/`</span>.</span>
+<span id="cb274-25"><a href="project.html#cb274-25" tabindex="-1"></a></span>
+<span id="cb274-26"><a href="project.html#cb274-26" tabindex="-1"></a><span class="fu"># Software</span></span>
+<span id="cb274-27"><a href="project.html#cb274-27" tabindex="-1"></a></span>
+<span id="cb274-28"><a href="project.html#cb274-28" tabindex="-1"></a><span class="pp">|</span> Program <span class="pp">|</span> Version <span class="pp">|</span> Installed with      <span class="pp">|</span></span>
+<span id="cb274-29"><a href="project.html#cb274-29" tabindex="-1"></a><span class="pp">|---------|---------|---------------------|</span></span>
+<span id="cb274-30"><a href="project.html#cb274-30" tabindex="-1"></a><span class="pp">|</span> curl    <span class="pp">|</span> 8.7.1   <span class="pp">|</span> comes with macOS    <span class="pp">|</span></span>
+<span id="cb274-31"><a href="project.html#cb274-31" tabindex="-1"></a><span class="pp">|</span> R       <span class="pp">|</span> 4.5.2   <span class="pp">|</span> cran.r-project.org  <span class="pp">|</span></span>
+<span id="cb274-32"><a href="project.html#cb274-32" tabindex="-1"></a></span>
+<span id="cb274-33"><a href="project.html#cb274-33" tabindex="-1"></a><span class="fu"># 2026-01-14: Download the reference genome</span></span>
+<span id="cb274-34"><a href="project.html#cb274-34" tabindex="-1"></a></span>
+<span id="cb274-35"><a href="project.html#cb274-35" tabindex="-1"></a>Downloaded the genome sequence (RefSeq assembly GCF_000150955.2) from NCBI</span>
+<span id="cb274-36"><a href="project.html#cb274-36" tabindex="-1"></a>and checked it against NCBI&#39;s checksums. Details in <span class="in">`data/README.md`</span>.</span>
+<span id="cb274-37"><a href="project.html#cb274-37" tabindex="-1"></a></span>
+<span id="cb274-38"><a href="project.html#cb274-38" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb274-39"><a href="project.html#cb274-39" tabindex="-1"></a><span class="in">cd data/genome</span></span>
+<span id="cb274-40"><a href="project.html#cb274-40" tabindex="-1"></a><span class="in">curl -O https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/150/955/GCF_000150955.2_ASM15095v2/GCF_000150955.2_ASM15095v2_genomic.fna.gz</span></span>
+<span id="cb274-41"><a href="project.html#cb274-41" tabindex="-1"></a><span class="in">curl -O https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/150/955/GCF_000150955.2_ASM15095v2/md5checksums.txt</span></span>
+<span id="cb274-42"><a href="project.html#cb274-42" tabindex="-1"></a><span class="in">md5sum GCF_000150955.2_ASM15095v2_genomic.fna.gz</span></span>
+<span id="cb274-43"><a href="project.html#cb274-43" tabindex="-1"></a><span class="in">grep ASM15095v2_genomic.fna.gz md5checksums.txt</span></span>
+<span id="cb274-44"><a href="project.html#cb274-44" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb274-45"><a href="project.html#cb274-45" tabindex="-1"></a></span>
+<span id="cb274-46"><a href="project.html#cb274-46" tabindex="-1"></a>**Result:** checksums match (<span class="in">`9f3ceb6ed3a6c00bd1019a44fdcf4256`</span>).</span>
+<span id="cb274-47"><a href="project.html#cb274-47" tabindex="-1"></a></span>
+<span id="cb274-48"><a href="project.html#cb274-48" tabindex="-1"></a><span class="fu"># 2026-01-16: Sequence lengths</span></span>
+<span id="cb274-49"><a href="project.html#cb274-49" tabindex="-1"></a></span>
+<span id="cb274-50"><a href="project.html#cb274-50" tabindex="-1"></a>How many sequences are in the assembly, and how long are they?</span>
+<span id="cb274-51"><a href="project.html#cb274-51" tabindex="-1"></a></span>
+<span id="cb274-52"><a href="project.html#cb274-52" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb274-53"><a href="project.html#cb274-53" tabindex="-1"></a><span class="in">gzcat data/genome/GCF_000150955.2_ASM15095v2_genomic.fna.gz | grep -c &#39;&gt;&#39;</span></span>
+<span id="cb274-54"><a href="project.html#cb274-54" tabindex="-1"></a><span class="in">gzcat data/genome/GCF_000150955.2_ASM15095v2_genomic.fna.gz | grep -c chromosome</span></span>
+<span id="cb274-55"><a href="project.html#cb274-55" tabindex="-1"></a><span class="in">mkdir results/2026-01-16_seq_lengths</span></span>
+<span id="cb274-56"><a href="project.html#cb274-56" tabindex="-1"></a><span class="in">bash scripts/seq_lengths.sh &gt; results/2026-01-16_seq_lengths/seq_lengths.tsv</span></span>
+<span id="cb274-57"><a href="project.html#cb274-57" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb274-58"><a href="project.html#cb274-58" tabindex="-1"></a></span>
+<span id="cb274-59"><a href="project.html#cb274-59" tabindex="-1"></a>**Result:** 88 sequences, 33 of them chromosomes. The longest is chromosome 1</span>
+<span id="cb274-60"><a href="project.html#cb274-60" tabindex="-1"></a>(NC_011669.1, 2,535,400 bp).</span>
+<span id="cb274-61"><a href="project.html#cb274-61" tabindex="-1"></a></span>
+<span id="cb274-62"><a href="project.html#cb274-62" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb274-63"><a href="project.html#cb274-63" tabindex="-1"></a><span class="in">lengths &lt;- read.table(&quot;results/2026-01-16_seq_lengths/seq_lengths.tsv&quot;, col.names = c(&quot;id&quot;, &quot;bp&quot;))</span></span>
+<span id="cb274-64"><a href="project.html#cb274-64" tabindex="-1"></a><span class="in">png(&quot;figs/seq_lengths.png&quot;)</span></span>
+<span id="cb274-65"><a href="project.html#cb274-65" tabindex="-1"></a><span class="in">hist(log10(lengths$bp), main = &quot;&quot;, xlab = &quot;Sequence length (log10 bp)&quot;)</span></span>
+<span id="cb274-66"><a href="project.html#cb274-66" tabindex="-1"></a><span class="in">dev.off()</span></span>
+<span id="cb274-67"><a href="project.html#cb274-67" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb274-68"><a href="project.html#cb274-68" tabindex="-1"></a></span>
+<span id="cb274-69"><a href="project.html#cb274-69" tabindex="-1"></a><span class="al">![Lengths of the 88 sequences in the assembly.](figs/seq_lengths.png)</span></span>
+<span id="cb274-70"><a href="project.html#cb274-70" tabindex="-1"></a></span>
+<span id="cb274-71"><a href="project.html#cb274-71" tabindex="-1"></a>**Next:** download the annotation (GFF) and count genes per chromosome.</span>
+<span id="cb274-72"><a href="project.html#cb274-72" tabindex="-1"></a></span>
+<span id="cb274-73"><a href="project.html#cb274-73" tabindex="-1"></a><span class="fu"># R session</span></span>
+<span id="cb274-74"><a href="project.html#cb274-74" tabindex="-1"></a></span>
+<span id="cb274-75"><a href="project.html#cb274-75" tabindex="-1"></a><span class="in">```{r session-info, eval = TRUE}</span></span>
+<span id="cb274-76"><a href="project.html#cb274-76" tabindex="-1"></a><span class="in">sessionInfo()</span></span>
+<span id="cb274-77"><a href="project.html#cb274-77" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>A few things to notice:</p>
+<ul>
+<li><strong>The header</strong> (between the <code>---</code> lines) is written in YAML. It sets the
+title, author, and date, and <code>toc: true</code> adds a table of contents that
+floats beside the text (<code>toc_float</code>), so you can jump to any day.</li>
+<li><strong>Code chunks</strong> start with <code>```{bash}</code> or <code>```{r}</code> and end
+with <code>```</code>. RStudio shows them shaded, and the <em>Insert</em> menu (the
+green <strong>+C</strong> button above the editor) adds a new one.</li>
+<li><strong><code>eval = FALSE</code></strong> in the setup chunk means knitting doesn’t run the code.
+The notebook is a <em>record</em>: you ran the commands in the Terminal as you
+worked, and you don’t want every knit to download the genome again. Turn a
+chunk back on with <code>eval = TRUE</code> in its header, as in the last chunk.</li>
+<li><strong>Software versions</strong> are in a table, copied from each program’s version
+command (<code>curl --version</code>, <code>samtools --version</code>, <code>blastn -version</code>). The
+last chunk runs <code>sessionInfo()</code>, which lists the versions of R and of every
+R package that was loaded.</li>
+<li><strong>Longer code goes in <code>scripts/</code>.</strong> The notebook just records running it.
+Here’s <code>scripts/seq_lengths.sh</code>, which uses <code>awk</code> (Section
+<a href="unix.html#awk">1.13</a>) to print the name and length of each sequence in a FASTA
+file:</li>
+</ul>
+<div class="sourceCode" id="cb275"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb275-1"><a href="project.html#cb275-1" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb275-2"><a href="project.html#cb275-2" tabindex="-1"></a><span class="co"># Print the name and length of every sequence in the genome, tab-separated.</span></span>
+<span id="cb275-3"><a href="project.html#cb275-3" tabindex="-1"></a><span class="ex">gzcat</span> data/genome/GCF_000150955.2_ASM15095v2_genomic.fna.gz <span class="kw">|</span></span>
+<span id="cb275-4"><a href="project.html#cb275-4" tabindex="-1"></a>  <span class="fu">awk</span> <span class="st">&#39;/^&gt;/ {if (name) print name &quot;\t&quot; len; name = substr($1, 2); len = 0; next}</span></span>
+<span id="cb275-5"><a href="project.html#cb275-5" tabindex="-1"></a><span class="st">       {len += length($0)}</span></span>
+<span id="cb275-6"><a href="project.html#cb275-6" tabindex="-1"></a><span class="st">       END {print name &quot;\t&quot; len}&#39;</span></span></code></pre></div>
+<div class="tip">
+<p><strong>Write it down now.</strong> The commands you think you’ll remember are the ones
+you’ll forget. Paste each command into the notebook right after it works (or
+right after it fails, with a note about why). <code>history</code> (Section
+<a href="shell-config.html#history">2.5</a>) can help you recover what you typed.</p>
+</div>
+</div>
+</div>
+<div id="markdown" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Markdown<a href="project.html#markdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Markdown</strong> is a simple way to format plain text. You write <code>**bold**</code>, and
+it becomes <strong>bold</strong>. It’s everywhere in scientific computing: R Markdown and
+Quarto documents, Jupyter notebooks, <code>README.md</code> files, and GitHub, which
+displays Markdown files formatted. Because it’s plain text, Markdown is easy to
+read even before it’s formatted, works with any text editor, and works well
+with Git (Chapter <a href="git.html#git">5</a>), which we’ll use to keep track of every version
+of your project.</p>
+<div id="text" class="section level3 unnumbered hasAnchor">
+<h3>Text<a href="project.html#text" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<thead>
+<tr class="header">
+<th>You type</th>
+<th>You get</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>*italic*</code> or <code>_italic_</code></td>
+<td><em>italic</em></td>
+</tr>
+<tr class="even">
+<td><code>**bold**</code></td>
+<td><strong>bold</strong></td>
+</tr>
+<tr class="odd">
+<td><code>`code`</code></td>
+<td><code>code</code></td>
+</tr>
+<tr class="even">
+<td><code>~~strikethrough~~</code></td>
+<td><del>strikethrough</del></td>
+</tr>
+<tr class="odd">
+<td><code>H~2~O</code>, <code>x^2^</code> (R Markdown)</td>
+<td>H<sub>2</sub>O, x<sup>2</sup></td>
+</tr>
+<tr class="even">
+<td><code>[a link](https://www.uark.edu)</code></td>
+<td><a href="https://www.uark.edu">a link</a></td>
+</tr>
+<tr class="odd">
+<td><code>&lt;https://www.uark.edu&gt;</code></td>
+<td><a href="https://www.uark.edu" class="uri">https://www.uark.edu</a></td>
+</tr>
+</tbody>
+</table>
+<p>Use italics for species names: <code>*Phaeodactylum tricornutum*</code>.</p>
+<p><strong>Paragraphs</strong> are separated by a blank line. A single line break inside a
+paragraph is ignored, so you can break long lines wherever you like. To start
+a new paragraph, leave a blank line.</p>
+</div>
+<div id="headings" class="section level3 unnumbered hasAnchor">
+<h3>Headings<a href="project.html#headings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Start a line with one to six <code>#</code> characters, followed by a space:</p>
+<div class="sourceCode" id="cb276"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb276-1"><a href="project.html#cb276-1" tabindex="-1"></a><span class="fu"># Heading 1</span></span>
+<span id="cb276-2"><a href="project.html#cb276-2" tabindex="-1"></a><span class="fu">## Heading 2</span></span>
+<span id="cb276-3"><a href="project.html#cb276-3" tabindex="-1"></a><span class="fu">### Heading 3</span></span></code></pre></div>
+</div>
+<div id="lists" class="section level3 unnumbered hasAnchor">
+<h3>Lists<a href="project.html#lists" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Start each item with <code>-</code> (or <code>*</code>) for a bulleted list, or a number and a
+period for a numbered list. Indent by four spaces to nest a list inside
+another. Leave a blank line before a list.</p>
+<div class="sourceCode" id="cb277"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb277-1"><a href="project.html#cb277-1" tabindex="-1"></a><span class="an">Things to buy:</span></span>
+<span id="cb277-2"><a href="project.html#cb277-2" tabindex="-1"></a></span>
+<span id="cb277-3"><a href="project.html#cb277-3" tabindex="-1"></a><span class="ss">- </span>agarose</span>
+<span id="cb277-4"><a href="project.html#cb277-4" tabindex="-1"></a><span class="ss">- </span>primers</span>
+<span id="cb277-5"><a href="project.html#cb277-5" tabindex="-1"></a><span class="ss">    - </span>ITS1</span>
+<span id="cb277-6"><a href="project.html#cb277-6" tabindex="-1"></a><span class="ss">    - </span>ITS4</span>
+<span id="cb277-7"><a href="project.html#cb277-7" tabindex="-1"></a></span>
+<span id="cb277-8"><a href="project.html#cb277-8" tabindex="-1"></a>Steps:</span>
+<span id="cb277-9"><a href="project.html#cb277-9" tabindex="-1"></a></span>
+<span id="cb277-10"><a href="project.html#cb277-10" tabindex="-1"></a><span class="ss">1. </span>Extract DNA.</span>
+<span id="cb277-11"><a href="project.html#cb277-11" tabindex="-1"></a><span class="ss">2. </span>Amplify.</span>
+<span id="cb277-12"><a href="project.html#cb277-12" tabindex="-1"></a><span class="ss">3. </span>Sequence.</span></code></pre></div>
+</div>
+<div id="code" class="section level3 unnumbered hasAnchor">
+<h3>Code<a href="project.html#code" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Inline code goes between single backticks, <code>`like this`</code>. For a block of
+code, put three backticks on the lines before and after. Add the language
+after the opening backticks to color-code it:</p>
+<div class="sourceCode" id="cb278"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb278-1"><a href="project.html#cb278-1" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb278-2"><a href="project.html#cb278-2" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">&#39;&gt;&#39;</span> sequences.fasta</span>
+<span id="cb278-3"><a href="project.html#cb278-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>In R Markdown, a language in <em>braces</em>, such as <code>```{bash}</code> or
+<code>```{r}</code>, makes a code chunk that can be run, not just displayed.</p>
+</div>
+<div id="images-tables-and-quotes" class="section level3 unnumbered hasAnchor">
+<h3>Images, tables, and quotes<a href="project.html#images-tables-and-quotes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb279"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb279-1"><a href="project.html#cb279-1" tabindex="-1"></a><span class="al">![A caption for the figure](figs/seq_lengths.png)</span></span>
+<span id="cb279-2"><a href="project.html#cb279-2" tabindex="-1"></a></span>
+<span id="cb279-3"><a href="project.html#cb279-3" tabindex="-1"></a><span class="pp">|</span> Sample <span class="pp">|</span> Reads     <span class="pp">|</span></span>
+<span id="cb279-4"><a href="project.html#cb279-4" tabindex="-1"></a><span class="pp">|--------|-----------|</span></span>
+<span id="cb279-5"><a href="project.html#cb279-5" tabindex="-1"></a><span class="pp">|</span> A1     <span class="pp">|</span> 1,204,551 <span class="pp">|</span></span>
+<span id="cb279-6"><a href="project.html#cb279-6" tabindex="-1"></a><span class="pp">|</span> A2     <span class="pp">|</span>   998,013 <span class="pp">|</span></span>
+<span id="cb279-7"><a href="project.html#cb279-7" tabindex="-1"></a></span>
+<span id="cb279-8"><a href="project.html#cb279-8" tabindex="-1"></a><span class="at">&gt; A block quote starts with a greater-than sign.</span></span></code></pre></div>
+<p>An image is a link with a <code>!</code> in front; the text in brackets becomes the
+caption. In a table, the <code>|</code> characters don’t need to line up, but it’s easier
+to read when they do. RStudio’s <strong>Visual</strong> editor (the button at the top left
+of the editor) lets you edit Markdown as formatted text and insert tables,
+images, and links from menus, and switch back to <strong>Source</strong> to see the
+Markdown.</p>
+<div class="tip">
+<p><strong>Literal characters.</strong> To show a character that Markdown would otherwise
+interpret, like <code>*</code> or <code>#</code>, put a backslash in front: <code>\*not italic\*</code>.</p>
+</div>
+</div>
+<div id="learning-more" class="section level3 unnumbered hasAnchor">
+<h3>Learning more<a href="project.html#learning-more" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><a href="https://commonmark.org/help/tutorial/">CommonMark’s 10-minute tutorial</a>:
+short interactive lessons, typed in your browser. Start here.</li>
+<li><a href="https://www.markdowntutorial.com/">Markdown Tutorial</a>: more interactive
+lessons.</li>
+<li><a href="https://www.markdownguide.org/">The Markdown Guide</a>: clear reference, with
+a <a href="https://www.markdownguide.org/cheat-sheet/">one-page cheat sheet</a>.</li>
+<li><a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">GitHub’s guide to writing
+Markdown</a>,
+for README files on GitHub.</li>
+<li>For R Markdown: RStudio’s <a href="https://rmarkdown.rstudio.com/lesson-1.html">introductory
+tutorial</a>, the <a href="https://rstudio.github.io/cheatsheets/rmarkdown.pdf">R Markdown
+cheat sheet</a>, and the
+free books <a href="https://bookdown.org/yihui/rmarkdown/"><em>R Markdown: The Definitive
+Guide</em></a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/"><em>R Markdown
+Cookbook</em></a>.</li>
+<li>RStudio’s <a href="https://rstudio.github.io/visual-markdown-editing/">Visual
+editor</a> documentation.</li>
+</ul>
+<div class="exercise">
+<p><span id="exr:ex-project" class="exercise"><strong>Exercise 3.1  </strong></span>Set up a project of your own: your thesis project, a side project, or this
+class.</p>
+<ol style="list-style-type: decimal">
+<li>Make the project directory with <code>data</code>, <code>scripts</code>, <code>results</code>, <code>figs</code>,
+and <code>manuscript</code> folders, and a subdirectory in <code>data/</code> for each of your
+data sets, using a single <code>mkdir</code> command with brace expansion. Check the
+result with <code>find . -type d</code>.</li>
+<li>Make it an RStudio project.</li>
+<li>Download some data into <code>data/</code>. If you don’t have any yet, download the
+<em>P. tricornutum</em> annotation (the <code>_genomic.gff.gz</code> file in the same NCBI
+directory as the genome; Section <a href="remote.html#download">4.3</a> shows how). Verify it
+with <code>md5sum</code> (Section <a href="remote.html#checksums">4.5</a>), and write a
+<code>data/README.md</code> that describes it.</li>
+<li>Create <code>notebook.Rmd</code>. Make a dated entry recording the commands you used
+in step 3, and a software table with the version of <code>curl</code> you used. End the
+notebook with a <code>sessionInfo()</code> chunk. Knit it.</li>
+<li>Write a top-level <code>README.md</code> that describes the project in a few
+sentences, with a heading, a bulleted list of the folders, a link, and a
+species name in italics.</li>
+<li>In <code>results/</code>, make three run directories with different parameter
+settings in their names, each holding a small output file (<code>echo</code> some text
+into it). Make a <code>FINAL_PUBLISHED_RESULT</code> link to one of the files, and
+check it with <code>ls -l</code> and <code>head</code>. Then make a broken link on purpose, from
+the top of the project, and see what <code>ls -l</code> and <code>head</code> do with it.</li>
+</ol>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-26" class="exercise"><strong>Exercise 3.2  </strong></span>Work through CommonMark’s <a href="https://commonmark.org/help/tutorial/">10-minute Markdown
+tutorial</a>. Then add a table and an
+image to your notebook, and knit it again.</p>
+</div>
+</div>
+</div>
+<div id="project-summary" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> Summary<a href="project.html#project-summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="27%" />
+<col width="72%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>What it’s for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>data/</code></td>
+<td>raw data, read-only, with a <code>README.md</code> describing sources</td>
+</tr>
+<tr class="even">
+<td><code>scripts/</code></td>
+<td>code</td>
+</tr>
+<tr class="odd">
+<td><code>results/</code></td>
+<td>intermediate files made by scripts</td>
+</tr>
+<tr class="even">
+<td><code>figs/</code></td>
+<td>figures made by scripts</td>
+</tr>
+<tr class="odd">
+<td><code>manuscript/</code></td>
+<td>writing</td>
+</tr>
+<tr class="even">
+<td>subdirectories</td>
+<td>where they help: <code>data/</code> by source, <code>results/</code> by dated analysis run</td>
+</tr>
+<tr class="odd">
+<td><code>README.md</code></td>
+<td>what the project is</td>
+</tr>
+<tr class="even">
+<td><code>notebook.Rmd</code></td>
+<td>dated record of everything you did, with commands, versions, and results</td>
+</tr>
+<tr class="odd">
+<td><code>project.Rproj</code></td>
+<td>makes the directory an RStudio project</td>
+</tr>
+<tr class="even">
+<td><code>mkdir -p dir/{a,b}/{c,d}</code></td>
+<td>make a whole tree of directories at once</td>
+</tr>
+<tr class="odd">
+<td><code>ln -s run/file FINAL_PUBLISHED_RESULT</code></td>
+<td>mark the exact output used in a publication</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="shell-config.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="remote.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": null,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

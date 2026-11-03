@@ -1,0 +1,239 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap");
+
+:root {
+  --accent: #9d2235;        /* Arkansas cardinal */
+  --accent-soft: #f7ecee;
+  --ink: #2b2b2b;
+  --muted: #6b6b6b;
+  --code-bg: #f6f4f0;
+  --rule: #e6e1da;
+
+  --exercise: #2f7d46;   --exercise-bg: #eef7f0;   --exercise-line: #cfe7d6;
+  --warning:  #b3261e;   --warning-bg:  #fdf1ef;   --warning-line:  #f3d0cb;
+  --tip:      #9a6b00;   --tip-bg:      #fff8e6;   --tip-line:      #f1e0b0;
+  --note:     #2f5d8c;   --note-bg:     #eef3f9;   --note-line:     #d2e0ef;
+}
+
+/* ---- Typography ---------------------------------------------------------- */
+
+.book.font-family-1 {
+  font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal {
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal h1 {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 2.2em;
+  padding-bottom: 0.3em;
+  border-bottom: 3px solid var(--accent);
+  margin-bottom: 0.8em;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal h2 {
+  font-weight: 700;
+  margin-top: 2em;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--rule);
+}
+
+.book .book-body .page-wrapper .page-inner section.normal h3 {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* section numbers in headings */
+.header-section-number { color: var(--muted); font-weight: 400; margin-right: 0.15em; }
+
+.book .book-body .page-wrapper .page-inner section.normal a { color: var(--accent); }
+
+/* title page */
+.title { color: var(--accent); font-weight: 700; }
+.subtitle { color: var(--muted); font-weight: 400; margin-top: 0; }
+
+/* ---- Sidebar -------------------------------------------------------------- */
+
+.book .book-summary ul.summary li.active > a,
+.book .book-summary ul.summary li a:hover {
+  color: var(--accent);
+}
+.book .book-summary ul.summary li.active > a { font-weight: 600; }
+
+/* ---- Code and output ------------------------------------------------------- */
+
+.book .book-body .page-wrapper .page-inner section.normal code,
+.book .book-body .page-wrapper .page-inner section.normal pre {
+  font-family: "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal code {
+  background: var(--code-bg);
+  border-radius: 3px;
+  padding: 0.1em 0.3em;
+  font-size: 0.88em;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal pre {
+  background: var(--code-bg);
+  border-radius: 8px;
+  padding: 0.9em 1.1em;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal pre > code {
+  padding: 0;
+  background: none;
+  font-size: 1em;
+}
+
+/* command output: white box with an "output" tag */
+.book .book-body .page-wrapper .page-inner section.normal pre:not(.sourceCode) {
+  background: #fff;
+  border: 1px solid var(--rule);
+  position: relative;
+  margin-top: -0.4em;
+}
+.book .book-body .page-wrapper .page-inner section.normal pre:not(.sourceCode)::before {
+  content: "output";
+  position: absolute;
+  top: 0.35em;
+  right: 0.7em;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 0.75em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #b0aaa0;
+}
+.book .book-body .page-wrapper .page-inner section.normal pre:not(.sourceCode) > code {
+  color: #444;
+}
+
+/* plain text blocks written by hand (```text) are diagrams, not output */
+.book .book-body .page-wrapper .page-inner section.normal pre.text::before { content: none; }
+
+kbd {
+  display: inline-block;
+  padding: 0.05em 0.45em;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.82em;
+  line-height: 1.4;
+  color: #333;
+  background: #fbfbfb;
+  border: 1px solid #ccc;
+  border-bottom-width: 2px;
+  border-radius: 4px;
+}
+
+/* ---- Callout boxes -----------------------------------------------------------
+   Fenced divs in the .Rmd files:
+
+     ::: {.exercise}          bookdown numbers these by chapter ("Exercise 1.3")
+     Do this thing...
+     :::
+
+     ::: {.warning}           .warning, .tip, .note, .goals: start the box
+     **Title.** Text...       with a bold title; it is colored and gets an icon
+     :::
+----------------------------------------------------------------------------- */
+
+div.exercise, .warning, .tip, .note, .goals {
+  padding: 0.9em 1.2em;
+  margin: 1.4em 0;
+  border-radius: 10px;
+  border: 1px solid;
+}
+div.exercise > :last-child, .warning > :last-child, .tip > :last-child,
+.note > :last-child, .goals > :last-child { margin-bottom: 0; }
+div.exercise > :first-child, .warning > :first-child, .tip > :first-child,
+.note > :first-child, .goals > :first-child { margin-top: 0; }
+
+div.exercise { background: var(--exercise-bg); border-color: var(--exercise-line); }
+
+/* bookdown inserts the "Exercise 1.3" label as a span; make it the box title */
+div.exercise span.exercise {
+  display: block;
+  color: var(--exercise);
+  margin-bottom: 0.4em;
+}
+div.exercise span.exercise strong::before { content: "\270E\00a0\00a0"; }
+
+.warning { background: var(--warning-bg); border-color: var(--warning-line); }
+.tip     { background: var(--tip-bg);     border-color: var(--tip-line); }
+.note    { background: var(--note-bg);    border-color: var(--note-line); }
+.goals   { background: var(--accent-soft); border-color: #ead0d5; }
+
+.warning > p:first-child > strong:first-child { color: var(--warning); }
+.tip     > p:first-child > strong:first-child { color: var(--tip); }
+.note    > p:first-child > strong:first-child { color: var(--note); }
+.goals   > p:first-child > strong:first-child { color: var(--accent); }
+
+.warning > p:first-child > strong:first-child::before { content: "\26A0\FE0E\00a0\00a0"; }
+.tip     > p:first-child > strong:first-child::before { content: "\2605\00a0\00a0"; }
+.note    > p:first-child > strong:first-child::before { content: "\2139\FE0E\00a0\00a0"; }
+.goals   > p:first-child > strong:first-child::before { content: "\2691\FE0E\00a0\00a0"; }
+
+/* code inside callouts sits on a white chip so it stands out from the tint */
+div.exercise code, .warning code, .tip code, .note code, .goals code {
+  background: rgba(255, 255, 255, 0.75) !important;
+}
+div.exercise pre, .warning pre, .tip pre, .note pre, .goals pre {
+  background: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ---- Figures and tables ------------------------------------------------------ */
+
+.figure { text-align: center; margin: 1.5em 0; }
+p.caption { font-size: 0.9em; color: var(--muted); }
+
+.book .book-body .page-wrapper .page-inner section.normal table {
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 0.95em;
+}
+.book .book-body .page-wrapper .page-inner section.normal table th {
+  background: var(--accent-soft);
+  color: var(--ink);
+  border-color: #ead0d5;
+}
+.book .book-body .page-wrapper .page-inner section.normal table td,
+.book .book-body .page-wrapper .page-inner section.normal table th {
+  border-color: var(--rule);
+}
+.book .book-body .page-wrapper .page-inner section.normal table tr:nth-child(2n) {
+  background: #fbfaf8;
+}
+.book .book-body .page-wrapper .page-inner section.normal table td code {
+  white-space: nowrap;
+}
+
+/* gitbook pads inline code with non-breaking spaces; we use real padding instead */
+.book .book-body .page-wrapper .page-inner section.normal code::before,
+.book .book-body .page-wrapper .page-inner section.normal code::after { content: none; }
+
+/* code in headings: no chip, just the monospace font */
+.book .book-body .page-wrapper .page-inner section.normal :is(h1, h2, h3, h4) code {
+  background: none;
+  padding: 0;
+  font-size: 0.92em;
+}
+
+/* ---- Collapsible answers (<details><summary>Answer</summary> ... </details>) ---- */
+
+details {
+  margin: 1em 0 1.4em;
+  padding: 0.6em 1.1em;
+  border: 1px dashed var(--rule);
+  border-radius: 10px;
+  background: #fcfbf9;
+}
+details > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--accent);
+}
+details[open] > summary { margin-bottom: 0.6em; }

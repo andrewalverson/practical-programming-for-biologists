@@ -1,0 +1,18 @@
+book_filename: "practical-programming-for-biologists"
+output_dir: "docs"
+delete_merged_file: true
+new_session: false
+language:
+  label:
+    fig: "Figure "
+    tab: "Table "
+  ui:
+    chapter_name: "Chapter "
+rmd_files:
+  - index.Rmd
+  - 01-unix.Rmd
+  - 02-shell.Rmd
+  - 03-project.Rmd
+  - 04-remote.Rmd
+  - 05-git.Rmd
+  - references.Rmd

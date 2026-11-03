@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Page not found | Practical Programming for Biologists</title>
+  <meta name="description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Page not found | Practical Programming for Biologists" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Page not found | Practical Programming for Biologists" />
+  
+  <meta name="twitter:description" content="Course text for BIOL 51573, Practical Programming for Biologists: Unix, remote computing, version control, and Python for biological data." />
+  
+
+<meta name="author" content="Andrew Alverson" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Practical Programming for Biologists</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#before-the-first-class"><i class="fa fa-check"></i>Before the first class</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-read-this-book"><i class="fa fa-check"></i>How to read this book</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="unix.html"><a href="unix.html"><i class="fa fa-check"></i><b>1</b> Introduction to Unix</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="unix.html"><a href="unix.html#why-command-line"><i class="fa fa-check"></i><b>1.1</b> Why the command line?</a></li>
+<li class="chapter" data-level="1.2" data-path="unix.html"><a href="unix.html#choosing-os"><i class="fa fa-check"></i><b>1.2</b> Choosing an operating system</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="unix.html"><a href="unix.html#macos"><i class="fa fa-check"></i><b>1.2.1</b> macOS</a></li>
+<li class="chapter" data-level="1.2.2" data-path="unix.html"><a href="unix.html#linux"><i class="fa fa-check"></i><b>1.2.2</b> Linux</a></li>
+<li class="chapter" data-level="1.2.3" data-path="unix.html"><a href="unix.html#windows"><i class="fa fa-check"></i><b>1.2.3</b> Windows</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="unix.html"><a href="unix.html#shell"><i class="fa fa-check"></i><b>1.3</b> The shell</a></li>
+<li class="chapter" data-level="1.4" data-path="unix.html"><a href="unix.html#file-system"><i class="fa fa-check"></i><b>1.4</b> The file system</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="unix.html"><a href="unix.html#paths"><i class="fa fa-check"></i><b>1.4.1</b> Paths</a></li>
+<li class="chapter" data-level="1.4.2" data-path="unix.html"><a href="unix.html#course-files"><i class="fa fa-check"></i><b>1.4.2</b> The course files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="unix.html"><a href="unix.html#getting-around"><i class="fa fa-check"></i><b>1.5</b> Getting around</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="unix.html"><a href="unix.html#pwd-cd-and-echo"><i class="fa fa-check"></i><b>1.5.1</b> <code>pwd</code>, <code>cd</code>, and <code>echo</code></a></li>
+<li class="chapter" data-level="1.5.2" data-path="unix.html"><a href="unix.html#clear-and-exit"><i class="fa fa-check"></i><b>1.5.2</b> <code>clear</code> and <code>exit</code></a></li>
+<li class="chapter" data-level="1.5.3" data-path="unix.html"><a href="unix.html#ctrl-c"><i class="fa fa-check"></i><b>1.5.3</b> Stopping a command: <kbd>Ctrl</kbd>+<kbd>C</kbd></a></li>
+<li class="chapter" data-level="1.5.4" data-path="unix.html"><a href="unix.html#ls"><i class="fa fa-check"></i><b>1.5.4</b> <code>ls</code>: listing directory contents</a></li>
+<li class="chapter" data-level="1.5.5" data-path="unix.html"><a href="unix.html#reading-ls--l-output"><i class="fa fa-check"></i><b>1.5.5</b> Reading <code>ls -l</code> output</a></li>
+<li class="chapter" data-level="1.5.6" data-path="unix.html"><a href="unix.html#wildcards"><i class="fa fa-check"></i><b>1.5.6</b> Wildcards</a></li>
+<li class="chapter" data-level="1.5.7" data-path="unix.html"><a href="unix.html#find"><i class="fa fa-check"></i><b>1.5.7</b> Finding files: <code>find</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="unix.html"><a href="unix.html#viewing-files"><i class="fa fa-check"></i><b>1.6</b> Looking at files</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="unix.html"><a href="unix.html#cat"><i class="fa fa-check"></i><b>1.6.1</b> <code>cat</code></a></li>
+<li class="chapter" data-level="1.6.2" data-path="unix.html"><a href="unix.html#head-and-tail"><i class="fa fa-check"></i><b>1.6.2</b> <code>head</code> and <code>tail</code></a></li>
+<li class="chapter" data-level="1.6.3" data-path="unix.html"><a href="unix.html#less"><i class="fa fa-check"></i><b>1.6.3</b> <code>less</code></a></li>
+<li class="chapter" data-level="1.6.4" data-path="unix.html"><a href="unix.html#man"><i class="fa fa-check"></i><b>1.6.4</b> Getting help: <code>man</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="unix.html"><a href="unix.html#data-streams"><i class="fa fa-check"></i><b>1.7</b> Data streams and redirection</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="unix.html"><a href="unix.html#redirecting-stdout"><i class="fa fa-check"></i><b>1.7.1</b> Redirecting STDOUT</a></li>
+<li class="chapter" data-level="1.7.2" data-path="unix.html"><a href="unix.html#redirecting-stderr"><i class="fa fa-check"></i><b>1.7.2</b> Redirecting STDERR</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="unix.html"><a href="unix.html#text-files"><i class="fa fa-check"></i><b>1.8</b> Text files and text editors</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="unix.html"><a href="unix.html#plain-text"><i class="fa fa-check"></i><b>1.8.1</b> Plain text</a></li>
+<li class="chapter" data-level="1.8.2" data-path="unix.html"><a href="unix.html#line-breaks-matter"><i class="fa fa-check"></i><b>1.8.2</b> Line breaks matter</a></li>
+<li class="chapter" data-level="1.8.3" data-path="unix.html"><a href="unix.html#text-editors"><i class="fa fa-check"></i><b>1.8.3</b> Text editors</a></li>
+<li class="chapter" data-level="1.8.4" data-path="unix.html"><a href="unix.html#fonts"><i class="fa fa-check"></i><b>1.8.4</b> Fonts</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="unix.html"><a href="unix.html#managing-files"><i class="fa fa-check"></i><b>1.9</b> Managing files and directories</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="unix.html"><a href="unix.html#copying-and-moving-cp-and-mv"><i class="fa fa-check"></i><b>1.9.1</b> Copying and moving: <code>cp</code> and <code>mv</code></a></li>
+<li class="chapter" data-level="1.9.2" data-path="unix.html"><a href="unix.html#making-directories-mkdir"><i class="fa fa-check"></i><b>1.9.2</b> Making directories: <code>mkdir</code></a></li>
+<li class="chapter" data-level="1.9.3" data-path="unix.html"><a href="unix.html#deleting-rm-and-rmdir"><i class="fa fa-check"></i><b>1.9.3</b> Deleting: <code>rm</code> and <code>rmdir</code></a></li>
+<li class="chapter" data-level="1.9.4" data-path="unix.html"><a href="unix.html#ln"><i class="fa fa-check"></i><b>1.9.4</b> Links: <code>ln</code></a></li>
+<li class="chapter" data-level="1.9.5" data-path="unix.html"><a href="unix.html#how-much-space-du-and-df"><i class="fa fa-check"></i><b>1.9.5</b> How much space? <code>du</code> and <code>df</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="unix.html"><a href="unix.html#working-with-data"><i class="fa fa-check"></i><b>1.10</b> Working with data</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="unix.html"><a href="unix.html#wc"><i class="fa fa-check"></i><b>1.10.1</b> <code>wc</code>: counting</a></li>
+<li class="chapter" data-level="1.10.2" data-path="unix.html"><a href="unix.html#sort"><i class="fa fa-check"></i><b>1.10.2</b> <code>sort</code>: sorting</a></li>
+<li class="chapter" data-level="1.10.3" data-path="unix.html"><a href="unix.html#grep"><i class="fa fa-check"></i><b>1.10.3</b> <code>grep</code>: searching</a></li>
+<li class="chapter" data-level="1.10.4" data-path="unix.html"><a href="unix.html#cut-extracting-columns"><i class="fa fa-check"></i><b>1.10.4</b> <code>cut</code>: extracting columns</a></li>
+<li class="chapter" data-level="1.10.5" data-path="unix.html"><a href="unix.html#uniq-removing-duplicates"><i class="fa fa-check"></i><b>1.10.5</b> <code>uniq</code>: removing duplicates</a></li>
+<li class="chapter" data-level="1.10.6" data-path="unix.html"><a href="unix.html#column-viewing-tables"><i class="fa fa-check"></i><b>1.10.6</b> <code>column</code>: viewing tables</a></li>
+<li class="chapter" data-level="1.10.7" data-path="unix.html"><a href="unix.html#diff"><i class="fa fa-check"></i><b>1.10.7</b> <code>diff</code>: comparing files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="unix.html"><a href="unix.html#pipes"><i class="fa fa-check"></i><b>1.11</b> Pipes</a></li>
+<li class="chapter" data-level="1.12" data-path="unix.html"><a href="unix.html#quoting"><i class="fa fa-check"></i><b>1.12</b> Variables and quoting</a>
+<ul>
+<li class="chapter" data-level="1.12.1" data-path="unix.html"><a href="unix.html#variables"><i class="fa fa-check"></i><b>1.12.1</b> Variables</a></li>
+<li class="chapter" data-level="1.12.2" data-path="unix.html"><a href="unix.html#quotes-and-special-characters"><i class="fa fa-check"></i><b>1.12.2</b> Quotes and special characters</a></li>
+</ul></li>
+<li class="chapter" data-level="1.13" data-path="unix.html"><a href="unix.html#awk"><i class="fa fa-check"></i><b>1.13</b> <code>awk</code>: working with columns</a>
+<ul>
+<li class="chapter" data-level="1.13.1" data-path="unix.html"><a href="unix.html#how-awk-reads-a-file"><i class="fa fa-check"></i><b>1.13.1</b> How <code>awk</code> reads a file</a></li>
+<li class="chapter" data-level="1.13.2" data-path="unix.html"><a href="unix.html#printing-columns-the-action"><i class="fa fa-check"></i><b>1.13.2</b> Printing columns (the action)</a></li>
+<li class="chapter" data-level="1.13.3" data-path="unix.html"><a href="unix.html#filtering-rows-the-pattern"><i class="fa fa-check"></i><b>1.13.3</b> Filtering rows (the pattern)</a></li>
+<li class="chapter" data-level="1.13.4" data-path="unix.html"><a href="unix.html#both-together"><i class="fa fa-check"></i><b>1.13.4</b> Both together</a></li>
+<li class="chapter" data-level="1.13.5" data-path="unix.html"><a href="unix.html#awk-fs"><i class="fa fa-check"></i><b>1.13.5</b> Tabs and commas: setting the field separator</a></li>
+<li class="chapter" data-level="1.13.6" data-path="unix.html"><a href="unix.html#doing-math"><i class="fa fa-check"></i><b>1.13.6</b> Doing math</a></li>
+<li class="chapter" data-level="1.13.7" data-path="unix.html"><a href="unix.html#summarizing-end"><i class="fa fa-check"></i><b>1.13.7</b> Summarizing: <code>END</code></a></li>
+<li class="chapter" data-level="1.13.8" data-path="unix.html"><a href="unix.html#awk-cheat-sheet"><i class="fa fa-check"></i><b>1.13.8</b> <code>awk</code> cheat sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="1.14" data-path="unix.html"><a href="unix.html#sed"><i class="fa fa-check"></i><b>1.14</b> <code>sed</code>: find and replace</a>
+<ul>
+<li class="chapter" data-level="1.14.1" data-path="unix.html"><a href="unix.html#substitution-soldnew"><i class="fa fa-check"></i><b>1.14.1</b> Substitution: <code>s/old/new/</code></a></li>
+<li class="chapter" data-level="1.14.2" data-path="unix.html"><a href="unix.html#replacing-every-match-g"><i class="fa fa-check"></i><b>1.14.2</b> Replacing every match: <code>g</code></a></li>
+<li class="chapter" data-level="1.14.3" data-path="unix.html"><a href="unix.html#practical-examples"><i class="fa fa-check"></i><b>1.14.3</b> Practical examples</a></li>
+<li class="chapter" data-level="1.14.4" data-path="unix.html"><a href="unix.html#deleting-and-printing-lines"><i class="fa fa-check"></i><b>1.14.4</b> Deleting and printing lines</a></li>
+<li class="chapter" data-level="1.14.5" data-path="unix.html"><a href="unix.html#sed-i"><i class="fa fa-check"></i><b>1.14.5</b> Editing a file in place: <code>-i</code></a></li>
+<li class="chapter" data-level="1.14.6" data-path="unix.html"><a href="unix.html#sed-cheat-sheet"><i class="fa fa-check"></i><b>1.14.6</b> <code>sed</code> cheat sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="1.15" data-path="unix.html"><a href="unix.html#bash-scripts"><i class="fa fa-check"></i><b>1.15</b> Bash scripts</a>
+<ul>
+<li class="chapter" data-level="1.15.1" data-path="unix.html"><a href="unix.html#running-several-commands"><i class="fa fa-check"></i><b>1.15.1</b> Running several commands</a></li>
+<li class="chapter" data-level="1.15.2" data-path="unix.html"><a href="unix.html#writing-a-script"><i class="fa fa-check"></i><b>1.15.2</b> Writing a script</a></li>
+<li class="chapter" data-level="1.15.3" data-path="unix.html"><a href="unix.html#chmod"><i class="fa fa-check"></i><b>1.15.3</b> File permissions: <code>chmod</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.16" data-path="unix.html"><a href="unix.html#loops"><i class="fa fa-check"></i><b>1.16</b> Loops</a>
+<ul>
+<li class="chapter" data-level="1.16.1" data-path="unix.html"><a href="unix.html#for-loops"><i class="fa fa-check"></i><b>1.16.1</b> <code>for</code> loops</a></li>
+<li class="chapter" data-level="1.16.2" data-path="unix.html"><a href="unix.html#parameter-expansion"><i class="fa fa-check"></i><b>1.16.2</b> Changing file names in a loop</a></li>
+</ul></li>
+<li class="chapter" data-level="1.17" data-path="unix.html"><a href="unix.html#unix-summary"><i class="fa fa-check"></i><b>1.17</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="shell-config.html"><a href="shell-config.html"><i class="fa fa-check"></i><b>2</b> Tailoring your shell</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="shell-config.html"><a href="shell-config.html#path"><i class="fa fa-check"></i><b>2.1</b> Where are executable programs installed?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="shell-config.html"><a href="shell-config.html#which-and-type"><i class="fa fa-check"></i><b>2.1.1</b> <code>which</code> and <code>type</code></a></li>
+<li class="chapter" data-level="2.1.2" data-path="shell-config.html"><a href="shell-config.html#the-path-variable"><i class="fa fa-check"></i><b>2.1.2</b> The <code>$PATH</code> variable</a></li>
+<li class="chapter" data-level="2.1.3" data-path="shell-config.html"><a href="shell-config.html#order-matters"><i class="fa fa-check"></i><b>2.1.3</b> Order matters</a></li>
+<li class="chapter" data-level="2.1.4" data-path="shell-config.html"><a href="shell-config.html#why-.script.sh"><i class="fa fa-check"></i><b>2.1.4</b> Why <code>./script.sh</code>?</a></li>
+<li class="chapter" data-level="2.1.5" data-path="shell-config.html"><a href="shell-config.html#change-path"><i class="fa fa-check"></i><b>2.1.5</b> Changing the <code>PATH</code></a></li>
+<li class="chapter" data-level="2.1.6" data-path="shell-config.html"><a href="shell-config.html#local-scripts"><i class="fa fa-check"></i><b>2.1.6</b> A home for your own scripts</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="shell-config.html"><a href="shell-config.html#config-files"><i class="fa fa-check"></i><b>2.2</b> The shell’s configuration files</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="shell-config.html"><a href="shell-config.html#which-file-it-depends-on-your-shell"><i class="fa fa-check"></i><b>2.2.1</b> Which file? It depends on your shell</a></li>
+<li class="chapter" data-level="2.2.2" data-path="shell-config.html"><a href="shell-config.html#zsh-use-.zshrc"><i class="fa fa-check"></i><b>2.2.2</b> Zsh: use <code>~/.zshrc</code></a></li>
+<li class="chapter" data-level="2.2.3" data-path="shell-config.html"><a href="shell-config.html#bash-.bash_profile-vs.-.bashrc"><i class="fa fa-check"></i><b>2.2.3</b> Bash: <code>.bash_profile</code> vs. <code>.bashrc</code></a></li>
+<li class="chapter" data-level="2.2.4" data-path="shell-config.html"><a href="shell-config.html#in-short"><i class="fa fa-check"></i><b>2.2.4</b> In short</a></li>
+<li class="chapter" data-level="2.2.5" data-path="shell-config.html"><a href="shell-config.html#editing-your-configuration-file"><i class="fa fa-check"></i><b>2.2.5</b> Editing your configuration file</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="shell-config.html"><a href="shell-config.html#aliases"><i class="fa fa-check"></i><b>2.3</b> Aliases</a></li>
+<li class="chapter" data-level="2.4" data-path="shell-config.html"><a href="shell-config.html#colors"><i class="fa fa-check"></i><b>2.4</b> Colors</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="shell-config.html"><a href="shell-config.html#colors-in-ls-output"><i class="fa fa-check"></i><b>2.4.1</b> Colors in <code>ls</code> output</a></li>
+<li class="chapter" data-level="2.4.2" data-path="shell-config.html"><a href="shell-config.html#terminal-colors-fonts-and-themes"><i class="fa fa-check"></i><b>2.4.2</b> Terminal colors, fonts, and themes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="shell-config.html"><a href="shell-config.html#history"><i class="fa fa-check"></i><b>2.5</b> History</a></li>
+<li class="chapter" data-level="2.6" data-path="shell-config.html"><a href="shell-config.html#noclobber"><i class="fa fa-check"></i><b>2.6</b> A safety net: <code>noclobber</code></a></li>
+<li class="chapter" data-level="2.7" data-path="shell-config.html"><a href="shell-config.html#customizing-your-prompt"><i class="fa fa-check"></i><b>2.7</b> Customizing your prompt</a></li>
+<li class="chapter" data-level="2.8" data-path="shell-config.html"><a href="shell-config.html#example-config"><i class="fa fa-check"></i><b>2.8</b> Putting it together</a></li>
+<li class="chapter" data-level="2.9" data-path="shell-config.html"><a href="shell-config.html#shell-summary"><i class="fa fa-check"></i><b>2.9</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>3</b> Organizing your project</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="project.html"><a href="project.html#why-organize"><i class="fa fa-check"></i><b>3.1</b> Why organize?</a></li>
+<li class="chapter" data-level="3.2" data-path="project.html"><a href="project.html#project-layout"><i class="fa fa-check"></i><b>3.2</b> A directory for each project</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="project.html"><a href="project.html#mkdir-braces"><i class="fa fa-check"></i><b>3.2.1</b> Making the directories</a></li>
+<li class="chapter" data-level="3.2.2" data-path="project.html"><a href="project.html#project-rules"><i class="fa fa-check"></i><b>3.2.2</b> Rules of thumb</a></li>
+<li class="chapter" data-level="3.2.3" data-path="project.html"><a href="project.html#final-result"><i class="fa fa-check"></i><b>3.2.3</b> Marking the final result</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="project.html"><a href="project.html#data-readme"><i class="fa fa-check"></i><b>3.3</b> Documenting your data</a></li>
+<li class="chapter" data-level="3.4" data-path="project.html"><a href="project.html#rstudio-projects"><i class="fa fa-check"></i><b>3.4</b> RStudio projects</a></li>
+<li class="chapter" data-level="3.5" data-path="project.html"><a href="project.html#notebook"><i class="fa fa-check"></i><b>3.5</b> The project notebook</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="project.html"><a href="project.html#make-notebook"><i class="fa fa-check"></i><b>3.5.1</b> Making the notebook</a></li>
+<li class="chapter" data-level="3.5.2" data-path="project.html"><a href="project.html#notebook-contents"><i class="fa fa-check"></i><b>3.5.2</b> What goes in the notebook</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="project.html"><a href="project.html#markdown"><i class="fa fa-check"></i><b>3.6</b> Markdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#text"><i class="fa fa-check"></i>Text</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#headings"><i class="fa fa-check"></i>Headings</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#lists"><i class="fa fa-check"></i>Lists</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#code"><i class="fa fa-check"></i>Code</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#images-tables-and-quotes"><i class="fa fa-check"></i>Images, tables, and quotes</a></li>
+<li class="chapter" data-level="" data-path="project.html"><a href="project.html#learning-more"><i class="fa fa-check"></i>Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="project.html"><a href="project.html#project-summary"><i class="fa fa-check"></i><b>3.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="remote.html"><a href="remote.html"><i class="fa fa-check"></i><b>4</b> Working remotely</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="remote.html"><a href="remote.html#ssh"><i class="fa fa-check"></i><b>4.1</b> Logging onto a remote system</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="remote.html"><a href="remote.html#ahpcc-files"><i class="fa fa-check"></i><b>4.1.1</b> The file system on AHPCC</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="remote.html"><a href="remote.html#copying-files"><i class="fa fa-check"></i><b>4.2</b> Copying files between computers</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="remote.html"><a href="remote.html#scp"><i class="fa fa-check"></i><b>4.2.1</b> <code>scp</code></a></li>
+<li class="chapter" data-level="4.2.2" data-path="remote.html"><a href="remote.html#rsync"><i class="fa fa-check"></i><b>4.2.2</b> <code>rsync</code>: bigger, smarter copies</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="remote.html"><a href="remote.html#download"><i class="fa fa-check"></i><b>4.3</b> Getting data from the web</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="remote.html"><a href="remote.html#curl"><i class="fa fa-check"></i><b>4.3.1</b> <code>curl</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="remote.html"><a href="remote.html#wget"><i class="fa fa-check"></i><b>4.3.2</b> <code>wget</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="remote.html"><a href="remote.html#compression"><i class="fa fa-check"></i><b>4.4</b> Compressing data</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="remote.html"><a href="remote.html#gzip-and-gunzip"><i class="fa fa-check"></i><b>4.4.1</b> <code>gzip</code> and <code>gunzip</code></a></li>
+<li class="chapter" data-level="4.4.2" data-path="remote.html"><a href="remote.html#working-with-compressed-files"><i class="fa fa-check"></i><b>4.4.2</b> Working with compressed files</a></li>
+<li class="chapter" data-level="4.4.3" data-path="remote.html"><a href="remote.html#tar"><i class="fa fa-check"></i><b>4.4.3</b> <code>tar</code>: archiving directories</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="remote.html"><a href="remote.html#checksums"><i class="fa fa-check"></i><b>4.5</b> Verifying data integrity</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="remote.html"><a href="remote.html#md5sum"><i class="fa fa-check"></i><b>4.5.1</b> <code>md5sum</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="remote.html"><a href="remote.html#slurm"><i class="fa fa-check"></i><b>4.6</b> Running jobs on the cluster</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="remote.html"><a href="remote.html#anatomy-of-a-slurm-script"><i class="fa fa-check"></i><b>4.6.1</b> Anatomy of a SLURM script</a></li>
+<li class="chapter" data-level="4.6.2" data-path="remote.html"><a href="remote.html#scratch"><i class="fa fa-check"></i><b>4.6.2</b> Using the scratch disk</a></li>
+<li class="chapter" data-level="4.6.3" data-path="remote.html"><a href="remote.html#submitting-and-checking-jobs"><i class="fa fa-check"></i><b>4.6.3</b> Submitting and checking jobs</a></li>
+<li class="chapter" data-level="4.6.4" data-path="remote.html"><a href="remote.html#software-modules"><i class="fa fa-check"></i><b>4.6.4</b> Software modules</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="remote.html"><a href="remote.html#ssh-keys"><i class="fa fa-check"></i><b>4.7</b> Authentication with SSH keys</a>
+<ul>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#check-for-existing-keys"><i class="fa fa-check"></i>1. Check for existing keys</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#create-a-key-pair"><i class="fa fa-check"></i>2. Create a key pair</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#copy-your-public-key-to-the-remote-computer"><i class="fa fa-check"></i>3. Copy your public key to the remote computer</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#check-permissions"><i class="fa fa-check"></i>4. Check permissions</a></li>
+<li class="chapter" data-level="" data-path="remote.html"><a href="remote.html#log-on"><i class="fa fa-check"></i>5. Log on</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="remote.html"><a href="remote.html#remote-summary"><i class="fa fa-check"></i><b>4.8</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="git.html"><a href="git.html"><i class="fa fa-check"></i><b>5</b> Version control with Git and GitHub</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="git.html"><a href="git.html#why-git"><i class="fa fa-check"></i><b>5.1</b> Why version control?</a></li>
+<li class="chapter" data-level="5.2" data-path="git.html"><a href="git.html#git-setup"><i class="fa fa-check"></i><b>5.2</b> Installing and configuring Git</a></li>
+<li class="chapter" data-level="5.3" data-path="git.html"><a href="git.html#git-init"><i class="fa fa-check"></i><b>5.3</b> Creating a repository</a></li>
+<li class="chapter" data-level="5.4" data-path="git.html"><a href="git.html#git-workflow"><i class="fa fa-check"></i><b>5.4</b> Track, stage, commit</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="git.html"><a href="git.html#git-status"><i class="fa fa-check"></i><b>5.4.1</b> Checking the status of your files</a></li>
+<li class="chapter" data-level="5.4.2" data-path="git.html"><a href="git.html#git-add"><i class="fa fa-check"></i><b>5.4.2</b> Tracking files with <code>git add</code></a></li>
+<li class="chapter" data-level="5.4.3" data-path="git.html"><a href="git.html#git-stage"><i class="fa fa-check"></i><b>5.4.3</b> Staging changes with <code>git add</code></a></li>
+<li class="chapter" data-level="5.4.4" data-path="git.html"><a href="git.html#git-commit"><i class="fa fa-check"></i><b>5.4.4</b> Storing changes with <code>git commit</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="git.html"><a href="git.html#git-restore"><i class="fa fa-check"></i><b>5.5</b> Undoing changes</a></li>
+<li class="chapter" data-level="5.6" data-path="git.html"><a href="git.html#gitignore"><i class="fa fa-check"></i><b>5.6</b> Ignoring files with <code>.gitignore</code></a></li>
+<li class="chapter" data-level="5.7" data-path="git.html"><a href="git.html#git-log"><i class="fa fa-check"></i><b>5.7</b> Viewing history with <code>git log</code></a></li>
+<li class="chapter" data-level="5.8" data-path="git.html"><a href="git.html#git-diff"><i class="fa fa-check"></i><b>5.8</b> Seeing what changed with <code>git diff</code></a></li>
+<li class="chapter" data-level="5.9" data-path="git.html"><a href="git.html#git-mv"><i class="fa fa-check"></i><b>5.9</b> Renaming and deleting files</a></li>
+<li class="chapter" data-level="5.10" data-path="git.html"><a href="git.html#git-old-versions"><i class="fa fa-check"></i><b>5.10</b> Retrieving an old version</a></li>
+<li class="chapter" data-level="5.11" data-path="git.html"><a href="git.html#branches"><i class="fa fa-check"></i><b>5.11</b> Branches</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="git.html"><a href="git.html#git-switch"><i class="fa fa-check"></i><b>5.11.1</b> Creating, switching, and merging</a></li>
+<li class="chapter" data-level="5.11.2" data-path="git.html"><a href="git.html#merge-conflicts"><i class="fa fa-check"></i><b>5.11.2</b> Merge conflicts</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="git.html"><a href="git.html#github"><i class="fa fa-check"></i><b>5.12</b> Remote repositories and GitHub</a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="git.html"><a href="git.html#git-clone"><i class="fa fa-check"></i><b>5.12.1</b> Cloning a repository</a></li>
+<li class="chapter" data-level="5.12.2" data-path="git.html"><a href="git.html#github-setup"><i class="fa fa-check"></i><b>5.12.2</b> Setting up GitHub</a></li>
+<li class="chapter" data-level="5.12.3" data-path="git.html"><a href="git.html#git-push"><i class="fa fa-check"></i><b>5.12.3</b> Pushing a local repository to GitHub</a></li>
+<li class="chapter" data-level="5.12.4" data-path="git.html"><a href="git.html#git-everyday"><i class="fa fa-check"></i><b>5.12.4</b> The everyday workflow</a></li>
+<li class="chapter" data-level="5.12.5" data-path="git.html"><a href="git.html#github-readme"><i class="fa fa-check"></i><b>5.12.5</b> README files and Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="git.html"><a href="git.html#git-summary"><i class="fa fa-check"></i><b>5.13</b> Command summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a>
+<ul>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html#books"><i class="fa fa-check"></i>Books</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html#articles"><i class="fa fa-check"></i>Articles</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/andrewalverson/BIOL51573-2026S" target="_blank">Course GitHub page</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Practical Programming for Biologists</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": null,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

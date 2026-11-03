@@ -1,0 +1,811 @@
+# Searching sequences with BLAST {#blast}
+
+::: {.goals}
+**In this chapter**
+
+- why genes can be read in six frames, and what that means for searching
+- local vs. global alignment
+- how BLAST finds and scores matches, and what the E-value means
+- the five main BLAST programs, and which one to use
+- how to build a BLAST database and search it from the command line
+- how to read a BLAST report, and how to get tabular output you can filter
+- how to run many searches at once, on your computer or on the cluster
+:::
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome", echo = FALSE, results = "hide"}
+# leftovers from the examples in Chapter 4
+rm -rf copy1 copy2 extracted genomes.tgz watermelon.fsa.gz
+```
+
+**BLAST** (**B**asic **L**ocal **A**lignment **S**earch **T**ool) finds
+sequences that are similar to the one you have. It's probably the single most
+used program in bioinformatics: the original paper ([Altschul et al.
+1990](#references)) is one of the most cited scientific papers of all time.
+Whenever you ask "What is this sequence?", "Where is this gene in my genome?",
+or "Does this species have a copy of that gene?", BLAST is usually the first
+tool you reach for.
+
+Most people first meet BLAST on [NCBI's website](https://blast.ncbi.nlm.nih.gov/),
+which is great for searching one sequence against GenBank. This chapter is
+about running BLAST yourself, at the command line, which lets you:
+
+- search your own data, like a new genome assembly that isn't in GenBank yet
+- run thousands of searches at once, on your computer or on the cluster
+- get results in a table you can filter with the tools from Chapter
+  \@ref(unix)
+- record exactly what you did, so you can do it again (Section
+  \@ref(notebook))
+
+## Background: strands and reading frames {#reading-frames}
+
+DNA is double stranded, and the two strands run in opposite directions, 5'
+to 3'. Genes can be encoded on either strand. A gene on the "top" strand of a
+genome sequence reads left to right; a gene on the "bottom" strand reads right
+to left, on the reverse complement.
+
+The genetic code is read three bases (one codon) at a time, so any DNA
+sequence can be translated in three different **reading frames**, depending on
+whether you start at the first, second, or third base. With two strands,
+that's **six frames**. Here are the six translations of a short sequence (`*`
+is a stop codon):
+
+```text
+5' CCTCTCGAATGGTAA 3'    top strand
+3' GGAGAGCTTACCATT 5'    bottom strand
+
+Frame   Codons                    Protein
++1      CCT CTC GAA TGG TAA       P L E W *
++2       CTC TCG AAT GGT          L S N G
++3        TCT CGA ATG GTA         S R M V
+-1      TTA CCA TTC GAG AGG       L P F E R       (reverse complement:
+-2       TAC CAT TCG AGA          Y H S R          5' TTACCATTCGAGAGG 3')
+-3        ACC ATT CGA GAG         T I R E
+```
+
+Usually, only one of the six frames codes for a real protein. When BLAST
+compares DNA to protein, it translates the DNA in all six frames and tries
+each one. It reports the frame of each match, so the frame (or strand) also
+tells you which way the gene runs in the genome.
+
+## Local vs. global alignment {#local-global}
+
+BLAST finds matches by **aligning** sequences, lining them up to maximize
+their similarity. There are two kinds of alignment:
+
+- A **global** alignment lines up two sequences across their entire length.
+  It answers "How similar are these two sequences, end to end?"
+- A **local** alignment finds the most similar *parts* of two sequences, and
+  ignores the rest. It answers "Which pieces of these sequences match?"
+
+An analogy: a local alignment finds the two most similar sentences in a pair of
+books; a global alignment compares two sentences word for word, from start to
+finish.
+
+Global alignment makes sense when the sequences are related along their whole
+length, like copies of the same gene from different species (it's what
+programs for multiple sequence alignment do). But genomes are mostly
+noncoding DNA that isn't shared between species, so global alignments of whole
+genomes rarely make sense. We usually want local alignments:
+
+- finding a gene, or a conserved region, in a genome
+- mapping a transcript (mRNA) back to the genome it came from
+- finding a conserved domain within a protein
+
+BLAST does local alignment. Each match it finds is called a **high-scoring
+segment pair**, or **HSP**. One query can match several places in the same
+subject sequence, so one hit can have several HSPs.
+
+## How BLAST works {#blast-algorithm}
+
+Comparing a query to every position in a big database with a full alignment
+algorithm is too slow. BLAST takes a shortcut that's much faster, at the cost
+of sometimes missing weak matches. It works in three steps:
+
+1. **Seed.** Chop the query into short overlapping "words" and make a lookup
+   table of them. Scan the database for words that match. For proteins,
+   "match" includes similar words, not just identical ones.
+2. **Extend.** When a word matches, try to extend the alignment in both
+   directions, keeping track of the score as you go. Stop when the score drops
+   too far below the best score seen so far.
+3. **Evaluate.** Keep the extended alignments that score well enough to be
+   unlikely to be due to chance, and report them from best to worst.
+
+### Scoring alignments
+
+The score of an alignment adds up rewards and penalties:
+
+- a **reward** for each match
+- a **penalty** for each mismatch
+- a penalty for **opening** a gap, and a smaller one for each position the
+  gap is **extended**
+
+For example, these two sequences:
+
+```text
+CCTCTCGAGAGTTCT
+GCTCTTGGTCT
+```
+
+align better with a gap than without one:
+
+```text
+CCTCTCGAGAGTTCT
+GCTCTTG----GTCT
+```
+
+You can change all of these values. Higher penalties make BLAST more
+stringent; lower ones let it find more distant matches (along with more
+junk).
+
+### Substitution matrices for proteins
+
+DNA has only four bases, so a simple match/mismatch score works. Proteins are
+different. There are 20 amino acids, and some substitutions are much more
+common than others. Swapping one small, hydrophobic amino acid for another,
+like isoleucine (I) for valine (V), often doesn't change a protein much, so
+natural selection allows it. Swapping for tryptophan (W) usually isn't
+tolerated.
+
+Protein searches therefore score each pair of amino acids with a
+**substitution matrix**, built from how often each substitution is seen in
+real, aligned proteins. The default is **BLOSUM62** ([Henikoff & Henikoff
+1992](#references)). Here it is (from NCBI's copy of the matrix):
+
+```text
+   A  R  N  D  C  Q  E  G  H  I  L  K  M  F  P  S  T  W  Y  V
+A  4 -1 -2 -2  0 -1 -1  0 -2 -1 -1 -1 -1 -2 -1  1  0 -3 -2  0
+R -1  5  0 -2 -3  1  0 -2  0 -3 -2  2 -1 -3 -2 -1 -1 -3 -2 -3
+N -2  0  6  1 -3  0  0  0  1 -3 -3  0 -2 -3 -2  1  0 -4 -2 -3
+D -2 -2  1  6 -3  0  2 -1 -1 -3 -4 -1 -3 -3 -1  0 -1 -4 -3 -3
+C  0 -3 -3 -3  9 -3 -4 -3 -3 -1 -1 -3 -1 -2 -3 -1 -1 -2 -2 -1
+Q -1  1  0  0 -3  5  2 -2  0 -3 -2  1  0 -3 -1  0 -1 -2 -1 -2
+E -1  0  0  2 -4  2  5 -2  0 -3 -3  1 -2 -3 -1  0 -1 -3 -2 -2
+G  0 -2  0 -1 -3 -2 -2  6 -2 -4 -4 -2 -3 -3 -2  0 -2 -2 -3 -3
+H -2  0  1 -1 -3  0  0 -2  8 -3 -3 -1 -2 -1 -2 -1 -2 -2  2 -3
+I -1 -3 -3 -3 -1 -3 -3 -4 -3  4  2 -3  1  0 -3 -2 -1 -3 -1  3
+L -1 -2 -3 -4 -1 -2 -3 -4 -3  2  4 -2  2  0 -3 -2 -1 -2 -1  1
+K -1  2  0 -1 -3  1  1 -2 -1 -3 -2  5 -1 -3 -1  0 -1 -3 -2 -2
+M -1 -1 -2 -3 -1  0 -2 -3 -2  1  2 -1  5  0 -2 -1 -1 -1 -1  1
+F -2 -3 -3 -3 -2 -3 -3 -3 -1  0  0 -3  0  6 -4 -2 -2  1  3 -1
+P -1 -2 -2 -1 -3 -1 -1 -2 -2 -3 -3 -1 -2 -4  7 -1 -1 -4 -3 -2
+S  1 -1  1  0 -1  0  0  0 -1 -2 -2  0 -1 -2 -1  4  1 -3 -2 -2
+T  0 -1  0 -1 -1 -1 -1 -2 -2 -1 -1 -1 -1 -2 -1  1  5 -2 -2  0
+W -3 -3 -4 -4 -2 -2 -3 -2 -2 -3 -2 -3 -1  1 -4 -3 -2 11  2 -3
+Y -2 -2 -2 -3 -2 -1 -2 -3  2 -1 -1 -2 -1  3 -3 -2 -2  2  7 -1
+V  0 -3 -3 -3 -1 -2 -2 -3 -3  3  1 -2  1 -1 -2 -2  0 -3 -1  4
+```
+
+Positive numbers are substitutions seen more often than expected by chance;
+negative numbers, less often. The diagonal is the score for an exact match.
+Rare amino acids, like tryptophan (W, 11) and cysteine (C, 9), score highest
+when they match, because a match is least likely to be a coincidence. Notice
+that I and V score +3: a mismatch, but a "positive" one. BLAST reports these
+as **positives**.
+
+## The five BLAST programs {#blast-programs}
+
+Which program you use depends on what kind of sequence you have (the
+**query**) and what kind of sequences you're searching (the **database**, or
+**subject** sequences):
+
+| Program     | Query                  | Database               | Typical use                                              |
+|-------------|------------------------|------------------------|----------------------------------------------------------|
+| `blastn`    | nucleotide             | nucleotide             | find a gene, or any DNA sequence, in a genome            |
+| `blastp`    | protein                | protein                | find related proteins                                    |
+| `blastx`    | translated nucleotide  | protein                | what proteins might this DNA sequence (a contig, a transcript) encode? |
+| `tblastn`   | protein                | translated nucleotide  | find genes for a protein in an unannotated genome        |
+| `tblastx`   | translated nucleotide  | translated nucleotide  | compare distantly related DNA sequences at the protein level (slow) |
+
+"Translated" means BLAST translates the sequence in all six reading frames
+(Section \@ref(reading-frames)) before it searches.
+
+::: {.tip}
+**Proteins find more distant relatives than DNA.** The genetic code is
+redundant, so DNA sequences change faster than the proteins they encode, and a
+protein's sequence holds onto its similarity for much longer. If you're
+looking for a gene in a distantly related species, search with the protein
+(`tblastn`), not the DNA (`blastn`).
+:::
+
+## Scores and E-values {#evalues}
+
+BLAST gives every match two numbers that tell you how good it is.
+
+- The **score** measures the alignment itself. The **raw score** is the sum of
+  the rewards and penalties (Section \@ref(blast-algorithm)). The **bit score**
+  rescales the raw score so it no longer depends on the scoring system you
+  used, which lets you compare scores from different searches. Bigger is
+  better.
+- The **E-value** (expect value) is the number of matches at least this good
+  that you'd *expect to find by chance*, in a search of this size. Smaller is
+  better. An E-value of 1e-6 (0.000001) means that, in a database this size,
+  you'd expect a random match this good about once in a million searches. An
+  E-value of 5 means you'd expect five matches like this by chance: it's noise.
+
+The E-value depends on the bit score, *S*, and on the size of the search,
+which is roughly the length of the query, *m*, times the size of the
+database, *n*:
+
+$$E \approx m \, n \, 2^{-S}$$
+
+Two things follow from this equation. First, E-values drop *exponentially* as
+the score goes up, so a slightly better alignment can have a much smaller
+E-value. Second, the same alignment gets a larger (worse) E-value in a bigger
+database, because a big database gives chance more opportunities. You'll see
+both of these happen in Section \@ref(blast-tasks).
+
+::: {.exercise}
+Think about how searches behave before you run one.
+
+1. Do you expect more hits with very stringent or very relaxed mismatch
+   penalties?
+2. You search the same query against two databases, one with 10 sequences and
+   one with 10^6^ (a million). Which do you expect to give more hits?
+3. You search two queries, 10 and 10^6^ nucleotides long, against the same
+   database. Which do you expect to have more hits?
+
+<details>
+<summary>Answers</summary>
+
+1. Relaxed penalties. Alignments with lots of mismatches still score well, so
+   more of them pass.
+2. The bigger database. There are more sequences to match, both real
+   relatives and chance matches.
+3. The longer query. A million nucleotides contain many more "words" that
+   could match something.
+
+</details>
+:::
+
+::: {.warning}
+**Similarity is not homology.** BLAST measures *similarity*: how alike two
+sequences are. **Homology** means two sequences share a common ancestor.
+Homology is a conclusion you draw, partly from the evidence of similarity. Two
+sequences are either homologous or not; they can't be "85% homologous". A
+very significant BLAST hit is strong evidence of homology, but short or
+low-complexity matches can be similar by chance, and distant homologs may not
+be detectably similar at all.
+:::
+
+### Setting a threshold
+
+In practice, you decide which hits to believe by setting a cutoff on the
+E-value or the bit score. There's no universal right answer, and published
+papers use a range of cutoffs: 1e-5 and 1e-10 are common for genes and
+proteins. Good practice is to look at how your results change across a range
+of cutoffs, and to report the cutoff you used in your methods, so others can
+reproduce your results. BLAST's default cutoff is an E-value of 10, which is
+deliberately generous: it shows you the weak matches, too, and leaves the
+decision to you.
+
+## Running BLAST at the command line {#local-blast}
+
+### Getting BLAST {#install-blast}
+
+The BLAST programs from NCBI are called **BLAST+** ([Camacho et al.
+2009](#references)). There are several ways to
+get them:
+
+- **On the cluster**, BLAST+ is already installed as a module (Section
+  \@ref(slurm)): `module load blast`.
+- **With a package manager.** With conda, `conda install -c conda-forge -c
+  bioconda blast`. With Homebrew on a Mac, `brew install blast`.
+- **From NCBI.** Download a ready-made version for your operating system from
+  [NCBI's FTP site](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/).
+  Check its checksum (Section \@ref(checksums)), unpack it, and add its `bin`
+  directory to your `PATH`, or link the programs into `~/local/bin` (Section
+  \@ref(local-scripts)).
+
+BLAST+ is a collection of programs: the five search programs, plus
+`makeblastdb` for building databases and several others. Check that it works,
+and which version you have:
+
+```{bash}
+blastn -version
+```
+
+::: {.note}
+**Record the version.** BLAST's defaults have changed over the years, so the
+same search can give slightly different results in different versions. Write
+the version you used in your project notebook (Section
+\@ref(notebook-contents)). At the time of writing, the newest version is
+2.17.0.
+:::
+
+Every BLAST program has dozens of options. To see them all:
+
+```{bash, eval = FALSE}
+blastn -help | less
+```
+
+### Step 1: make a database {#makeblastdb}
+
+A local BLAST search has two steps: format a database of the sequences you
+want to search, then search it. The database is built from a FASTA file with
+one or more sequences, either nucleotides or proteins, but not both. In the
+course files, `watermelon_genome/watermelon.fsa` is the watermelon
+mitochondrial genome. Make a nucleotide database from it with `makeblastdb`:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome", results = "hide"}
+makeblastdb -in watermelon.fsa -dbtype nucl
+```
+
+`makeblastdb` prints a short report and writes several index files next to
+the FASTA file:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+ls watermelon.fsa*
+```
+
+The `.n` files are for a nucleotide database; protein databases get `.p`
+files. (Newer versions of BLAST+ make a few more.) You don't need to look
+inside them, and you can always make them again from the FASTA file. To use
+the database, give BLAST its name, `watermelon.fsa`, not the names of the
+index files.
+
+| Option           | What it does                                                      |
+|------------------|-------------------------------------------------------------------|
+| `-in`            | the input FASTA file                                              |
+| `-dbtype`        | `nucl` or `prot`                                                  |
+| `-out`           | a name for the database (default: the name of the input file)     |
+| `-title`         | a description of the database, shown in BLAST reports             |
+| `-parse_seqids`  | use the FASTA IDs as sequence IDs, so you can pull sequences back out with `blastdbcmd` |
+
+### Step 2: search the database {#blastn}
+
+The `nt` directory has the nucleotide sequences of the watermelon
+mitochondrial genes, one per file. Where is the *nad4L* gene in the genome?
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+blastn -query nt/nad4L.fasta -db watermelon.fsa
+```
+
+By default, BLAST prints its report to STDOUT. To save it, redirect it to a
+file, or use the `-out` option:
+
+```{bash, eval = FALSE}
+blastn -query nt/nad4L.fasta -db watermelon.fsa > nad4L.vs.watermelon.blastn
+blastn -query nt/nad4L.fasta -db watermelon.fsa -out nad4L.vs.watermelon.blastn
+```
+
+### Reading a BLAST report {#blast-report}
+
+A BLAST report has four parts.
+
+**1. The header.** The program and version, a reference to cite, and a
+description of the database (`1 sequences; 379,236 total letters`) and the
+query (`Query= Citrullus_nad4L`, `Length=303`).
+
+**2. The one-line summaries.** One line per database sequence that has a
+significant match, best first, with the bit score and E-value of its best
+alignment.
+
+**3. The alignments.** Each database sequence that matched (the **subject**,
+abbreviated `Sbjct`) starts with `>` and its description. Then come its HSPs,
+each with:
+
+- `Score`: the bit score, with the raw score in parentheses
+- `Expect`: the E-value
+- `Identities`: how many positions are identical, out of the length of the
+  alignment
+- `Gaps`: how many positions are gaps
+- `Strand`: which strands of the query and subject match. `Plus/Minus` means
+  the query matches the *reverse complement* of the subject. *nad4L* is on the
+  bottom strand of the genome, so the subject coordinates count *down*
+  (366432 to 366130) while the query coordinates count up.
+- the alignment itself, in rows of 60, with the start and end coordinates of
+  each row. A `|` marks an identical position.
+
+**4. The footer.** The statistical parameters BLAST used: λ and K (constants
+that depend on the scoring system, used to calculate bit scores and
+E-values), the effective size of the search space (*m* × *n*, adjusted for
+edge effects), and the scoring settings (`Matrix: blastn matrix 1 -2` is a
+reward of 1 and a penalty of −2).
+
+::: {.exercise}
+1. Search for `nt/atp9.fasta` in the watermelon genome. Where is *atp9*, and
+   which strand is it on?
+2. Search for `nt/cox1.fasta`. Why are there two alignments? (Look at the
+   query coordinates of each one.)
+
+<details>
+<summary>Answers</summary>
+
+1. *atp9* is at positions 242,700–242,924, on the top strand
+   (`Strand=Plus/Plus`, and the subject coordinates count up). There's also a
+   second, weaker match to part of the gene (query positions 54–225): a
+   partial copy of *atp9* elsewhere in the genome.
+2. The query matches the genome in two pieces: query positions 1–726 and
+   727–1584, which are about 1,000 bp apart in the genome. The watermelon
+   *cox1* gene has an intron, and each HSP is one exon.
+
+</details>
+:::
+
+## Tabular output {#outfmt}
+
+BLAST reports are made for people to read. When you have many results, you
+want a table instead, one line per HSP, that you can sort, filter, and count
+with the tools from Chapter \@ref(unix). Use `-outfmt 6` for tab-separated
+columns:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+blastn -query nt/cox1.fasta -db watermelon.fsa -outfmt 6
+```
+
+### The 12 columns of `-outfmt 6` {#outfmt6-columns}
+
+`-outfmt 6` is probably the most used BLAST output format, but the table has
+no header, so you need to know what the columns are. Each line is one HSP
+(Section \@ref(local-global)), and the 12 columns are always in this order:
+
+| Column | Name       | Meaning                                                                   |
+|--------|------------|---------------------------------------------------------------------------|
+| 1      | `qseqid`   | query sequence ID: the first word of the query's FASTA header             |
+| 2      | `sseqid`   | subject sequence ID: the first word of the matching database sequence's header |
+| 3      | `pident`   | percent identity: identical positions ÷ alignment length × 100            |
+| 4      | `length`   | alignment length, including gaps                                          |
+| 5      | `mismatch` | number of mismatched positions                                            |
+| 6      | `gapopen`  | number of gap *openings* (one gap of 5 positions counts once)             |
+| 7      | `qstart`   | start of the alignment in the query                                       |
+| 8      | `qend`     | end of the alignment in the query                                         |
+| 9      | `sstart`   | start of the alignment in the subject                                     |
+| 10     | `send`     | end of the alignment in the subject                                       |
+| 11     | `evalue`   | E-value (Section \@ref(evalues)); smaller is better                       |
+| 12     | `bitscore` | bit score; bigger is better                                               |
+
+A few things to watch for:
+
+- **Strand.** If `sstart` is bigger than `send`, the query matches the
+  subject's reverse complement (the bottom strand). `qstart` is always smaller
+  than `qend` in `blastn` and `tblastn` output.
+- **Several lines per subject.** One query can have several HSPs in the same
+  subject, like the two exons of *cox1* above, so a subject ID can appear on
+  several lines.
+- **Percent identity is over the aligned part only.** A 30 bp alignment at
+  100% identity can be a much weaker match than a 1,500 bp alignment at 95%.
+  Look at `length` (or `qcovs`, below) and the E-value, not just `pident`.
+- **Coordinates start at 1** and include both ends, so an alignment from 1 to
+  726 covers 726 positions.
+
+`-outfmt 7` is the same table with comment lines that name the columns, which
+is handy for checking:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+blastn -query nt/cox1.fasta -db watermelon.fsa -outfmt 7
+```
+
+### Choosing your own columns {#outfmt-custom}
+
+You can also choose your own columns, in any order. Put `6` and the column
+names in quotes, so they're one argument:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+blastn -query nt/cox1.fasta -db watermelon.fsa -outfmt "6 qseqid qstart qend sstart send evalue"
+```
+
+Other useful columns include `qlen` and `slen` (sequence lengths), `qcovs`
+(how much of the query is covered by alignments to this subject), `stitle`
+(the subject's full description), and `sframe` or `qframe` (the reading frame
+of a translated search). `blastn -help` lists them all, under `-outfmt`.
+
+::: {.tip}
+**Tables work with everything you already know.** For example, to keep only
+hits with an E-value below 1e-10, use `awk -F '\t' '$11 < 1e-10'` (Section
+\@ref(awk)). To list the subjects, `cut -f 2 | sort -u`. And to read a table in
+R, `read.table("results.blastn", sep = "\t")`.
+:::
+
+Other formats include `-outfmt 5` (XML) and `-outfmt 15` (JSON), for other
+programs to read, and `-outfmt 0`, the default report.
+
+## Searching with proteins {#protein-blast}
+
+The `aa` directory has the protein sequences of the same watermelon genes. To
+find a protein-coding gene in a genome, search the genome with its protein
+with `tblastn`. The same database works, because `tblastn` translates the
+genome in all six frames as it searches. Add `sframe` to the columns to see
+which frame matched:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+tblastn -query aa/nad4L.fasta -db watermelon.fsa -outfmt "6 qseqid sseqid pident length sstart send evalue sframe"
+```
+
+The match is in frame −1: the bottom strand, as `blastn` found earlier.
+
+### Searching a single sequence, without a database {#blast-subject}
+
+To compare your query to just one or a few sequences, you don't need a
+database. Give the sequences to `-subject` instead of `-db`. Here's the
+watermelon NAD4L protein against the mitochondrial genome of *Cycas*, a
+distantly related seed plant. (`sed` prints from the `>` line to the first
+line of the footer, skipping the header; Section \@ref(sed).)
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+tblastn -query aa/nad4L.fasta -subject mt_genomes/cycas_taitungensis.fasta | sed -n '/^>/,/^Lambda/p'
+```
+
+Things to notice in a protein alignment:
+
+- **Identities and positives.** The middle line shows the amino acid for
+  identical positions and a `+` for mismatches that score positively in
+  BLOSUM62 (Section \@ref(blast-algorithm)), like I for V.
+- **Frame.** The match is on the bottom strand (frame −3), so the subject
+  coordinates count down.
+- **Lowercase letters.** Some of the query is printed in lowercase. These are
+  **low-complexity** regions, stretches made mostly of a few kinds of
+  amino acids (here, rich in I, L, S, and V). Matches between low-complexity regions are common
+  and usually meaningless, so BLAST **masks** them: it won't start a match in
+  a lowercase region, though an alignment can extend into one. For proteins,
+  the masking program is called SEG; for DNA, it's DUST.
+- **Compositional matrix adjust.** BLAST adjusted the scores for the amino
+  acid composition of these particular sequences, which makes the E-values
+  more accurate.
+
+::: {.exercise}
+1. Make a protein database from all the watermelon proteins:
+   `cat aa/*.fasta > proteins.fasta`, then
+   `makeblastdb -in proteins.fasta -dbtype prot`.
+2. Use `blastx` to search `nt/nad4L.fasta` against your protein database.
+   Which frame of the query matched?
+3. Use `blastp` to search `aa/atp9.fasta` against your protein database. Are
+   there any matches besides ATP9 itself?
+:::
+
+## Choosing a search: `-task` {#blast-tasks}
+
+`blastn` has several modes, chosen with `-task`. They differ mostly in the
+size of the seed words (Section \@ref(blast-algorithm)) and the scoring
+system:
+
+| Task                       | Word size | Use it for                                                       |
+|----------------------------|-----------|------------------------------------------------------------------|
+| `megablast` (the default)  | 28        | very similar sequences: the same species, or close relatives     |
+| `dc-megablast`             | 11        | more distant relatives ("discontiguous" megablast)              |
+| `blastn`                   | 11        | more distant relatives, and short queries                        |
+| `blastn-short`             | 7         | very short queries, like primers (under about 30 bp)            |
+
+The default, megablast, is fast but needs 28 identical bases in a row to
+start a match. That's fine within a species, but it misses short or more
+divergent matches. To see the difference, make a database of all 23 plant
+mitochondrial genomes in `mt_genomes`. Instead of combining them into a file
+first, you can pipe them straight into `makeblastdb` (`-in` defaults to
+STDIN), naming the database with `-out`:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome", results = "hide"}
+cat mt_genomes/*.fasta | makeblastdb -dbtype nucl -out mt -title "plant mitochondrial genomes"
+```
+
+Now search for the watermelon *trnG(GCC)* gene, a 72 bp transfer RNA, and
+count how many genomes it matches with each task:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+blastn -query "nt/trnG(GCC)-1.fasta" -db mt -outfmt 6 | cut -f 2 | sort -u | wc -l
+blastn -task blastn -query "nt/trnG(GCC)-1.fasta" -db mt -outfmt 6 | cut -f 2 | sort -u | wc -l
+```
+
+(The quotes are needed because of the parentheses in the file name; Section
+\@ref(quoting).) The `blastn` task finds the gene in many more genomes. But
+look at the hits before you celebrate:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+blastn -task blastn -query "nt/trnG(GCC)-1.fasta" -db mt -outfmt "6 sseqid pident length evalue bitscore"
+```
+
+The first hits are real: alignments of all 72 bp of the gene, with E-values
+of 1e-24 or smaller. The rest are short fragments, under 25 bp, with much
+larger E-values, most of them above 1. Matches like those are what you'd
+expect by chance in a database of 23 genomes, and they're why the `blastn`
+task "found" more genomes. None of the grasses (*Zea*, *Oryza*, *Sorghum*, and
+their relatives) has a full-length match: their mitochondrial genomes don't
+appear to have this gene at all.
+
+This is where an E-value cutoff comes in. Here's how the number of hits
+changes as the cutoff gets more stringent (`-evalue` sets the cutoff; a loop
+from Section \@ref(loops) runs the search at each value):
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+for cutoff in 10 1 0.001 1e-10 1e-20 1e-30; do
+  echo "$cutoff $(blastn -task blastn -evalue $cutoff -query "nt/trnG(GCC)-1.fasta" -db mt -outfmt 6 | wc -l)"
+done
+```
+
+The noise disappears quickly, and then the number of hits holds steady over a
+wide range of cutoffs. That plateau is a good sign that you've found the real
+matches. At the most stringent cutoffs, the real but less similar matches
+start to drop out, too.
+
+Last, compare the E-values for the same alignment, watermelon's *trnG(GCC)* to
+itself, in the small database (one genome) and the big one (23 genomes):
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+blastn -task blastn -query "nt/trnG(GCC)-1.fasta" -db watermelon.fsa -outfmt "6 sseqid sstart send evalue bitscore" | head -n 1
+blastn -task blastn -query "nt/trnG(GCC)-1.fasta" -db mt -outfmt "6 sseqid sstart send evalue bitscore" | grep Citrullus | head -n 1
+```
+
+The bit score is the same, but the E-value is larger in the bigger database,
+just as the equation in Section \@ref(evalues) predicts.
+
+## Searching many sequences at once {#many-queries}
+
+### One file with many queries
+
+A query file can hold many sequences. BLAST searches each one in turn, and
+`-outfmt 6` puts the query ID in the first column, so all the results can go
+in one table. Here are all 60 watermelon genes against the genome, counting
+the hits for each gene and printing the genes with the most hits:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+cat nt/*.fasta > all_genes.fasta
+blastn -query all_genes.fasta -db watermelon.fsa -outfmt 6 > all_genes.vs.watermelon.blastn
+cut -f 1 all_genes.vs.watermelon.blastn | sort | uniq -c | sort -rn | head -n 5
+```
+
+These genes are split into several exons, as *cox1* was. Several *nad* genes
+in plant mitochondria are even assembled from pieces encoded in different
+parts of the genome.
+
+::: {.warning}
+**Check the end of your FASTA files.** If the last line of a file doesn't end
+with a newline, `cat` joins it to the first line of the next file, so the
+next header ends up in the middle of a sequence (`...TTTCATTGA>Citrullus_nad4L`).
+BLAST warns about "invalid residues" and searches the two genes as one. You
+can check a file's last character with `tail -c 1 file | od -c`, which prints
+`\n` if it ends with a newline.
+:::
+
+### A loop, with one output file per query
+
+To keep the results for each gene in their own file, use a loop (Section
+\@ref(loops)), with parameter expansion (Section \@ref(parameter-expansion))
+to make the output file names:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+mkdir -p blast_out
+for gene in nt/*.fasta; do
+  name=${gene#nt/}               # nt/atp1.fasta -> atp1.fasta
+  blastn -query "$gene" -db watermelon.fsa -outfmt 6 > "blast_out/${name%.fasta}.blastn"
+done
+ls blast_out | head -n 4
+```
+
+::: {.tip}
+**Print the commands before you run them.** Put `echo` in front of the
+command in a loop, with the whole command in double quotes, and the loop
+prints each command instead of running it. The `>` is inside the quotes, so
+it's printed rather than redirecting `echo`. The single quotes around the file
+names will protect names like `trnG(GCC)-1.fasta` when the commands run:
+
+```{bash, sandbox = TRUE, dir = "watermelon_genome"}
+for gene in nt/trn*.fasta; do
+  name=${gene#nt/}
+  echo "blastn -query '$gene' -db watermelon.fsa -outfmt 6 > 'blast_out/${name%.fasta}.blastn'"
+done | head -n 3
+```
+
+If the commands look right, remove the `echo` and the quotes around the
+command. Or redirect the loop's output to a file, `> blast_commands.sh`, and
+you have a script that runs every search, ready to run with
+`bash blast_commands.sh` or from a job on the cluster.
+:::
+
+## BLAST on the cluster {#blast-cluster}
+
+Big searches belong on the cluster (Chapter \@ref(remote)). BLAST can use
+several processor cores at once with `-num_threads`; set it to the number of
+cores you request from SLURM. Here's a job script (Section \@ref(slurm)) that
+builds the database and runs a script of BLAST commands, like the one from the
+previous section, on the scratch disk (Section \@ref(scratch)):
+
+```{bash, eval = FALSE}
+#!/bin/bash
+#SBATCH --job-name=all.blast
+#SBATCH --partition comp01
+#SBATCH --qos comp
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=32
+#SBATCH --time=01:00:00
+#SBATCH -o %x.%j.out
+#SBATCH -e %x.%j.err
+
+module purge
+module load blast
+
+cd $SLURM_SUBMIT_DIR
+
+# copy the input files to the scratch disk, and work there
+cp -r nt watermelon.fsa blast_commands.sh /scratch/$SLURM_JOB_ID/
+cd /scratch/$SLURM_JOB_ID
+
+makeblastdb -in watermelon.fsa -dbtype nucl
+bash blast_commands.sh
+
+# copy the results back
+rsync -a /scratch/$SLURM_JOB_ID/ $SLURM_SUBMIT_DIR/
+```
+
+For this script, make `blast_commands.sh` with `-num_threads 32` in each
+command. `files/other_files/all-blastn.slurm` and `atp9-blastn.slurm` in the
+course files are scripts like this one.
+
+## Useful options {#blast-options}
+
+| Option                    | What it does                                                         |
+|---------------------------|----------------------------------------------------------------------|
+| `-query file`             | the query sequence(s), in FASTA format                               |
+| `-db name`                | the database to search                                               |
+| `-subject file`           | search these sequences instead of a database                         |
+| `-out file`               | write the output to a file                                           |
+| `-outfmt 6`               | tabular output (`7` adds comments; `"6 col1 col2 ..."` picks the columns) |
+| `-evalue 1e-10`           | report only hits with E-values below this (default: 10)              |
+| `-task blastn`            | the search mode (Section \@ref(blast-tasks))                          |
+| `-num_threads 8`          | use 8 processor cores                                                |
+| `-word_size`, `-reward`, `-penalty`, `-gapopen`, `-gapextend` | adjust the seeding and scoring    |
+| `-dust no`, `-seg no`     | turn off low-complexity masking (nucleotide, protein)                |
+| `-max_target_seqs 500`    | the maximum number of subject sequences to report (see below)       |
+| `-remote`                 | search NCBI's databases (like `-db nt`) over the internet, instead of a local one |
+
+::: {.warning}
+**`-max_target_seqs` doesn't mean "the best N hits".** It's tempting to use
+`-max_target_seqs 1` to get the best hit for each query, but BLAST applies the
+limit during the search, not after, so the hit you get isn't always the best
+one ([Shah et al. 2019](#references)). Keep the default, and pick the best hit
+from the results yourself, for example with `sort`.
+:::
+
+## Beyond BLAST {#beyond-blast}
+
+BLAST is the standard, but it's not the only tool, or the fastest:
+
+- **[DIAMOND](https://github.com/bbuchfink/diamond)** and
+  **[MMseqs2](https://github.com/soedinglab/MMseqs2)** do protein searches
+  (`blastp` and `blastx`) hundreds or thousands of times faster than BLAST,
+  with similar sensitivity ([Buchfink et al. 2021](#references); [Steinegger &
+  Söding 2017](#references)). They're the usual choice for huge searches, like
+  annotating all the genes in a metagenome.
+- To map sequencing reads to a genome, use a read aligner (like BWA, Bowtie2,
+  or minimap2), not BLAST. They're built for millions of short or long reads.
+- To align whole genomes to each other, use a genome aligner like minimap2 or
+  MUMmer.
+
+The ideas in this chapter (local alignment, seeds, scores, and E-values) carry
+over to all of them.
+
+::: {.exercise #ex-blast}
+Work in the `watermelon_genome` directory.
+
+1. Make a database of the 23 mitochondrial genomes, if you haven't yet
+   (Section \@ref(blast-tasks)). Search it with `nt/cox1.fasta`, with tabular
+   output. Which genomes have *cox1* in two pieces, like watermelon? (Look at
+   `qstart` and `qend`.)
+2. Use `tblastn` to search the mitochondrial genomes with the watermelon
+   NAD4L protein (`aa/nad4L.fasta`). Which genome has the least similar
+   protein? Does that make sense, given what you know about plant evolution?
+3. Search the mitochondrial genomes with `nt/rpl5.fasta`, first with the
+   default task and then with `-task blastn`. How many genomes does each find?
+   Look at the E-values of the extra hits. Are they real?
+4. Write a loop that searches the mitochondrial genomes with every protein in
+   `aa`, using `tblastn`, and saves the tabular results for each protein in
+   its own file in a new directory. Then, in a single pipeline, count how many
+   hits with an E-value below 1e-10 each genome has across all the proteins.
+5. Write a SLURM script that runs your loop from question 4 on the cluster,
+   with `-num_threads` set to match the cores you request.
+6. Record the commands you ran, and the version of BLAST, in your project
+   notebook.
+:::
+
+## Command summary {#blast-summary}
+
+| Command                                            | What it does                                               |
+|----------------------------------------------------|------------------------------------------------------------|
+| `blastn -version`                                  | print the version of BLAST+                                 |
+| `blastn -help`                                     | list all the options                                        |
+| `makeblastdb -in seqs.fasta -dbtype nucl`          | make a nucleotide database (`-dbtype prot` for proteins)   |
+| `cat *.fasta \| makeblastdb -dbtype nucl -out db`  | make a database from several files                          |
+| `blastn -query q.fasta -db db`                     | search nucleotides against nucleotides                     |
+| `blastp`, `blastx`, `tblastn`, `tblastx`           | the other searches (Section \@ref(blast-programs))          |
+| `blastn -query q.fasta -subject s.fasta`           | compare sequences without making a database                 |
+| `-outfmt 6`, `-outfmt "6 qseqid sseqid evalue"`    | tabular output, with the default or your own columns        |
+| `-evalue 1e-10`                                    | set the E-value cutoff                                      |
+| `-task blastn`                                     | a more sensitive (and slower) `blastn` search               |
+| `-num_threads 8`                                   | use several processor cores                                 |

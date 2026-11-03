@@ -699,7 +699,8 @@ module purge               # unload all modules
    (`nt/atp9.fasta`) against the watermelon genome (`watermelon.fsa`). You'll
    need `makeblastdb -in watermelon.fsa -dbtype nucl` to build a BLAST
    database first, then `blastn -query nt/atp9.fasta -db watermelon.fsa`.
-   Write the output to `atp9.vs.watermelon.blastn`.
+   Write the output to `atp9.vs.watermelon.blastn`. (Chapter \@ref(blast)
+   explains these commands.)
 5. Modify your script from question 4 so that it runs on the scratch disk.
 6. Submit a job, then cancel it with `scancel` before it finishes.
 :::

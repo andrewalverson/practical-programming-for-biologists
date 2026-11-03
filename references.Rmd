@@ -14,14 +14,43 @@ Biologists*. Sinauer Associates, Sunderland, MA.
 
 ## Articles {-}
 
+Altschul, S. F., W. Gish, W. Miller, E. W. Myers, and D. J. Lipman (1990).
+Basic local alignment search tool. *Journal of Molecular Biology* 215:
+403–410. <https://doi.org/10.1016/S0022-2836(05)80360-2>
+
+Altschul, S. F., T. L. Madden, A. A. Schäffer, J. Zhang, Z. Zhang, W. Miller,
+and D. J. Lipman (1997). Gapped BLAST and PSI-BLAST: a new generation of
+protein database search programs. *Nucleic Acids Research* 25: 3389–3402.
+<https://doi.org/10.1093/nar/25.17.3389>
+
+Buchfink, B., K. Reuter, and H.-G. Drost (2021). Sensitive protein alignments
+at tree-of-life scale using DIAMOND. *Nature Methods* 18: 366–368.
+<https://doi.org/10.1038/s41592-021-01101-x>
+
+Camacho, C., G. Coulouris, V. Avagyan, N. Ma, J. Papadopoulos, K. Bealer, and
+T. L. Madden (2009). BLAST+: architecture and applications. *BMC
+Bioinformatics* 10: 421. <https://doi.org/10.1186/1471-2105-10-421>
+
+Henikoff, S., and J. G. Henikoff (1992). Amino acid substitution matrices from
+protein blocks. *Proceedings of the National Academy of Sciences USA* 89:
+10915–10919. <https://doi.org/10.1073/pnas.89.22.10915>
+
 Noble, W. S. (2009). A quick guide to organizing computational biology
 projects. *PLoS Computational Biology* 5: e1000424.
 <https://doi.org/10.1371/journal.pcbi.1000424>
+
+Shah, N., M. G. Nute, T. Warnow, and M. Pop (2019). Misunderstood parameter
+of NCBI BLAST impacts the correctness of bioinformatics workflows.
+*Bioinformatics* 35: 1613–1614. <https://doi.org/10.1093/bioinformatics/bty833>
 
 Shaver, G. R., E. B. Rastetter, V. Salmon, L. E. Street, M. J. van de Weg,
 A. Rocha, M. T. van Wijk, and M. Williams (2013). Pan-Arctic modelling of net
 ecosystem exchange of CO~2~. *Philosophical Transactions of the Royal Society
 B* 368: 20120485. <https://doi.org/10.1098/rstb.2012.0485>
+
+Steinegger, M., and J. Söding (2017). MMseqs2 enables sensitive protein
+sequence searching for the analysis of massive data sets. *Nature
+Biotechnology* 35: 1026–1028. <https://doi.org/10.1038/nbt.3988>
 
 Wilson, G., J. Bryan, K. Cranston, J. Kitzes, L. Nederbragt, and T. K. Teal
 (2017). Good enough practices in scientific computing. *PLoS Computational

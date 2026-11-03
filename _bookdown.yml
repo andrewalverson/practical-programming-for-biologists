@@ -1,6 +1,7 @@
 book_filename: "practical-programming-for-biologists"
 output_dir: "docs"
 delete_merged_file: true
+before_chapter_script: "_common.R"
 new_session: false
 language:
   label:
@@ -15,4 +16,5 @@ rmd_files:
   - 03-project.Rmd
   - 04-remote.Rmd
   - 05-git.Rmd
+  - 06-blast.Rmd
   - references.Rmd

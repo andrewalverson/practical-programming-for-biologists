@@ -17,11 +17,45 @@ Or from the Terminal, in this folder:
 Rscript -e 'bookdown::render_book()'
 ```
 
-The finished HTML book is written to `docs/`. Open `docs/index.html` in a
-browser. In RStudio, you can instead open `bookdown.Rproj` and use
-*Build > Build Book*, or run `bookdown::serve_book()` for a live preview that
-rebuilds whenever you save a file. The live preview needs the `servr` package
-(`install.packages("servr")`, once).
+The finished HTML book is written to `docs/`. In RStudio, you can instead
+open `bookdown.Rproj` and use *Build > Build Book*.
+
+Building the book runs the live examples, so the build needs the programs
+they use: Git, and BLAST+ (`blastn`, `makeblastdb`, ...) for Chapter 6. The
+setup chunk in `index.Rmd` adds `~/local/bin` to the `PATH`, so BLAST+
+installed there is found even when RStudio doesn't read your shell settings.
+
+## Previewing changes before you push
+
+What you see locally is exactly what will appear online after you commit and
+push, because the built pages in `docs/` are what GitHub serves. There are two
+ways to preview.
+
+**Live preview in RStudio (best while editing).** Open `bookdown.Rproj` and
+run:
+
+```r
+bookdown::serve_book()
+```
+
+The book opens in the Viewer pane. Click *Show in new window* (the box with an
+arrow) in the Viewer toolbar to open it in your web browser. Every time you
+save an `.Rmd` file, the book rebuilds and the page reloads. Run
+`servr::daemon_stop()` when you're done. The live preview needs the `servr`
+package (`install.packages("servr")`, once). If you get "evaluation nested too
+deeply" after an older version of the book was built in the same session,
+restart R (*Session > Restart R*) and try again.
+
+**Build once, then open the files.** From the Terminal, in this folder:
+
+```sh
+Rscript -e 'bookdown::render_book()'
+open docs/index.html
+```
+
+`open` shows the book in your default browser. After each later edit, rebuild
+and reload the page. Some browsers block the sidebar search for pages opened
+from a file; the live preview doesn't have that problem.
 
 ## Publishing
 
@@ -62,8 +96,10 @@ Rscript -e 'bookdown::render_book()'
 | `03-project.Rmd` | Chapter 3: Organizing your project |
 | `04-remote.Rmd` | Chapter 4: Working remotely |
 | `05-git.Rmd` | Chapter 5: Version control with Git and GitHub |
+| `06-blast.Rmd` | Chapter 6: Searching sequences with BLAST |
 | `references.Rmd` | References (unnumbered, always last) |
 | `templates/notebook.Rmd` | Example project notebook, shown in Chapter 3 |
+| `_common.R` | Chunk options, run before every chapter |
 | `_bookdown.yml` | Book settings, including the chapter order (`rmd_files`) |
 | `_output.yml` | Output format settings (gitbook) |
 | `style.css` | Styles for the callout boxes, keyboard keys, etc. |
@@ -71,7 +107,7 @@ Rscript -e 'bookdown::render_book()'
 | `files/` | Course data used by the live shell examples |
 | `docs/` | The built book, published with GitHub Pages (don't edit by hand) |
 
-To add a chapter, create e.g. `06-python.Rmd` starting with a
+To add a chapter, create e.g. `07-python.Rmd` starting with a
 level-one heading (`# Python {#python}`) and add it to `rmd_files`
 in `_bookdown.yml`.
 

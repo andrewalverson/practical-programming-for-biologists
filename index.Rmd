@@ -35,7 +35,13 @@ writeLines(c("[user]", "\tname = Andrew Alverson", "\temail = aja@uark.edu",
              "[init]", "\tdefaultBranch = main"), git_config)
 Sys.setenv(GIT_CONFIG_GLOBAL = git_config, GIT_CONFIG_NOSYSTEM = "1")
 
-knitr::opts_chunk$set(comment = "", collapse = FALSE, fig.align = "center")
+# Programs installed in ~/local/bin (like BLAST+, Chapter 6) aren't always on
+# the PATH that RStudio sees, so add it.
+local_bin <- path.expand("~/local/bin")
+if (dir.exists(local_bin) && !grepl(local_bin, Sys.getenv("PATH"), fixed = TRUE))
+  Sys.setenv(PATH = paste(local_bin, Sys.getenv("PATH"), sep = ":"))
+
+# Chunk options are set in _common.R, which runs before every chapter.
 
 # Keep knitr's original bash engine. Saving it once matters when the book is
 # rebuilt in the same R session (serve_book()), where knit_engines$get("bash")
@@ -65,6 +71,7 @@ It introduces the basics of scientific computing for biologists:
 - working at the Unix command line
 - remote computing on a high-performance computing cluster
 - version control with `git` and GitHub
+- searching sequence databases with BLAST
 - programming in Python
 - automating workflows
 

@@ -41,14 +41,15 @@ tells GitHub to serve the files as they are; don't delete it.
 
 ## Course data
 
-The shell examples run against `files/data` and `files/file_types`, a copy of
-the files students download as `files.tgz`. If you change those files for a
-new semester, copy the new versions here too and rebuild, so the output in the
-book matches what students have.
+The shell examples run against `files/data` and `files/file_types`. Students
+download the same files as `files.tgz` from the book's website
+(`docs/files.tgz`), so the output in the book matches what they have. If you
+change anything in `files/`, rebuild the archive, then rebuild the book:
 
-The links to the current semester's GitHub page are in `index.Rmd`,
-`01-unix.Rmd`, and `_output.yml` (search for `2026S`); update them each
-semester.
+```sh
+COPYFILE_DISABLE=1 tar -czf docs/files.tgz --exclude .DS_Store files
+Rscript -e 'bookdown::render_book()'
+```
 
 ## Files
 

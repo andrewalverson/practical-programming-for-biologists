@@ -385,7 +385,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html#articles"><i class="fa fa-check"></i>Articles</a></li>
 </ul></li>
 <li class="divider"></li>
-<li><a href="https://github.com/andrewalverson/BIOL51573-2026S" target="_blank">Course GitHub page</a></li>
+<li><a href="https://github.com/andrewalverson/practical-programming-for-biologists" target="_blank">Book on GitHub</a></li>
 
 </ul>
 
@@ -872,11 +872,11 @@ the end of a pipe.</li>
 <div class="sourceCode" id="cb293"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb293-1"><a href="remote.html#cb293-1" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> watermelon.fsa</span>
 <span id="cb293-2"><a href="remote.html#cb293-2" tabindex="-1"></a><span class="fu">gzip</span> watermelon.fsa       <span class="co"># compress (watermelon.fsa is replaced)</span></span>
 <span id="cb293-3"><a href="remote.html#cb293-3" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> watermelon.fsa<span class="pp">*</span></span></code></pre></div>
-<pre><code>-rw-------  1 aja  staff   371K Nov  2 18:15 watermelon.fsa
--rw-------  1 aja  staff   108K Nov  2 18:15 watermelon.fsa.gz</code></pre>
+<pre><code>-rw-------  1 aja  staff   371K Nov  2 19:37 watermelon.fsa
+-rw-------  1 aja  staff   108K Nov  2 19:37 watermelon.fsa.gz</code></pre>
 <div class="sourceCode" id="cb295"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb295-1"><a href="remote.html#cb295-1" tabindex="-1"></a><span class="fu">gunzip</span> watermelon.fsa.gz  <span class="co"># decompress (watermelon.fsa.gz is replaced)</span></span>
 <span id="cb295-2"><a href="remote.html#cb295-2" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> watermelon.fsa<span class="pp">*</span></span></code></pre></div>
-<pre><code>-rw-------  1 aja  staff   371K Nov  2 18:15 watermelon.fsa</code></pre>
+<pre><code>-rw-------  1 aja  staff   371K Nov  2 19:37 watermelon.fsa</code></pre>
 <div class="sourceCode" id="cb297"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb297-1"><a href="remote.html#cb297-1" tabindex="-1"></a><span class="fu">gzip</span> <span class="at">-c</span> watermelon.fsa <span class="op">&gt;</span> wat.fsa.gz     <span class="co"># make a compressed copy; keep the original</span></span>
 <span id="cb297-2"><a href="remote.html#cb297-2" tabindex="-1"></a><span class="fu">gzip</span> <span class="at">-d</span> wat.fsa.gz                      <span class="co"># decompress, same as gunzip</span></span>
 <span id="cb297-3"><a href="remote.html#cb297-3" tabindex="-1"></a><span class="ex">my_program.py</span> reads.fa <span class="kw">|</span> <span class="fu">gzip</span> <span class="op">&gt;</span> out.fa.gz   <span class="co"># compress a program&#39;s output on the fly</span></span></code></pre></div>
@@ -974,7 +974,7 @@ Put it last in the group of options, and you’ll get it right: <code>-czf</code
 <div class="sourceCode" id="cb302"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb302-1"><a href="remote.html#cb302-1" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-czf</span> genomes.tgz mt_genomes/          <span class="co"># create a compressed archive of mt_genomes</span></span>
 <span id="cb302-2"><a href="remote.html#cb302-2" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> genomes.tgz</span>
 <span id="cb302-3"><a href="remote.html#cb302-3" tabindex="-1"></a><span class="fu">du</span> <span class="at">-sh</span> mt_genomes</span></code></pre></div>
-<pre><code>-rw-r--r--  1 aja  staff   3.3M Nov  2 18:15 genomes.tgz
+<pre><code>-rw-r--r--  1 aja  staff   3.3M Nov  2 19:37 genomes.tgz
  11M    mt_genomes</code></pre>
 <div class="sourceCode" id="cb304"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb304-1"><a href="remote.html#cb304-1" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-tzf</span> genomes.tgz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 4          <span class="co"># list what&#39;s inside, without extracting</span></span></code></pre></div>
 <pre><code>mt_genomes/

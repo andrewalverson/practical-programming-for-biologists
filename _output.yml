@@ -7,7 +7,7 @@ bookdown::gitbook:
       before: |
         <li><a href="./">Practical Programming for Biologists</a></li>
       after: |
-        <li><a href="https://github.com/andrewalverson/BIOL51573-2026S" target="_blank">Course GitHub page</a></li>
+        <li><a href="https://github.com/andrewalverson/practical-programming-for-biologists" target="_blank">Book on GitHub</a></li>
     edit: null
     download: null
     sharing: null

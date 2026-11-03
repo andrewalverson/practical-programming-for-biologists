@@ -385,7 +385,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html#articles"><i class="fa fa-check"></i>Articles</a></li>
 </ul></li>
 <li class="divider"></li>
-<li><a href="https://github.com/andrewalverson/BIOL51573-2026S" target="_blank">Course GitHub page</a></li>
+<li><a href="https://github.com/andrewalverson/practical-programming-for-biologists" target="_blank">Book on GitHub</a></li>
 
 </ul>
 
@@ -666,7 +666,7 @@ change after <code>git add</code> isn’t included in the next commit unless you
 message that describes the change:</p>
 <div class="sourceCode" id="cb341"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb341-1"><a href="git.html#cb341-1" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Initial import&quot;</span></span>
 <span id="cb341-2"><a href="git.html#cb341-2" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
-<pre><code>[main (root-commit) 841eb91] Initial import
+<pre><code>[main (root-commit) 4302bce] Initial import
  2 files changed, 1 insertion(+)
  create mode 100644 README
  create mode 100644 data/README
@@ -788,7 +788,7 @@ worth keeping, so commit it:</p>
 <div class="sourceCode" id="cb351"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb351-1"><a href="git.html#cb351-1" tabindex="-1"></a><span class="fu">git</span> add .gitignore</span>
 <span id="cb351-2"><a href="git.html#cb351-2" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Ignore FASTA files in data/&quot;</span></span>
 <span id="cb351-3"><a href="git.html#cb351-3" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div>
-<pre><code>[main 639eaca] Ignore FASTA files in data/
+<pre><code>[main f96f7c1] Ignore FASTA files in data/
  1 file changed, 1 insertion(+)
  create mode 100644 .gitignore
 On branch main
@@ -820,45 +820,45 @@ generate it (Section <a href="remote.html#download">4.3</a>) in the repository i
 <div class="sourceCode" id="cb354"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb354-1"><a href="git.html#cb354-1" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Project started 2026-01-14&quot;</span> <span class="op">&gt;&gt;</span> README</span>
 <span id="cb354-2"><a href="git.html#cb354-2" tabindex="-1"></a><span class="fu">git</span> add README</span>
 <span id="cb354-3"><a href="git.html#cb354-3" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Add project start date&quot;</span></span></code></pre></div>
-<pre><code>[main 59f25f4] Add project start date
+<pre><code>[main a221a10] Add project start date
  1 file changed, 1 insertion(+)</code></pre>
 <p><code>git log</code> lists the commits, newest first:</p>
 <div class="sourceCode" id="cb356"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb356-1"><a href="git.html#cb356-1" tabindex="-1"></a><span class="fu">git</span> log</span></code></pre></div>
-<pre><code>commit 59f25f4401638e70db13d633da614750c113100b
+<pre><code>commit a221a105fe727de3fe29618859931574f6b6e2b0
 Author: Andrew Alverson &lt;aja@uark.edu&gt;
-Date:   Mon Nov 2 18:15:57 2026 -0600
+Date:   Mon Nov 2 19:37:30 2026 -0600
 
     Add project start date
 
-commit 639eacabb54074f95667f9dc24e6b69eb4abfafc
+commit f96f7c178a91ab14eae79e41cd07fb785dfdb690
 Author: Andrew Alverson &lt;aja@uark.edu&gt;
-Date:   Mon Nov 2 18:15:57 2026 -0600
+Date:   Mon Nov 2 19:37:30 2026 -0600
 
     Ignore FASTA files in data/
 
-commit 841eb91706d6013c29a3a54cf1d5dc906edaa7c6
+commit 4302bce422ae0352d37ed9cb0c707946479ed48b
 Author: Andrew Alverson &lt;aja@uark.edu&gt;
-Date:   Mon Nov 2 18:15:56 2026 -0600
+Date:   Mon Nov 2 19:37:30 2026 -0600
 
     Initial import</code></pre>
 <p>Each commit has a full 40-character ID, an author, a date, and the commit
 message. A few useful options:</p>
 <div class="sourceCode" id="cb358"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb358-1"><a href="git.html#cb358-1" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span></span></code></pre></div>
-<pre><code>59f25f4 Add project start date
-639eaca Ignore FASTA files in data/
-841eb91 Initial import</code></pre>
+<pre><code>a221a10 Add project start date
+f96f7c1 Ignore FASTA files in data/
+4302bce Initial import</code></pre>
 <div class="sourceCode" id="cb360"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb360-1"><a href="git.html#cb360-1" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--name-status</span> <span class="at">-n</span> 2</span></code></pre></div>
-<pre><code>commit 59f25f4401638e70db13d633da614750c113100b
+<pre><code>commit a221a105fe727de3fe29618859931574f6b6e2b0
 Author: Andrew Alverson &lt;aja@uark.edu&gt;
-Date:   Mon Nov 2 18:15:57 2026 -0600
+Date:   Mon Nov 2 19:37:30 2026 -0600
 
     Add project start date
 
 M   README
 
-commit 639eacabb54074f95667f9dc24e6b69eb4abfafc
+commit f96f7c178a91ab14eae79e41cd07fb785dfdb690
 Author: Andrew Alverson &lt;aja@uark.edu&gt;
-Date:   Mon Nov 2 18:15:57 2026 -0600
+Date:   Mon Nov 2 19:37:30 2026 -0600
 
     Ignore FASTA files in data/
 
@@ -906,7 +906,7 @@ index 62debb3..078409c 100644
  The README file for my project
  Project started 2026-01-14
 +Samples collected from Lake Fayetteville
-[main 4bfddbd] Add sampling location
+[main 9491db7] Add sampling location
  1 file changed, 1 insertion(+)</code></pre>
 </div>
 <div id="git-mv" class="section level2 hasAnchor" number="5.9">
@@ -925,7 +925,7 @@ Changes to be committed:
     renamed:    README -&gt; README.md
     renamed:    data/README -&gt; data/README.md</code></pre>
 <div class="sourceCode" id="cb369"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb369-1"><a href="git.html#cb369-1" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Add Markdown extension to README files&quot;</span></span></code></pre></div>
-<pre><code>[main f5022f4] Add Markdown extension to README files
+<pre><code>[main aece00c] Add Markdown extension to README files
  2 files changed, 0 insertions(+), 0 deletions(-)
  rename README =&gt; README.md (100%)
  rename data/{README =&gt; README.md} (100%)</code></pre>
@@ -940,14 +940,14 @@ to regret:</p>
 <div class="sourceCode" id="cb371"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb371-1"><a href="git.html#cb371-1" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;TODO: delete all the raw data&quot;</span> <span class="op">&gt;&gt;</span> README.md</span>
 <span id="cb371-2"><a href="git.html#cb371-2" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">&quot;Update README&quot;</span></span>
 <span id="cb371-3"><a href="git.html#cb371-3" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span></span></code></pre></div>
-<pre><code>[main 22ff2f2] Update README
+<pre><code>[main 347fc78] Update README
  1 file changed, 1 insertion(+)
-22ff2f2 Update README
-f5022f4 Add Markdown extension to README files
-4bfddbd Add sampling location
-59f25f4 Add project start date
-639eaca Ignore FASTA files in data/
-841eb91 Initial import</code></pre>
+347fc78 Update README
+aece00c Add Markdown extension to README files
+9491db7 Add sampling location
+a221a10 Add project start date
+f96f7c1 Ignore FASTA files in data/
+4302bce Initial import</code></pre>
 <p><code>git commit -a</code> stages every change to tracked files before committing, so
 you can skip <code>git add</code>. It never adds untracked files. Use it only when you
 know what you’ve changed.</p>
@@ -975,7 +975,7 @@ Changes not staged for commit:
 no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</code></pre>
 <p>The old version is now in your working directory, as a change you can commit:</p>
 <div class="sourceCode" id="cb377"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb377-1"><a href="git.html#cb377-1" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">&quot;Remove bad advice from README&quot;</span></span></code></pre></div>
-<pre><code>[main aed7a27] Remove bad advice from README
+<pre><code>[main 420bb7e] Remove bad advice from README
  1 file changed, 1 deletion(-)</code></pre>
 <p>The bad version is still in the history, in case you ever want it back. That’s
 the point: once you’ve committed something, it’s very hard to lose. You can
@@ -1033,11 +1033,11 @@ Switched to branch &#39;readme-changes&#39;
 <div class="sourceCode" id="cb381"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb381-1"><a href="git.html#cb381-1" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Data are in data/, one FASTA file per sample.&quot;</span> <span class="op">&gt;&gt;</span> README.md</span>
 <span id="cb381-2"><a href="git.html#cb381-2" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">&quot;Describe the data directory&quot;</span></span>
 <span id="cb381-3"><a href="git.html#cb381-3" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">-n</span> 3</span></code></pre></div>
-<pre><code>[readme-changes f0cb5a8] Describe the data directory
+<pre><code>[readme-changes b653a75] Describe the data directory
  1 file changed, 1 insertion(+)
-f0cb5a8 Describe the data directory
-aed7a27 Remove bad advice from README
-22ff2f2 Update README</code></pre>
+b653a75 Describe the data directory
+420bb7e Remove bad advice from README
+347fc78 Update README</code></pre>
 <p>The new commit exists only on <code>readme-changes</code>. If you switch back to <code>main</code>,
 the new line disappears from <code>README.md</code>:</p>
 <div class="sourceCode" id="cb383"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb383-1"><a href="git.html#cb383-1" tabindex="-1"></a><span class="fu">git</span> switch main</span>
@@ -1050,7 +1050,7 @@ the branch you want to merge <em>into</em> (<code>main</code>, which we just did
 the other branch:</p>
 <div class="sourceCode" id="cb385"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb385-1"><a href="git.html#cb385-1" tabindex="-1"></a><span class="fu">git</span> merge readme-changes</span>
 <span id="cb385-2"><a href="git.html#cb385-2" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 2 README.md</span></code></pre></div>
-<pre><code>Updating aed7a27..f0cb5a8
+<pre><code>Updating 420bb7e..b653a75
 Fast-forward
  README.md | 1 +
  1 file changed, 1 insertion(+)
@@ -1062,7 +1062,7 @@ branches have new commits, Git combines them in a new <strong>merge commit</stro
 Figure <a href="git.html#fig:branches">5.4</a>.</p>
 <p>Once a branch is merged, you can delete it:</p>
 <div class="sourceCode" id="cb387"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb387-1"><a href="git.html#cb387-1" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-d</span> readme-changes</span></code></pre></div>
-<pre><code>Deleted branch readme-changes (was f0cb5a8).</code></pre>
+<pre><code>Deleted branch readme-changes (was b653a75).</code></pre>
 <div class="tip">
 <p><strong>Create and switch in one step.</strong> <code>git switch -c new-branch</code> creates a branch
 and switches to it. (In older tutorials: <code>git checkout -b new-branch</code>.)</p>
@@ -1090,7 +1090,7 @@ index 3bad163..d478709 100644
  Project started 2026-01-14
  Samples collected from Lake Fayetteville
  Data are in data/, one FASTA file per sample.
-[new-title e7f0149] Shorter title
+[new-title 7c214c7] Shorter title
  1 file changed, 1 insertion(+), 1 deletion(-)</code></pre>
 <p>Meanwhile, back on <code>main</code>, we change the same line differently:</p>
 <div class="sourceCode" id="cb392"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb392-1"><a href="git.html#cb392-1" tabindex="-1"></a><span class="fu">git</span> switch main</span>
@@ -1107,7 +1107,7 @@ index 3bad163..28da5e8 100644
  Project started 2026-01-14
  Samples collected from Lake Fayetteville
  Data are in data/, one FASTA file per sample.
-[main ebfcd40] Better title
+[main 52a63c8] Better title
  1 file changed, 1 insertion(+), 1 deletion(-)</code></pre>
 <p>Now merge <code>new-title</code> into <code>main</code>:</p>
 <div class="sourceCode" id="cb395"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb395-1"><a href="git.html#cb395-1" tabindex="-1"></a><span class="fu">git</span> merge new-title</span></code></pre></div>
@@ -1153,20 +1153,20 @@ a combination.</li>
 <span id="cb402-3"><a href="git.html#cb402-3" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Merge new-title, keeping the longer title&quot;</span></span>
 <span id="cb402-4"><a href="git.html#cb402-4" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--graph</span></span></code></pre></div>
 <pre><code># Diatom genomics project
-[main 5865bc0] Merge new-title, keeping the longer title
-*   5865bc0 Merge new-title, keeping the longer title
+[main 0ed7666] Merge new-title, keeping the longer title
+*   0ed7666 Merge new-title, keeping the longer title
 |\  
-| * e7f0149 Shorter title
-* | ebfcd40 Better title
+| * 7c214c7 Shorter title
+* | 52a63c8 Better title
 |/  
-* f0cb5a8 Describe the data directory
-* aed7a27 Remove bad advice from README
-* 22ff2f2 Update README
-* f5022f4 Add Markdown extension to README files
-* 4bfddbd Add sampling location
-* 59f25f4 Add project start date
-* 639eaca Ignore FASTA files in data/
-* 841eb91 Initial import</code></pre>
+* b653a75 Describe the data directory
+* 420bb7e Remove bad advice from README
+* 347fc78 Update README
+* aece00c Add Markdown extension to README files
+* 9491db7 Add sampling location
+* a221a10 Add project start date
+* f96f7c1 Ignore FASTA files in data/
+* 4302bce Initial import</code></pre>
 <p><code>git log --graph</code> draws the history of the branches and the merge commit that
 joins them, just like Figure <a href="git.html#fig:branches">5.4</a>.</p>
 <div class="tip">

@@ -172,7 +172,7 @@ Every user has a **home directory** where their own files live. On a Mac, it's
 `/Users/username`. The shell uses `~` as shorthand for your home directory.
 
 ::: {.note}
-**Reading.** [*File not found*](https://github.com/andrewalverson/BIOL51573-2026S/blob/main/readings/file-not-found-quiz-01-reading.pdf)
+**Reading.** [*File not found*](https://www.theverge.com/22684730/students-file-folder-directory-structure-education-gen-z)
 by Monica Chin (*The Verge*), on why a generation raised on search bars has
 never needed to think about directories, and why that's a problem for
 scientists.
@@ -226,7 +226,7 @@ file names cause endless trouble at the command line. Instead, use:
 
 ### The course files {#course-files}
 
-Download `files.tgz` from the class GitHub page and move it to your Desktop.
+Download [`files.tgz`](https://andrewalverson.github.io/practical-programming-for-biologists/files.tgz) and move it to your Desktop.
 A `.tgz` file is a compressed archive (a "tarball"), similar to a `.zip` file.
 Double-click it in the Finder, or extract it at the command line (Section
 \@ref(tar) explains how this works):

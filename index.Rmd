@@ -69,11 +69,11 @@ you go. You learn this material by typing it, not by reading it.
 
 ## Before the first class {-}
 
-1. Find and bookmark the [class GitHub page](https://github.com/andrewalverson/BIOL51573-2026S).
+1. Bookmark this book.
 2. Enroll in the [DataCamp class](https://www.datacamp.com/groups/shared_links/a84f73bdb85e70197f83520ee390e538c16815a1c5b5453db88a14225cfd1ca2).
 3. Register for an [AHPCC user account](https://hpc.uark.edu/hpc-support/user-account-requests/internal.php).
    Your advisor is your sponsor, not the course instructor.
-4. Download `files.tgz` from the class GitHub page. This archive holds all the
+4. Download [`files.tgz`](https://andrewalverson.github.io/practical-programming-for-biologists/files.tgz). This archive holds all the
    example data we use in class (see Section \@ref(course-files)).
 
 ## How to read this book {-}

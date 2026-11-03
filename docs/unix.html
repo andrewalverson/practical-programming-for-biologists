@@ -385,7 +385,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html#articles"><i class="fa fa-check"></i>Articles</a></li>
 </ul></li>
 <li class="divider"></li>
-<li><a href="https://github.com/andrewalverson/BIOL51573-2026S" target="_blank">Course GitHub page</a></li>
+<li><a href="https://github.com/andrewalverson/practical-programming-for-biologists" target="_blank">Book on GitHub</a></li>
 
 </ul>
 
@@ -610,7 +610,7 @@ Figure 1.1: Part of the directory structure on a Mac. Everything branches from t
 <p>Every user has a <strong>home directory</strong> where their own files live. On a Mac, it’s
 <code>/Users/username</code>. The shell uses <code>~</code> as shorthand for your home directory.</p>
 <div class="note">
-<p><strong>Reading.</strong> <a href="https://github.com/andrewalverson/BIOL51573-2026S/blob/main/readings/file-not-found-quiz-01-reading.pdf"><em>File not found</em></a>
+<p><strong>Reading.</strong> <a href="https://www.theverge.com/22684730/students-file-folder-directory-structure-education-gen-z"><em>File not found</em></a>
 by Monica Chin (<em>The Verge</em>), on why a generation raised on search bars has
 never needed to think about directories, and why that’s a problem for
 scientists.</p>
@@ -677,7 +677,7 @@ file names cause endless trouble at the command line. Instead, use:</p>
 </div>
 <div id="course-files" class="section level3 hasAnchor" number="1.4.2">
 <h3><span class="header-section-number">1.4.2</span> The course files<a href="unix.html#course-files" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Download <code>files.tgz</code> from the class GitHub page and move it to your Desktop.
+<p>Download <a href="https://andrewalverson.github.io/practical-programming-for-biologists/files.tgz"><code>files.tgz</code></a> and move it to your Desktop.
 A <code>.tgz</code> file is a compressed archive (a “tarball”), similar to a <code>.zip</code> file.
 Double-click it in the Finder, or extract it at the command line (Section
 <a href="remote.html#tar">4.4.3</a> explains how this works):</p>
@@ -939,8 +939,8 @@ nt/cox1.fasta
 nt/cox2.fasta
 nt/cox3.fasta</code></pre>
 <div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="unix.html#cb21-1" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> <span class="pp">*</span>/nad1<span class="pp">*</span>    <span class="co"># nad1 files in any subdirectory</span></span></code></pre></div>
-<pre><code>-rw-------  2 aja  staff  350 Jan  4  2019 aa/nad1.fasta
--rw-------  2 aja  staff  995 Jan  4  2019 nt/nad1.fasta</code></pre>
+<pre><code>-rw-------  1 aja  staff  350 Jan  4  2019 aa/nad1.fasta
+-rw-------  1 aja  staff  995 Jan  4  2019 nt/nad1.fasta</code></pre>
 <p>Two less common wildcards are sometimes handy: <code>?</code> matches exactly one
 character, and <code>[...]</code> matches any one of the characters inside the brackets.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="unix.html#cb23-1" tabindex="-1"></a><span class="fu">ls</span> nt/atp<span class="pp">?</span>.fasta       <span class="co"># atp followed by exactly one character</span></span>
